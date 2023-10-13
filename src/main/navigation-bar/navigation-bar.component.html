@@ -1,13 +1,15 @@
 <div class="navigation">
-<p class="time">{{currentTimeOfDay}}</p>
+  <p class="time">{{currentTimeOfDay}}</p>
   <div class="input-container">
-    <img src="assets/svg/search.svg" class="search-icon" />
-    <input type="text" placeholder="Search" [(ngModel)]="searchValue" />
+    <img class="search-icon" src="assets/svg/search.svg"/>
+    <input [(ngModel)]="searchValue" placeholder="Search" type="text"/>
   </div>
   <p-button (click)="toggleCalendar()">
-    <img src="assets/svg/calender.svg" class="calendar-icon" />
+    <img class="calendar-icon" src="assets/svg/calender.svg"/>
     <span class="calender-text">Today</span>
-    <img src="assets/svg/down.svg" alt="down-arrow" class="down-icon"/>
+    <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
   </p-button>
-  <p-calendar #Calender *ngIf="showCalendar" [inline]="true"  [(ngModel)]="selectedDate" (onSelect)="onDateSelect($event)" [minDate]="minDate" [maxDate]="maxDate" (onMonthChange)="onMonthChange($event)"></p-calendar>
+  <p-calendar #Calender (onMonthChange)="onMonthChange($event)" (onSelect)="onDateSelect($event)" *ngIf="showCalendar"
+              [(ngModel)]="selectedDate" [inline]="true" [maxDate]="maxDate"
+              [minDate]="minDate"></p-calendar>
 </div>

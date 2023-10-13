@@ -1,50 +1,50 @@
-.navigation{
-  width:1242px;
-  height:50px;
+.navigation {
+  width: 77.625em; // 1242px / 16px
+  height: 3.125em; // 50px / 16px
   position: relative;
-  top:-8.5px;
-  right:-14.5em;
+  top: -8.5px;
+  right: -14.5em;
   display: grid;
   grid-area: journal-topbar / journal-topbar / journal-topbar / journal-topbar;
   grid-template-areas: "topbar-date-selector topbar-search";
-  padding: 0px 10px 0px 15px;
+  padding: 0 10px 0 15px;
   -webkit-box-pack: justify;
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
   background: rgb(255, 255, 255);
-
   border-bottom: 1px solid rgb(237, 237, 237);
 }
-.time{
-  width:85.2px;
-  height:20.4px;
-  font-family: Inter,sans-serif;
-  font-size: 17px;
+
+.time {
+  width: 5.325em; // 85.2px / 16px
+  height: 1.275em; // 20.4px / 16px
+  font-family: Inter, sans-serif;
+  font-size: 1.0625em; // 17px / 16px
   font-weight: 600;
-  line-height: 20.4px;
+  line-height: 1.275em;
   color: rgb(0, 0, 0);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin:0;
+  margin: 0;
   position: relative;
-  top: 10px;
+  top: 0.625em;
 }
-.area-container{
+
+.area-container {
   grid-area: topbar-search / topbar-search / topbar-search / topbar-search;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
 }
-/* styles.scss */
 
 .input-container {
   position: relative;
   display: flex;
   align-items: center;
-  right:30em;
-  top:0.65em;
+  right: 30em;
+  top: 0.65em;
 }
 
 .search-icon {
@@ -52,9 +52,10 @@
   left: 11px; /* Adjust the left position as needed */
   top: 49%;
   transform: translateY(-50%);
-  width: 15px; /* Adjust the width as needed */
-  height: 15px; /* Adjust the height as needed */
+  width: 0.9375em; /* Adjust the width as needed */
+  height: 0.9375em; /* Adjust the height as needed */
 }
+
 input:focus {
   border: 1px solid #ccc; /* Default border style */
   outline: none; /* Remove the default focus outline */
@@ -62,72 +63,78 @@ input:focus {
 
 input {
   padding-left: 2.5em; /* Adjust the padding-left to accommodate the icon */
-  width: 164px; /* Adjust the width as needed */
-  height: 30px; /* Adjust the height as needed */
+  width: 10.25em; /* Adjust the width as needed */
+  height: 1.875em; /* Adjust the height as needed */
   border: 1px solid #ccc; /* Optional: Add border styling */
   border-radius: 5px; /* Optional: Add border-radius */
 }
 
-/* Optional: Style the placeholder text */
 input::placeholder {
   color: #999; /* Adjust the color as needed */
 }
 
 ::ng-deep .p-inputtext {
-  width:164px;
-  height:30px;
+  width: 10.25em;
+  height: 1.875em;
   background-color: #ffffff;
-  margin:0 8px 0 0;
-  padding: 0 12px;
-  padding-left:2em !important;
+  margin: 0 8px 0 0;
+  padding: 0 0.75em;
+  padding-left: 2em !important;
 }
 
 
 ::ng-deep .p-inputtext:focus {
   border: 1px solid transparent;
 }
+
 ::ng-deep .p-button {
-  width: 103px;
-  height: 30px;
-  background: rgb(255,255,255);
+  width: 6.4375em;
+  height: 1.875em;
+  background: rgb(255, 255, 255);
   color: black;
   border: 1px solid #ccc;
-  padding:0 10px;
+  padding: 0 10px;
   position: relative;
   right: -48em;
   top: -1.2em;
 }
+
 ::ng-deep .p-button:focus {
   border: 1px solid #ccc;
-  background-color: rgb(255,255,255);
-  box-shadow:none;
+  background-color: rgb(255, 255, 255);
+  box-shadow: none;
 }
-.calendar-icon{
-  width: 13px;
-  height: 13px;
+
+.calendar-icon {
+  width: 0.8125em;
+  height: 0.8125em;
 }
-.calender-text{
-  width:36px;
-  height:15px;
-  margin:auto;
-  position:relative;
-  top:-4px;
-}
-.down-icon{
-  width:16px;
-  height:16px;
+
+.calender-text {
+  width: 2.25em;
+  height: 0.9375em;
+  margin: auto;
   position: relative;
-  right:-3px;
+  top: -4px;
 }
+
+.down-icon {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  right: -3px;
+}
+
 ::ng-deep .p-datepicker {
-  width: 231px !important;
-  height: 219px !important;
-  position:absolute;
+  width: 14.4375em !important;
+  height: 13.6875em !important;
+  position: absolute;
   top: -0.1em;
-  left:-25.8em;
+  left: -25.8em;
 }
+
 /* Style for today when the calendar is open */
-::ng-deep  .p-datepicker table td.p-datepicker-today > span {
+::ng-deep .p-datepicker table td.p-datepicker-today > span {
   color: #ffffff;
   background: #2A67F4;
 }
@@ -148,10 +155,12 @@ input::placeholder {
   width: 1.5rem;
   height: 1.5rem;
 }
+
 ::ng-deep .p-datepicker table td > span.p-highlight {
   color: #ffffff;
   background: #2A67F4;
 }
+
 ::ng-deep .p-datepicker table {
   font-size: 10pt;
   margin: -0.143rem 0;

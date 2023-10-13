@@ -1,6 +1,5 @@
-/* sidebar.component.scss */
-* {
 
+* {
   box-sizing: border-box;
 }
 
@@ -15,15 +14,14 @@
 
 }
 
-/* sidebar.component.scss */
 
 ::ng-deep.p-sidebar::before {
   content: '';
-  width: 15px;
+  width: 0.9375em;
   height: 100%;
   position: absolute;
-  top: 0px;
-  left: -8px;
+  top: 0;
+  left: -0.5em;
   background-color: var(--chakra-colors-transparent);
   z-index: 10;
 }
@@ -36,7 +34,7 @@
   width: 13.375em;
   height: 2.625em;
   position: relative;
-  right: 8px;
+  right: 0.5em;
   border: 1px solid rgb(229, 228, 229); /* Use 'border' property to set border color and style */
   border-radius: 5px;
   background: rgb(236, 236, 236);
@@ -63,7 +61,7 @@
   font-family: Inter, sans-serif;
   font-size: 13px;
   font-weight: 500;
-  line-height: 15.6px;
+  line-height: 0.975em;
   color: rgb(0, 0, 0);
   position: relative;
   top: -2.5px;
@@ -76,8 +74,8 @@
 }
 
 .item {
-  width: 214px;
-  height: 36px;
+  width: 13.375em;
+  height: 2.25em;
   padding: 4.3px 8px;
   position: relative;
   right: 7px;
@@ -117,14 +115,14 @@
 .text-container {
 
   display: inline-block !important;
-  width: 173px !important;
-  height: 27.6px !important;
+  width: 10.8125em !important;
+  height: 1.725em !important;
   padding: 6px 7px;
   text-transform: capitalize;
   font-family: Inter, sans-serif;
-  font-size: 13px;
+  font-size: 0.8125em;
   font-weight: 500;
-  line-height: 15.6px;
+  line-height: 0.975em;
   position: relative;
   top: -1px;
   right: -5px;
@@ -132,8 +130,8 @@
 }
 
 .side-bar-sideline {
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 1.25em;
+  margin-top: 1.25em;
 }
 
 .side-line-text {
@@ -152,8 +150,8 @@
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  width: 214px;
-  height: 36px;
+  width: 13.375em;
+  height: 2.25em;
   padding: 4.3px 0 4.3px 8px;
   position: relative;
   right: 7px;
@@ -175,7 +173,7 @@
 }
 
 .preferences-area {
-  margin-bottom: 20px;
+  margin-bottom: 1.25em;
 }
 
 .pre-text {
@@ -191,5 +189,5 @@
 }
 
 .plus {
-  width: 17px;
+  width: 1.0625em;
 }

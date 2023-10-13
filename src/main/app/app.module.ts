@@ -13,11 +13,11 @@ import { CalendarModule } from "primeng/calendar";
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        SidebarComponent,
-        NavigationBarComponent
-    ],
+  declarations: [
+    AppComponent,
+    SidebarComponent,
+    NavigationBarComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
