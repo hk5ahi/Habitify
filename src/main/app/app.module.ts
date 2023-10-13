@@ -10,24 +10,36 @@ import { FormsModule } from "@angular/forms";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { CalendarModule } from "primeng/calendar";
+import { SplitButtonModule } from "primeng/splitbutton";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { HabitsComponent } from "../habits/habits.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SidebarComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    HabitsComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    SidebarModule,
-    InputTextModule,
-    FormsModule,
-    ButtonModule,
-    CalendarModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        SidebarModule,
+        InputTextModule,
+        FormsModule,
+        ButtonModule,
+        CalendarModule,
+        SplitButtonModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

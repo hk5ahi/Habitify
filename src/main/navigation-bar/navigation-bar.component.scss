@@ -1,8 +1,8 @@
 .navigation {
-  width: 77.625em; // 1242px / 16px
+  width: 78.2em; // 1242px / 16px
   height: 3.125em; // 50px / 16px
   position: relative;
-  top: -8.5px;
+  top: -1.5px;
   right: -14.5em;
   display: grid;
   grid-area: journal-topbar / journal-topbar / journal-topbar / journal-topbar;
@@ -14,6 +14,7 @@
   align-items: center;
   background: rgb(255, 255, 255);
   border-bottom: 1px solid rgb(237, 237, 237);
+  border-right: 1px solid rgb(237, 237, 237);
 }
 
 .time {
@@ -29,7 +30,8 @@
   white-space: nowrap;
   margin: 0;
   position: relative;
-  top: 0.625em;
+  top: 0.1em;
+  right:-0.5em;
 }
 
 .area-container {
@@ -40,11 +42,11 @@
 }
 
 .input-container {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
-  right: 30em;
-  top: 0.65em;
+  right: 15.3em;
+  top: 0.85em;
 }
 
 .search-icon {
@@ -63,8 +65,8 @@ input:focus {
 
 input {
   padding-left: 2.5em; /* Adjust the padding-left to accommodate the icon */
-  width: 10.25em; /* Adjust the width as needed */
-  height: 1.875em; /* Adjust the height as needed */
+  width: 164px; /* Adjust the width as needed */
+  height: 30px; /* Adjust the height as needed */
   border: 1px solid #ccc; /* Optional: Add border styling */
   border-radius: 5px; /* Optional: Add border-radius */
 }
@@ -88,26 +90,13 @@ input::placeholder {
 }
 
 ::ng-deep .p-button {
-  width: 6.4375em;
-  height: 1.875em;
-  background: rgb(255, 255, 255);
-  color: black;
-  border: 1px solid #ccc;
-  padding: 0 10px;
-  position: relative;
-  right: -48em;
-  top: -1.2em;
-}
-
-::ng-deep .p-button:focus {
-  border: 1px solid #ccc;
-  background-color: rgb(255, 255, 255);
-  box-shadow: none;
+  display: none;
 }
 
 .calendar-icon {
-  width: 0.8125em;
-  height: 0.8125em;
+  width: 13px;
+  height: 13px;
+  cursor: default !important;
 }
 
 .calender-text {
@@ -123,14 +112,15 @@ input::placeholder {
   height: 1em;
   position: relative;
   right: -3px;
+  cursor: default !important;
 }
 
 ::ng-deep .p-datepicker {
   width: 14.4375em !important;
   height: 13.6875em !important;
-  position: absolute;
-  top: -0.1em;
-  left: -25.8em;
+  position: relative;
+  top: 1.75em;
+  left: 43.8em;
 }
 
 /* Style for today when the calendar is open */
@@ -170,3 +160,372 @@ input::placeholder {
   padding: 0.2rem;
 }
 
+.search-container {
+  width: 40px;
+  display: flex;
+  position: absolute;
+  height: 30px;
+  margin-right: 8px;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 3px;
+  padding: 0 12px;
+  background: rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
+  right: 26.6em;
+  top:13px;
+}
+.sort-container{
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: absolute;
+  vertical-align: middle;
+  width: 40px;
+  line-height: 30px;
+  font-weight: 500;
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+  height: 30px;
+  min-width: var(--chakra-sizes-10);
+  font-size: 12px;
+  padding-inline-start: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
+  right: 12.3em;
+  top:12px;
+}
+.container {
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: absolute;
+  vertical-align: middle;
+  width: 40px;
+  line-height: 30px;
+  font-weight: 500;
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+  height: 30px;
+  min-width: var(--chakra-sizes-10);
+  font-size: 12px;
+  padding-inline-start: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
+  right: 16.3em;
+  top:12px;
+}
+
+.right {
+
+  right: 20em !important;
+}
+
+::ng-deep .add-button {
+
+  display: inline-flex;
+  appearance: none;
+  white-space: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: absolute;
+  vertical-align: middle;
+  width: 128px;
+  line-height: 30px;
+  font-weight: 500;
+  transition-property: var(--chakra-transition-property-common);
+  transition-duration: var(--chakra-transition-duration-normal);
+  height: 30px;
+  min-width: var(--chakra-sizes-10);
+  font-size: 12px;
+  padding-inline-start: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  color: rgb(255, 255, 255);
+  background-color: rgb(42, 103, 244);
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border: none;
+  top: 11px;
+  right: 0.8em;
+}
+
+::ng-deep .mat-icon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  line-height: 1em;
+  flex-shrink: 0;
+  color: currentcolor;
+  vertical-align: middle;
+  position: relative;
+  top: 1px;
+}
+
+::ng-deep .material-icons {
+
+  font-size: 20px;
+}
+
+.button-text {
+
+  width: 60px !important;
+  height: 30px !important;
+}
+
+.add-icon {
+  right: 6px;
+  top: 2px;
+}
+
+.drop-icon {
+  right: -7px;
+  top: 2px;
+}
+
+.sort-drop-icon {
+  right: -6px;
+  top: 0;
+}
+
+::ng-deep .mat-mdc-menu-item {
+  color: rgba(0, 0, 0, .7) !important;
+  display: flex;
+  cursor: default;
+  height: 30px !important;
+  line-height: 30px;
+  text-transform: capitalize !important;
+  padding: 0 6px 0 10px !important;
+  width: 208px !important;
+  min-height: 30px !important;
+
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+
+  color: rgb(255, 255, 255) !important;
+  background-color: rgb(42, 103, 244) !important;
+  border-radius: 0;
+}
+
+::ng-deep .mat-mdc-menu-item:hover .infinity {
+
+  filter: brightness(0) invert(1);
+}
+
+::ng-deep .mat-mdc-menu-item:hover .tick-icon {
+
+  filter: brightness(0) invert(1);
+}
+
+
+::ng-deep .mat-mdc-menu-item:hover .mat-mdc-menu-submenu-icon {
+
+  filter: brightness(0) invert(1);
+}
+
+::ng-deep .add-menu {
+  padding-top: 6px;
+  padding-bottom: 4px;
+}
+
+::ng-deep .alpha-menu {
+  width: 30px !important;
+  height: 62px !important;
+  overflow: hidden !important;
+}
+
+/* Styles for the sort menu */
+::ng-deep .mat-mdc-menu-content,
+{
+  padding: 0 !important;
+}
+
+
+.add-menu::ng-deep .mat-mdc-menu-content {
+
+  height: 44px !important;
+  overflow: hidden;
+}
+
+.sort-menu::ng-deep .mat-mdc-menu-content {
+
+  height: 92px !important;
+  overflow: hidden;
+}
+
+
+::ng-deep .mat-mdc-menu-item-text {
+  position: relative;
+  top: -2.5px;
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  text-overflow: ellipsis;
+}
+
+.hide-icon {
+  opacity: 1 !important;
+}
+
+.infinity {
+  position: relative;
+  top: 3px;
+  text-align: center;
+  margin-right: 5px;
+
+}
+
+.custom-calendar-input {
+  position: absolute;
+  display: inline-block; /* Ensure the icons are inside the same container */
+  cursor: default;
+  right: 19em;
+  top:12px;
+}
+
+.custom-calendar-input img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  right: 10px;
+}
+
+.custom-calendar-input .calendar-icon {
+  left: 10px; /* Adjust the position of the calendar icon */
+  top: 14px;
+}
+
+.custom-calendar-input img.drop-icon {
+  right: 10px; /* Adjust the position of the dropdown icon */
+}
+
+.input-calender {
+  width: 120px;
+  height: 30px;
+  color: black;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  background-color: white;
+  padding: 0 10px;
+  cursor: default !important;
+}
+
+.custom-calendar-input input.input-calender {
+
+  padding-left: 32px;
+  padding-bottom: 1px;
+}
+
+.sort-button {
+  border: 1px solid #ccc;
+  background-color: white;
+  position: absolute;
+  right: 11em;
+  top: 0.9em;
+  border-radius: 5px;
+  height: 30px !important;
+}
+
+.sort-icon {
+  position: relative;
+  top: 2px;
+  right: -1px;
+}
+
+.sort-text {
+  position: relative;
+  top: -2px;
+  right: -6px;
+  font-family: "Inter", sans-serif;
+  line-height: 30px;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+}
+
+.sort-menu ::ng-deep .mat-mdc-menu-item-text {
+  position: relative;
+  top: -2.5px;
+  font-family: Inter, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  text-overflow: ellipsis;
+
+}
+
+::ng-deep.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
+  box-shadow: none !important;
+  border: 1px solid #ececec !important;
+
+}
+
+::ng-deep .mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
+  box-shadow: none !important;
+  border: 1px solid #ececec !important;
+}
+
+::ng-deep .sort-menu {
+  width: 208px !important;
+  height: 92px !important;
+  overflow: hidden !important;
+}
+
+.tick-icon {
+  position: relative;
+  top: 2px;
+  opacity: 0;
+  right: 0;
+  margin-right: 8px;
+}
+
+.menu-text {
+  position: relative;
+  top: -2px;
+  right: -6px;
+
+}

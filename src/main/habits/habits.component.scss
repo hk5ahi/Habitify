@@ -1,0 +1,82 @@
+*{
+  margin:0;
+}
+.empty-template{
+  width:298px;
+  height: 285px;
+  position:relative;
+  top:20.75em;
+  right:-29.5em;
+}
+.habits{
+  width:1242px;
+  height:953px;
+  border-right: 1px solid rgb(234, 234, 234);
+  position: relative;
+  right:-15.05em;
+}
+.images-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 0 35px;
+}
+
+.images-container img {
+  margin: 10px; /* Add margin between images if needed */
+}
+.bold-text{
+  height:18px;
+  width:298px;
+  font-family: "Inter",sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 18px;
+  color: rgb(0, 0, 0);
+  margin-bottom: 6px;
+  text-align: center;
+}
+.light-text{
+  font-family: "Inter",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: rgb(123, 124, 124);
+  height:36px;
+  width:298px;
+  text-align:center;
+}
+
+::ng-deep .add {
+
+
+  width: 102px;
+  line-height: 30px;
+  font-weight: 500;
+  height: 30px;
+  font-size: 12px;
+  color: black;
+  background-color: rgb(255, 255, 255);
+  font-family: Inter, sans-serif;
+  cursor: default;
+  border-radius: 5px;
+  border: 1px solid rgb(237, 237, 237);
+
+
+}
+.image{
+  margin:0 0 8px !important;
+}
+.add{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position:relative;
+  right:-8em;
+  margin-top:12px;
+}
+.last-image{
+  margin:0 !important;
+}
+
