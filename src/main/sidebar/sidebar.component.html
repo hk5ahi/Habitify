@@ -1,0 +1,82 @@
+<p-sidebar [(visible)]="sidebarVisible" [baseZIndex]="1000" [blockScroll]="true" [modal]="false"
+           [showCloseIcon]="false">
+
+  <div class="user-container">
+    <div class="user">
+      <div class="icon">
+        <img alt="user" class="icon" src="assets/images/user.png">
+      </div>
+      <div class="text">
+        <span class="content">Muhammad Hanan</span>
+      </div>
+    </div>
+  </div>
+  <div class="side-bar-items">
+    <div class="item habit-time">
+      <div class="item-container">
+        <img alt="Habit" class="item-icon" src="assets/svg/habit.svg">
+        <span class="text-container">All Habits</span>
+      </div>
+
+    </div>
+    <ng-container *ngIf="calculateTimeOfDay()=='Afternoon'">
+      <div class="item habit-time">
+        <div class="item-container">
+          <img alt="Afternoon" class="item-icon" src="assets/svg/afternoon.svg">
+          <span class="text-container">Afternoon</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="calculateTimeOfDay()=='Morning'">
+      <div class="item habit-time">
+        <div class="item-container">
+          <img alt="Morning" class="item-icon" src="assets/svg/afternoon.svg">
+          <span class="text-container">Morning</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="calculateTimeOfDay()=='Evening'">
+      <div class="item habit-time">
+        <div class="item-container">
+          <img alt="Evening" class="item-icon" src="assets/svg/afternoon.svg">
+          <span class="text-container">Evening</span>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="side-bar-sideline">
+      <p class="side-line-text">areas</p>
+      <div class="area-container">
+        <img alt="plus" class="plus" src="assets/svg/plus.svg">
+        <p class="area">New Area</p>
+      </div>
+
+    </div>
+    <div class="preferences-area">
+      <p class="pre-text">Preferences</p>
+      <div class="end-area">
+        <div class="item">
+          <div class="item-container">
+            <img alt="Manage Habits" class="item-icon" src="assets/svg/manage.svg">
+            <span class="text-container">Manage Habits</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-container">
+            <img alt="App Settings" class="item-icon" src="assets/svg/setting.svg">
+            <span class="text-container">App Settings</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-container">
+            <img alt="Resources" class="item-icon" src="assets/svg/share.svg">
+            <span class="text-container">Resources</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-sidebar>
+<app-navigation-bar></app-navigation-bar>

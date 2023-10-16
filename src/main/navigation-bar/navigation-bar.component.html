@@ -1,0 +1,76 @@
+<div class="navigation">
+  <p class="time">{{currentTimeOfDay}}</p>
+  <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
+    <img class="search-icon" src="assets/svg/search.svg"/>
+  </div>
+  <div (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
+    <img class="calendar-icon" src="assets/svg/calender.svg"/>
+  </div>
+  <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container">
+    <img class="sort-icon" src="assets/svg/sort.svg"/>
+  </div>
+  <div #Search *ngIf="showSearch" class="input-container">
+    <img class="search-icon" src="assets/svg/search.svg"/>
+    <input [(ngModel)]="searchValue" placeholder="Search" type="text"/>
+  </div>
+  <div *ngIf="!showSearch">
+    <button [matMenuTriggerFor]="sortmenu" class="sort-button">
+      <img class="sort-icon" src="assets/svg/sort.svg"/>
+      <span [(ngModel)]="sortText" class="sort-text">{{sortText}}</span>
+      <mat-icon class="sort-drop-icon">arrow_drop_down</mat-icon>
+    </button>
+  </div>
+
+  <div (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input">
+    <img class="calendar-icon" src="assets/svg/calender.svg"/>
+    <input [value]="getDisplayValue(selectedDate)" class="input-calender" readonly type="text">
+    <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
+  </div>
+  <p-calendar (ngModelChange)=" hideCalender()"
+              *ngIf="showCalendar" [(ngModel)]="selectedDate" [inline]="true" [showIcon]="false" dateFormat="MM d">
+
+  </p-calendar>
+  <button [matMenuTriggerFor]="addmenu" class="add-button">
+    <mat-icon class="add-icon">add</mat-icon>
+    <span class="button-text">Add Habits</span>
+    <mat-icon class="drop-icon">arrow_drop_down</mat-icon>
+  </button>
+  <mat-menu #addmenu="matMenu" class="add-menu" overlapTrigger="false">
+    <button (click)="menuItemClicked('Item 1')" mat-menu-item>
+      <img class="infinity" src="assets/svg/infinty.svg"/>
+      Create Good Habit
+    </button>
+
+  </mat-menu>
+  <mat-menu #sortmenu="matMenu" class="sort-menu" overlapTrigger="false">
+    <button (click)="menuItemClicked('Reminder Time')" mat-menu-item>
+      <img [ngClass]="{'hide-icon': menuText == 'Reminder Time'}" alt="tick" class="tick-icon"
+           src="assets/svg/tick.svg"/>
+      <span class="menu-text">Reminder Time</span>
+    </button>
+    <button (click)="menuItemClicked('My Habits Order')" mat-menu-item>
+      <img [ngClass]="{'hide-icon': menuText == 'My Habits Order'}" alt="tick" class="tick-icon"
+           src="assets/svg/tick.svg"/>
+      My Habits Order
+    </button>
+    <button (click)="menuItemClicked('Alphabetical')" (mouseenter)="openAlphaMenu(true)"
+            (mouseleave)="openAlphaMenu(false)" [matMenuTriggerFor]="alphamenu"
+            mat-menu-item>
+      <img [ngClass]="{'hide-icon': menuText == 'A-Z' || menuText=='Z-A'}" alt="tick" class="tick-icon"
+           src="assets/svg/tick.svg"/>
+      Alphabetical
+    </button>
+  </mat-menu>
+
+  <mat-menu #alphamenu="matMenu" class="alpha-menu" overlapTrigger="false">
+    <button (click)="menuItemClicked('A-Z')" mat-menu-item>
+      <img [ngClass]="{'hide-icon': menuText == 'A-Z'}" alt="tick" class="tick-icon" src="assets/svg/tick.svg"/>
+      A-Z
+    </button>
+    <button (click)="menuItemClicked('Z-A')" mat-menu-item>
+      <img [ngClass]="{'hide-icon': menuText == 'Z-A'}" alt="tick" class="tick-icon" src="assets/svg/tick.svg"/>
+      Z-A
+    </button>
+  </mat-menu>
+</div>
+<app-habits></app-habits>
