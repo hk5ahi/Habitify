@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Habit } from "../Data Types/habit";
+import { DialogService } from "primeng/dynamicdialog";
+import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
+
+
 
 @Component({
   selector: 'app-habits',
@@ -10,8 +14,15 @@ export class HabitsComponent {
 
   habits: Habit[] = [];
 
+  constructor(private dialogService: DialogService) {
+  }
+
   hasHabits(): boolean {
     return this.habits.length > 0;
+  }
+
+  openDialog(): void {
+    const ref = this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
 }

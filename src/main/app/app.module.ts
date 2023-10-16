@@ -16,6 +16,13 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { HabitsComponent } from "../habits/habits.component";
+import { DialogModule } from "primeng/dialog";
+import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
+import { DialogService } from "primeng/dynamicdialog";
+import { PaginatorModule } from "primeng/paginator";
+import { InputNumberModule } from "primeng/inputnumber";
+import { DatePipe } from "@angular/common";
+
 
 
 @NgModule({
@@ -23,7 +30,8 @@ import { HabitsComponent } from "../habits/habits.component";
     AppComponent,
     SidebarComponent,
     NavigationBarComponent,
-    HabitsComponent
+    HabitsComponent,
+    HabitModalDialogueComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +46,13 @@ import { HabitsComponent } from "../habits/habits.component";
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DialogModule,
+    PaginatorModule,
+    InputNumberModule,
+    InputTextModule
   ],
-  providers: [],
+  providers: [DialogService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

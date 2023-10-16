@@ -1,0 +1,471 @@
+
+.habit-dialogue {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 448px;
+  height: 361px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  background: rgb(252, 252, 252);
+  color: inherit;
+  margin-top: 3.75rem;
+  margin-bottom: 3.75rem;
+  max-height: calc(100% - 7.5rem);
+  right: 1em;
+}
+
+.Header {
+  flex: 0 1 0;
+  padding: 14px 16px 4px;
+  position: relative;
+  top: -77px;
+
+}
+
+.header-text {
+  font-size: 17px;
+  font-weight: 600;
+  font-family: Inter, sans-serif;
+  line-height: 20.4px;
+  color: #000000;
+  height: 20.4px;
+  width: 416px;
+  position: relative;
+  top: -13px;
+}
+
+::ng-deep .p-dialog-header {
+
+  display: none; /* or any other styles to hide the header */
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #212529;
+  padding: 1rem;
+  height: 296px !important;
+  width: 448px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.modal-footer {
+  width: 448px;
+  height: 50px !important;
+  background-color: #f5f5f5;
+  margin: 20px 0 0;
+  padding: 10px 12px;
+  position: relative;
+  top: -162px;
+
+}
+
+::ng-deep .p-dialog {
+  border: none !important;
+}
+
+.buttons {
+  width: 142px;
+  height: 30px;
+  margin-left: auto;
+}
+
+::ng-deep .p-button {
+  width: 74px;
+  height: 30px;
+  background: #2A67F4 !important;
+  padding: 0 16px;
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+}
+
+::ng-deep .save .p-button {
+  width: 60px;
+  line-height: 300px;
+  font-weight: 500;
+}
+
+::ng-deep .save .p-button:focus {
+  box-shadow: none;
+}
+
+::ng-deep .cancel .p-button:focus {
+  box-shadow: none;
+}
+
+::ng-deep .cancel .p-button {
+  width: 74px;
+  background: #ffffff !important;
+  margin: 0 8px 0 0;
+  padding: 0 16px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  line-height: 300px;
+  font-weight: 500;
+  color: #000000;
+  border-color: rgb(229, 228, 229);
+}
+
+.name-container {
+  width: 416px;
+  height: 50px !important;
+  position: relative;
+  top: -99px;
+  right: -13px;
+}
+
+.name-text {
+  width: 404px;
+  height: 12px;
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  margin-inline-end: var(--chakra-space-3);
+  margin-bottom: var(--chakra-space-2);
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  padding-left: 6px;
+
+}
+
+.name-input {
+  width: 416px;
+  height: 30px;
+  display: flex;
+}
+
+.input-habit {
+  width: 376px;
+  height: 30px;
+  background: #ffffff;
+  padding: 0 10px;
+  min-width: 0;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  cursor: default;
+  margin-top: 8px !important;
+
+}
+
+.input-habit:focus, .input-habit:hover, ::ng-deep .goal-value .p-inputtext:focus, ::ng-deep .goal-value .p-inputtext:hover {
+  border-color: rgb(42, 103, 244);
+
+}
+
+.habit-icon {
+  width: 32px;
+  height: 30px;
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  line-height: 1.2;
+  padding: 0;
+  border: 1px solid rgb(229, 228, 229);
+  color: rgb(42, 168, 208);
+  cursor: default;
+  top: 8px;
+  right: -8px;
+  border-radius: 5px;
+}
+
+.mark {
+  width: 30px;
+  height: 28px;
+}
+
+.goal-container {
+  width: 266px;
+  height: 50px;
+  position: relative;
+  top: -76px;
+  right: -13px;
+}
+
+.goal-text {
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 12px 8px 0;
+  padding-left: 6px;
+}
+
+.goal-input-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 10px;
+  width: 266px;
+  height: 30px;
+}
+
+::ng-deep .goal-value .p-inputtext {
+  width: 82px !important;
+  height: 30px;
+  background: #ffffff;
+  padding: 0 24px 0 8px;
+  padding-left: 8px !important;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  border-radius: 3px;
+  vertical-align: top;
+  border: 1px solid rgb(229, 228, 229);
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  color: black;
+}
+
+
+::ng-deep.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+::ng-deep .up-down-arrows .p-button {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  background-color: #ffffff !important;
+  color: #000000;
+  border: none;
+
+}
+
+::ng-deep.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 30px;
+  height: 23px;
+  top: 4px;
+}
+
+::ng-deep .p-inputnumber {
+  width: 82px;
+}
+
+.goal-frequency {
+  width: 82px;
+  height: 30px;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.goal-input-container {
+  position: relative;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.goal-frequency {
+  padding-right: 24px; /* Adjust the padding based on the size of your SVGs */
+}
+
+.down {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  right: 9.515px; /* Adjust the right offset based on your design */
+  color: black;
+}
+
+.up {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  right: 9.5px; /* Adjust the right offset based on your design */
+}
+
+.input-wrapper:hover .goal-frequency, .goal-frequency:focus {
+  border-color: rgb(42, 103, 244);
+
+}
+
+.input-wrapper:hover .repeat-frequency, .repeat-frequency:focus {
+  border-color: rgb(42, 103, 244);
+
+}
+
+.frequency-menu {
+  position: absolute !important;
+}
+
+.repeat-container {
+  display: inline-block;
+  width: 140px;
+  height: 50px;
+  position: relative;
+  top: -133.9px;
+  right: -18.2em;
+
+}
+
+.calender-container {
+  display: inline-block;
+  width: 140px;
+  height: 50px;
+  position: relative;
+  top: -170.9px;
+  right: -18.2em;
+}
+
+.repeat-text {
+  display: inline-block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 12px 8px 0;
+  padding-left: 6px;
+  width: 128px;
+  height: 12px;
+}
+
+.repeat-input-container {
+  width: 140px;
+  height: 30px;
+}
+
+.down-repeat {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  right: 11.5px; /* Adjust the right offset based on your design */
+  color: black;
+}
+
+.up-repeat {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  right: 11.5px; /* Adjust the right offset based on your design */
+}
+
+.repeat-frequency {
+  width: 140px;
+  height: 30px;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.tod-container {
+  width: 266px;
+  height: 50px;
+  position: relative;
+  top: -113px;
+  right: -11px;
+
+}
+
+.tod-text {
+  width: 254px;
+  height: 12px;
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 12px 8px 0;
+  padding-left: 6px;
+}
+
+.tod-wrapper {
+  width: 266px;
+  height: 30px;
+}
+
+.tod-input {
+  width: 266px;
+  height: 30px;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.calendar-button {
+  width: 13px;
+  height: 13px;
+  cursor: default !important;
+  position: relative;
+  top: -25px;
+  right: -116px;
+}

@@ -1,0 +1,91 @@
+<div class="habit-dialogue">
+  <div class="Header">
+    <p class="header-text">New Habit</p>
+  </div>
+  <div class="name-container">
+    <div class="name-text">NAME</div>
+    <div class="name-input">
+      <input class="input-habit">
+      <div class="habit-icon">
+        <img alt="Question Mark" class="mark" src="assets/svg/mark.svg">
+      </div>
+    </div>
+  </div>
+  <div class="goal-container">
+    <div class="goal-text">GOAL</div>
+    <div class="goal-input-container">
+      <p-inputNumber [(ngModel)]="goalValue" [max]="100" [min]="1" [showButtons]="true"
+                     class="up-down-arrows goal-value"
+                     inputId="minmax-buttons"></p-inputNumber>
+      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
+        <input [(ngModel)]="goalFrequency" class="goal-frequency" readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
+        <input [(ngModel)]="frequencyPerPeriod" class="goal-frequency" readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="repeat-container">
+    <div class="repeat-text">REPEAT</div>
+    <div class="repeat-input-container">
+
+      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
+        <input [(ngModel)]="repeat" class="repeat-frequency" readonly/>
+        <img alt="Up" class="up-repeat" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down-repeat" src="assets/svg/down.svg"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="tod-container">
+    <div class="tod-text">TIME OF DAY</div>
+    <div class="goal-input-container">
+
+      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
+        <input [(ngModel)]="timeOfDay" class="tod-input" readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+    </div>
+  </div>
+  <div class="calender-container">
+    <div class="repeat-text">START DATE</div>
+    <div class="repeat-input-container">
+
+      <div (click)="toggleCalendar()" class="input-wrapper">
+        <input [value]="getDisplayValue(selectedDate)" class="repeat-frequency" readonly/>
+        <img alt="Calender" class="calendar-button" src="assets/svg/calender.svg"/>
+      </div>
+    </div>
+  </div>
+  <mat-menu #frequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
+    <button (click)="updateGoalFrequency('Times')" mat-menu-item>
+      Times
+    </button>
+    <button (click)="updateGoalFrequency('Mins')" mat-menu-item>
+      Mins
+    </button>
+
+  </mat-menu>
+
+  <div class="modal-footer">
+    <div class="buttons">
+      <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
+      <p-button class="save" label="Save" size="small"></p-button>
+    </div>
+  </div>
+</div>
+<div class="calendar-container">
+  <p-calendar
+    *ngIf="showCalendar"
+    [(ngModel)]="selectedDate" [inline]="true"
+    [showIcon]="false"
+    dateFormat="MM d">
+  </p-calendar>
+</div>

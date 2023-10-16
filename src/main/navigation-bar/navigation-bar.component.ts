@@ -4,6 +4,9 @@ import { Subscription } from "rxjs";
 import { DatePipe } from '@angular/common';
 import { MatMenuTrigger } from "@angular/material/menu";
 import { AppConstants } from "../Constants/app-constant";
+import { DialogService } from "primeng/dynamicdialog";
+import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
+
 
 
 @Component({
@@ -27,9 +30,11 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   sortText: string = 'My Habits Order';
   menuText: string = 'My Habits Order';
   showSearch: boolean = false;
+  isPrevious: boolean = false;
+  isCurrent: boolean = true;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private datePipe: DatePipe) {
+  constructor(private navService: NavigationService, private datePipe: DatePipe,private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -40,11 +45,40 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.calculateMinMaxDates();
   }
 
-  openAlphaMenu(open: boolean): void {
-    if (open) {
-      this.alphaMenu.openMenu();
-    } else {
-      this.alphaMenu.closeMenu();
+
+  onDateSelect() {
+    this.showCalendar = false;
+
+  }
+  openDialog(): void {
+    const ref = this.dialogService.open(HabitModalDialogueComponent, {});
+  }
+
+  isCurrentMonth(): boolean {
+
+    const currentDate = new Date();
+    return currentDate.getMonth() === this.selectedDate.getMonth() && currentDate.getFullYear() === this.selectedDate.getFullYear();
+  }
+
+  isPreviousMonth(event: any): boolean {
+    const currentDate = new Date();
+    const selectedMonth = event.month;
+    const selectedYear = event.year;
+
+    // Check if the selected month is the previous month
+    return (
+      currentDate.getFullYear() === selectedYear &&
+      currentDate.getMonth() === selectedMonth
+    );
+  }
+
+  onMonthChange(event: any) {
+    // Update isCurrentMonth based on the current month and the newly selected month
+
+    this.isPrevious = this.isPreviousMonth(event);
+    this.isCurrent = this.isCurrentMonth();
+    if (this.isPrevious) {
+      this.isCurrent = false;
     }
   }
 

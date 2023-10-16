@@ -1,5 +1,4 @@
 export const AppConstants = {
-
   Morning: 'Morning',
   Afternoon: 'Afternoon',
   Evening: 'Evening',
@@ -8,3 +7,12 @@ export const AppConstants = {
   Tomorrow: 'Tomorrow',
   Alphabetical: 'Alphabetical',
 };
+
+export enum TimeOfDay {
+  Morning = 'Morning',
+  Afternoon = 'Afternoon',
+  Evening = 'Evening',
+  Anytime = 'Anytime',
+}
+
+

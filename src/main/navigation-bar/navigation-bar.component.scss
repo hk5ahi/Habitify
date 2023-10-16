@@ -30,7 +30,7 @@
   white-space: nowrap;
   margin: 0;
   position: relative;
-  top: 0.1em;
+  top: 0.5em;
   right: -0.5em;
 }
 
@@ -119,8 +119,8 @@ input::placeholder {
   width: 14.4375em !important;
   height: 13.6875em !important;
   position: relative;
-  top: 1.75em;
-  left: 43.8em;
+  top: -0.2em;
+  left: 59.3em;
 }
 
 /* Style for today when the calendar is open */
@@ -193,13 +193,8 @@ input::placeholder {
   width: 40px;
   line-height: 30px;
   font-weight: 500;
-  transition-property: var(--chakra-transition-property-common);
-  transition-duration: var(--chakra-transition-duration-normal);
   height: 30px;
-  min-width: var(--chakra-sizes-10);
   font-size: 12px;
-  padding-inline-start: var(--chakra-space-4);
-  padding-inline-end: var(--chakra-space-4);
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
   padding-left: 10px;
@@ -229,13 +224,8 @@ input::placeholder {
   width: 40px;
   line-height: 30px;
   font-weight: 500;
-  transition-property: var(--chakra-transition-property-common);
-  transition-duration: var(--chakra-transition-duration-normal);
   height: 30px;
-  min-width: var(--chakra-sizes-10);
   font-size: 12px;
-  padding-inline-start: var(--chakra-space-4);
-  padding-inline-end: var(--chakra-space-4);
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
   padding-left: 10px;
@@ -272,13 +262,8 @@ input::placeholder {
   width: 128px;
   line-height: 30px;
   font-weight: 500;
-  transition-property: var(--chakra-transition-property-common);
-  transition-duration: var(--chakra-transition-duration-normal);
   height: 30px;
-  min-width: var(--chakra-sizes-10);
   font-size: 12px;
-  padding-inline-start: var(--chakra-space-4);
-  padding-inline-end: var(--chakra-space-4);
   color: rgb(255, 255, 255);
   background-color: rgb(42, 103, 244);
   padding-left: 10px;
@@ -529,5 +514,16 @@ input::placeholder {
   position: relative;
   top: -2px;
   right: -6px;
-
 }
+
+.calendar-container {
+  position: absolute;
+  top: 50px; /* Adjust as needed */
+  left: -1px; /* Adjust as needed */
+  z-index: 2; /* Ensure it has a higher z-index than other components */
+}
+
+
+
+
+
