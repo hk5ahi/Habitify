@@ -1,12 +1,12 @@
 <div class="navigation">
   <p class="time">{{currentTimeOfDay}}</p>
-  <div #searchIcon (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
+  <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
     <img class="search-icon" src="assets/svg/search.svg"/>
   </div>
-  <div (click)="showButtons()" *ngIf="showSearch" class="container">
+  <div (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
     <img class="calendar-icon" src="assets/svg/calender.svg"/>
   </div>
-  <div (click)="showButtons1()" *ngIf="showSearch" class="sort-container">
+  <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container">
     <img class="sort-icon" src="assets/svg/sort.svg"/>
   </div>
   <div #Search *ngIf="showSearch" class="input-container">

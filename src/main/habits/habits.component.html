@@ -1,23 +1,21 @@
 <div class="habits">
+  <div *ngIf="!hasHabits()" class="empty-template">
+    <div class="images-container">
+      <img alt="image1" class="image" src="assets/svg/image1.svg">
+      <img alt="image2" class="image" src="assets/svg/image2.svg">
+      <img alt="image3" class="last-image" src="assets/svg/image3.svg">
+    </div>
+    <div class="bold-text">
+      The Start of a Better You!
+    </div>
+    <div class="light-text">
+      Habits are like dominos. As one is formed, all others will follow!
+    </div>
 
-
-<div class="empty-template" *ngIf="!hasHabits()">
-<div class="images-container">
-  <img class="image" src="assets/svg/image1.svg" alt="image1">
-  <img class="image" src="assets/svg/image2.svg" alt="image2">
-  <img class="last-image" src="assets/svg/image3.svg" alt="image3">
-</div>
-<div class="bold-text">
-  The Start of a Better You!
-</div>
-  <div class="light-text">
-    Habits are like dominos. As one is formed, all others will follow!
-  </div>
-
-  <button class="add">
-    <mat-icon class="add-icon">add</mat-icon>
-    <span class="button-text">Add Habits</span>
-  </button>
+    <button class="add">
+      <mat-icon class="add-icon">add</mat-icon>
+      <span class="button-text">Add Habits</span>
+    </button>
   </div>
 </div>
 

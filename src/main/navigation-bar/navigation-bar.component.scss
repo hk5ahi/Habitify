@@ -31,7 +31,7 @@
   margin: 0;
   position: relative;
   top: 0.1em;
-  right:-0.5em;
+  right: -0.5em;
 }
 
 .area-container {
@@ -177,9 +177,10 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 26.6em;
-  top:13px;
+  top: 13px;
 }
-.sort-container{
+
+.sort-container {
   display: inline-flex;
   appearance: none;
   -webkit-box-align: center;
@@ -212,8 +213,9 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 12.3em;
-  top:12px;
+  top: 12px;
 }
+
 .container {
   display: inline-flex;
   appearance: none;
@@ -247,7 +249,7 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 16.3em;
-  top:12px;
+  top: 12px;
 }
 
 .right {
@@ -422,7 +424,7 @@ input::placeholder {
   display: inline-block; /* Ensure the icons are inside the same container */
   cursor: default;
   right: 19em;
-  top:12px;
+  top: 12px;
 }
 
 .custom-calendar-input img {

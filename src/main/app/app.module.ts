@@ -25,21 +25,21 @@ import { HabitsComponent } from "../habits/habits.component";
     NavigationBarComponent,
     HabitsComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        SidebarModule,
-        InputTextModule,
-        FormsModule,
-        ButtonModule,
-        CalendarModule,
-        SplitButtonModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    SidebarModule,
+    InputTextModule,
+    FormsModule,
+    ButtonModule,
+    CalendarModule,
+    SplitButtonModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
