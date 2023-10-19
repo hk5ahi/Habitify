@@ -62,6 +62,15 @@
         <input [value]="getDisplayValue(selectedDate)" class="repeat-frequency" readonly/>
         <img alt="Calender" class="calendar-button" src="assets/svg/calender.svg"/>
       </div>
+      <div class="calendar-container">
+        <p-calendar
+          *ngIf="showCalendar"
+          [(ngModel)]="selectedDate" [inline]="true"
+          [showIcon]="false"
+          dateFormat="MM d">
+        </p-calendar>
+      </div>
+
     </div>
   </div>
   <mat-menu #frequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
@@ -73,19 +82,10 @@
     </button>
 
   </mat-menu>
-
   <div class="modal-footer">
     <div class="buttons">
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button class="save" label="Save" size="small"></p-button>
     </div>
   </div>
-</div>
-<div class="calendar-container">
-  <p-calendar
-    *ngIf="showCalendar"
-    [(ngModel)]="selectedDate" [inline]="true"
-    [showIcon]="false"
-    dateFormat="MM d">
-  </p-calendar>
 </div>

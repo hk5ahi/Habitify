@@ -23,7 +23,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0 0 35px;
+  margin: 0 0 2.1875em;
 }
 
 .images-container img {
@@ -49,16 +49,16 @@
   line-height: 18px;
   color: rgb(123, 124, 124);
   height: 2.25em;
-  width: 298px;
+  width: 22.9em;
   text-align: center;
 }
 
 ::ng-deep .add {
 
-  width: 102px;
+  width: 8.5em;
   line-height: 1.125em;
   font-weight: 500;
-  height: 30px;
+  height: 2.5em;
   font-size: 12px;
   color: black;
   background-color: rgb(255, 255, 255);
@@ -66,11 +66,10 @@
   cursor: default;
   border-radius: 5px;
   border: 1px solid rgb(237, 237, 237);
-
 }
 
 .image {
-  margin: 0 0 8px !important;
+  margin: 0 0 0.5em !important;
 }
 
 .add {
@@ -78,8 +77,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  right: -8em;
-  margin-top: 12px;
+  right: -8.5em;
+  margin-top: 1.1875em;
 }
 
 .last-image {

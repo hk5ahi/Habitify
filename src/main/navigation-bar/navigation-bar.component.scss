@@ -1,13 +1,11 @@
 .navigation {
-  width: 78.2em; // 1242px / 16px
-  height: 3.125em; // 50px / 16px
+  width: 78.2em;
+  height: 3.125em;
   position: relative;
   top: -1.5px;
   right: -14.5em;
   display: grid;
-  grid-area: journal-topbar / journal-topbar / journal-topbar / journal-topbar;
-  grid-template-areas: "topbar-date-selector topbar-search";
-  padding: 0 10px 0 15px;
+  padding: 0 10px 0 0.9375em;
   -webkit-box-pack: justify;
   justify-content: space-between;
   -webkit-box-align: center;
@@ -35,7 +33,6 @@
 }
 
 .area-container {
-  grid-area: topbar-search / topbar-search / topbar-search / topbar-search;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -65,8 +62,8 @@ input:focus {
 
 input {
   padding-left: 2.5em; /* Adjust the padding-left to accommodate the icon */
-  width: 164px; /* Adjust the width as needed */
-  height: 30px; /* Adjust the height as needed */
+  width: 12.3em; /* Adjust the width as needed */
+  height: 2.25em; /* Adjust the height as needed */
   border: 1px solid #ccc; /* Optional: Add border styling */
   border-radius: 5px; /* Optional: Add border-radius */
 }
@@ -89,13 +86,15 @@ input::placeholder {
   border: 1px solid transparent;
 }
 
-::ng-deep .p-button {
-  display: none;
+.calendar-icon {
+  width: 0.8125em;
+  height: 0.8125em;
+  cursor: default !important;
 }
 
-.calendar-icon {
-  width: 13px;
-  height: 13px;
+.calendar-icon-increase {
+  width: 1.05em;
+  height: 1.05em;
   cursor: default !important;
 }
 
@@ -161,11 +160,11 @@ input::placeholder {
 }
 
 .search-container {
-  width: 40px;
+  width: 2.5em;
   display: flex;
   position: absolute;
-  height: 30px;
-  margin-right: 8px;
+  height: 1.875em;
+  margin-right: 0.5em;
   -webkit-box-align: center;
   align-items: center;
   overflow: hidden;
@@ -177,7 +176,7 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 26.6em;
-  top: 13px;
+  top: 12px;
 }
 
 .sort-container {
@@ -190,10 +189,10 @@ input::placeholder {
   user-select: none;
   position: absolute;
   vertical-align: middle;
-  width: 40px;
+  width: 3.35em;
   line-height: 30px;
   font-weight: 500;
-  height: 30px;
+  height: 2.5em;
   font-size: 12px;
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
@@ -221,10 +220,10 @@ input::placeholder {
   user-select: none;
   position: absolute;
   vertical-align: middle;
-  width: 40px;
+  width: 3.35em;
   line-height: 30px;
   font-weight: 500;
-  height: 30px;
+  height: 2.5em;
   font-size: 12px;
   color: rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
@@ -243,7 +242,6 @@ input::placeholder {
 }
 
 .right {
-
   right: 20em !important;
 }
 
@@ -259,10 +257,10 @@ input::placeholder {
   user-select: none;
   position: absolute;
   vertical-align: middle;
-  width: 128px;
+  width: 10.65em;
   line-height: 30px;
   font-weight: 500;
-  height: 30px;
+  height: 2.5em;
   font-size: 12px;
   color: rgb(255, 255, 255);
   background-color: rgb(42, 103, 244);
@@ -296,8 +294,8 @@ input::placeholder {
 
 .button-text {
 
-  width: 60px !important;
-  height: 30px !important;
+  width: 5em !important;
+  height: 2.5em !important;
 }
 
 .add-icon {
@@ -319,12 +317,12 @@ input::placeholder {
   color: rgba(0, 0, 0, .7) !important;
   display: flex;
   cursor: default;
-  height: 30px !important;
-  line-height: 30px;
+  height: 1.875em !important;
+  line-height: 1.875em !important;
   text-transform: capitalize !important;
   padding: 0 6px 0 10px !important;
-  width: 208px !important;
-  min-height: 30px !important;
+  width: 13em !important;
+  min-height: 1.875em !important;
 
 }
 
@@ -357,8 +355,8 @@ input::placeholder {
 }
 
 ::ng-deep .alpha-menu {
-  width: 30px !important;
-  height: 62px !important;
+  width: 1.875em !important;
+  height: 3.875em !important;
   overflow: hidden !important;
 }
 
@@ -371,13 +369,13 @@ input::placeholder {
 
 .add-menu::ng-deep .mat-mdc-menu-content {
 
-  height: 44px !important;
+  height: 2.75em !important;
   overflow: hidden;
 }
 
 .sort-menu::ng-deep .mat-mdc-menu-content {
 
-  height: 92px !important;
+  height: 5.75em !important;
   overflow: hidden;
 }
 
@@ -430,8 +428,8 @@ input::placeholder {
 }
 
 .input-calender {
-  width: 120px;
-  height: 30px;
+  width: 10em;
+  height: 2.5em;
   color: black;
   font-size: 12px;
   font-family: "Inter", sans-serif;
@@ -442,7 +440,7 @@ input::placeholder {
 
 .custom-calendar-input input.input-calender {
 
-  padding-left: 32px;
+  padding-left: 2.5em;
   padding-bottom: 1px;
 }
 
@@ -458,7 +456,7 @@ input::placeholder {
 
 .sort-icon {
   position: relative;
-  top: 2px;
+  top: 1px;
   right: -1px;
 }
 
@@ -497,8 +495,8 @@ input::placeholder {
 }
 
 ::ng-deep .sort-menu {
-  width: 208px !important;
-  height: 92px !important;
+  width: 13em !important;
+  height: 5.75em !important;
   overflow: hidden !important;
 }
 
@@ -518,7 +516,7 @@ input::placeholder {
 
 .calendar-container {
   position: absolute;
-  top: 50px; /* Adjust as needed */
+  top: 3.125em; /* Adjust as needed */
   left: -1px; /* Adjust as needed */
   z-index: 2; /* Ensure it has a higher z-index than other components */
 }

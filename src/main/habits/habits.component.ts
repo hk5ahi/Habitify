@@ -4,7 +4,6 @@ import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 
 
-
 @Component({
   selector: 'app-habits',
   templateUrl: './habits.component.html',
@@ -22,7 +21,7 @@ export class HabitsComponent {
   }
 
   openDialog(): void {
-    const ref = this.dialogService.open(HabitModalDialogueComponent, {});
+    this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
 }

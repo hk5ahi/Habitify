@@ -4,7 +4,7 @@
     <img alt="Search" class="search-icon" src="assets/svg/search.svg"/>
   </div>
   <div (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
-    <img alt="Calender" class="calendar-icon" src="assets/svg/calender.svg"/>
+    <img alt="Calender" class="calendar-icon-increase" src="assets/svg/calender.svg"/>
   </div>
   <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container">
     <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg"/>
@@ -23,14 +23,11 @@
   </div>
 
   <div (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input">
-    <img class="calendar-icon" src="assets/svg/calender.svg"/>
+    <img alt="Calender" class="calendar-icon" src="assets/svg/calender.svg"/>
     <input [value]="getDisplayValue(selectedDate)" class="input-calender" readonly type="text">
     <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
   </div>
-  <p-calendar (ngModelChange)=" hideCalender()"
-              *ngIf="showCalendar" [(ngModel)]="selectedDate" [inline]="true" [showIcon]="false" dateFormat="MM d">
 
-  </p-calendar>
   <button [matMenuTriggerFor]="addmenu" class="add-button">
     <mat-icon class="add-icon">add</mat-icon>
     <span class="button-text">Add Habits</span>
@@ -38,7 +35,7 @@
   </button>
   <mat-menu #addmenu="matMenu" class="add-menu" overlapTrigger="false">
     <button (click)="openDialog()" mat-menu-item>
-      <img class="infinity" src="assets/svg/infinty.svg"/>
+      <img alt="Infinity Icon" class="infinity" src="assets/svg/infinty.svg"/>
       Create Good Habit
     </button>
 

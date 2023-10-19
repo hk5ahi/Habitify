@@ -23,8 +23,6 @@ import { PaginatorModule } from "primeng/paginator";
 import { InputNumberModule } from "primeng/inputnumber";
 import { DatePipe } from "@angular/common";
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

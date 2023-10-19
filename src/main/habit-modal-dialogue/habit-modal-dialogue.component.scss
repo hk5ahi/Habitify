@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  width: 448px;
-  height: 361px;
+  width: 28em;
+  height: 22.5625em !important;
   outline: transparent solid 2px;
   outline-offset: 2px;
   background: rgb(252, 252, 252);
@@ -17,9 +17,9 @@
 
 .Header {
   flex: 0 1 0;
-  padding: 14px 16px 4px;
+  padding: 14px 1em 4px;
   position: relative;
-  top: -77px;
+  top: -4.8125em;
 
 }
 
@@ -30,7 +30,7 @@
   line-height: 20.4px;
   color: #000000;
   height: 20.4px;
-  width: 416px;
+  width: 26em;
   position: relative;
   top: -13px;
 }
@@ -44,20 +44,20 @@
   background: #ffffff;
   color: #212529;
   padding: 1rem;
-  height: 296px !important;
-  width: 448px;
+  height: 18.5em !important;
+  width: 28em;
   overflow: hidden;
   border-radius: 5px;
 }
 
 .modal-footer {
-  width: 448px;
-  height: 50px !important;
+  width: 28em;
+  height: 3.125em !important;
   background-color: #f5f5f5;
-  margin: 20px 0 0;
+  margin: 1.25em 0 0;
   padding: 10px 12px;
   position: relative;
-  top: -162px;
+  top: -10.125em;
 
 }
 
@@ -66,23 +66,23 @@
 }
 
 .buttons {
-  width: 142px;
-  height: 30px;
+  width: 8.875em;
+  height: 1.875em;
   margin-left: auto;
 }
 
 ::ng-deep .p-button {
-  width: 74px;
-  height: 30px;
+  width: 4.625em;
+  height: 2.5em;
   background: #2A67F4 !important;
-  padding: 0 16px;
+  padding: 0 1em;
   font-size: 12px;
   font-family: Inter, sans-serif;
 }
 
 ::ng-deep .save .p-button {
-  width: 60px;
-  line-height: 300px;
+  width: 5em;
+  line-height: 30px;
   font-weight: 500;
 }
 
@@ -95,28 +95,28 @@
 }
 
 ::ng-deep .cancel .p-button {
-  width: 74px;
+  width: 6.2em;
   background: #ffffff !important;
-  margin: 0 8px 0 0;
-  padding: 0 16px;
+  margin: 0 0.5em 0 0;
+  padding: 0 1em;
   font-size: 12px;
   font-family: "Inter", sans-serif;
-  line-height: 300px;
+  line-height: 30px;
   font-weight: 500;
   color: #000000;
   border-color: rgb(229, 228, 229);
 }
 
 .name-container {
-  width: 416px;
-  height: 50px !important;
+  width: 26em;
+  height: 3.125em !important;
   position: relative;
-  top: -99px;
+  top: -6.1875em;
   right: -13px;
 }
 
 .name-text {
-  width: 404px;
+  width: 25.25em;
   height: 12px;
   display: block;
   text-align: start;
@@ -129,18 +129,17 @@
   line-height: 12px;
   color: rgb(123, 124, 124);
   padding-left: 6px;
-
 }
 
 .name-input {
-  width: 416px;
-  height: 30px;
+  width: 26em;
+  height: 1.875em;
   display: flex;
 }
 
 .input-habit {
-  width: 376px;
-  height: 30px;
+  width: 31.35em;
+  height: 2.5em;
   background: #ffffff;
   padding: 0 10px;
   min-width: 0;
@@ -155,21 +154,19 @@
   font-weight: 500;
   line-height: 14.4px;
   cursor: default;
-  margin-top: 8px !important;
+  margin-top: 0.5em !important;
 
 }
 
 .input-habit:focus, .input-habit:hover, ::ng-deep .goal-value .p-inputtext:focus, ::ng-deep .goal-value .p-inputtext:hover {
   border-color: rgb(42, 103, 244);
-
 }
 
 .habit-icon {
-  width: 32px;
-  height: 30px;
+  width: 2em;
+  height: 1.87em;
   display: inline-flex;
   appearance: none;
-  -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
@@ -184,21 +181,22 @@
   border: 1px solid rgb(229, 228, 229);
   color: rgb(42, 168, 208);
   cursor: default;
-  top: 8px;
+  top: 6px;
   right: -8px;
   border-radius: 5px;
 }
 
 .mark {
-  width: 30px;
-  height: 28px;
+  width: 1.875em;
+  height: 1.75em;
+
 }
 
 .goal-container {
-  width: 266px;
-  height: 50px;
+  width: 16.625em;
+  height: 3.125em !important;
   position: relative;
-  top: -76px;
+  top: -4.75em;
   right: -13px;
 }
 
@@ -219,16 +217,16 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 10px;
-  width: 266px;
-  height: 30px;
+  width: 16.625em;
+  height: 1.875em;
 }
 
 ::ng-deep .goal-value .p-inputtext {
-  width: 82px !important;
-  height: 30px;
+  width: 6.85em !important;
+  height: 2.5em;
   background: #ffffff;
-  padding: 0 24px 0 8px;
-  padding-left: 8px !important;
+  padding: 0 1.5em 0 0.5em;
+  padding-left: 0.5em !important;
   outline: transparent solid 2px;
   outline-offset: 2px;
   position: relative;
@@ -262,18 +260,18 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  right: 30px;
-  height: 23px;
+  right: 1.875em;
+  height: 1.4375em;
   top: 4px;
 }
 
 ::ng-deep .p-inputnumber {
-  width: 82px;
+  width: 5.125em;
 }
 
 .goal-frequency {
-  width: 82px;
-  height: 30px;
+  width: 6.85em;
+  height: 2.5em;
   background: #ffffff;
   padding: 0 17px 0 10px;
   outline: transparent solid 2px;
@@ -302,7 +300,7 @@
 }
 
 .goal-frequency {
-  padding-right: 24px; /* Adjust the padding based on the size of your SVGs */
+  padding-right: 1.5em; /* Adjust the padding based on the size of your SVGs */
 }
 
 .down {
@@ -336,20 +334,20 @@
 
 .repeat-container {
   display: inline-block;
-  width: 140px;
-  height: 50px;
+  width: 8.75em;
+  height: 3.125em;
   position: relative;
-  top: -133.9px;
+  top: -8.37em;
   right: -18.2em;
 
 }
 
 .calender-container {
   display: inline-block;
-  width: 140px;
-  height: 50px;
+  width: 8.75em;
+  height: 3.125em;
   position: relative;
-  top: -170.9px;
+  top: -10.68em;
   right: -18.2em;
 }
 
@@ -364,13 +362,13 @@
   color: rgb(123, 124, 124);
   margin: 0 12px 8px 0;
   padding-left: 6px;
-  width: 128px;
+  width: 8em;
   height: 12px;
 }
 
 .repeat-input-container {
-  width: 140px;
-  height: 30px;
+  width: 8.75em;
+  height: 1.875em;
 }
 
 .down-repeat {
@@ -389,8 +387,8 @@
 }
 
 .repeat-frequency {
-  width: 140px;
-  height: 30px;
+  width: 11.7em;
+  height: 2.5em;
   background: #ffffff;
   padding: 0 17px 0 10px;
   outline: transparent solid 2px;
@@ -411,16 +409,16 @@
 }
 
 .tod-container {
-  width: 266px;
-  height: 50px;
+  width: 16.625em;
+  height: 3.125em;
   position: relative;
-  top: -113px;
+  top: -7.0625em;
   right: -11px;
 
 }
 
 .tod-text {
-  width: 254px;
+  width: 15.875em;
   height: 12px;
   display: block;
   text-align: start;
@@ -435,13 +433,13 @@
 }
 
 .tod-wrapper {
-  width: 266px;
-  height: 30px;
+  width: 16.625em;
+  height: 1.875em;
 }
 
 .tod-input {
-  width: 266px;
-  height: 30px;
+  width: 22.2em;
+  height: 2.5em;
   background: #ffffff;
   padding: 0 17px 0 10px;
   outline: transparent solid 2px;
@@ -462,10 +460,10 @@
 }
 
 .calendar-button {
-  width: 13px;
-  height: 13px;
+  width: 0.8125em;
+  height: 0.8125em;
   cursor: default !important;
   position: relative;
   top: -25px;
-  right: -116px;
+  right: -7.25em;
 }

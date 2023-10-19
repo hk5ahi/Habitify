@@ -6,7 +6,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
 import { AppConstants } from "../Constants/app-constant";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
-
+import { DisplayService } from "../Service/display.service";
 
 
 @Component({
@@ -27,14 +27,14 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   selectedDate: Date = new Date();
   minDate!: Date;
   maxDate!: Date;
-  sortText: string = 'My Habits Order';
-  menuText: string = 'My Habits Order';
+  sortText: string = AppConstants.habits_Order;
+  menuText: string = AppConstants.habits_Order;
   showSearch: boolean = false;
   isPrevious: boolean = false;
   isCurrent: boolean = true;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private datePipe: DatePipe,private dialogService: DialogService) {
+  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: DisplayService) {
   }
 
   ngOnInit() {
@@ -48,14 +48,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   onDateSelect() {
     this.showCalendar = false;
-
   }
+
   openDialog(): void {
-    const ref = this.dialogService.open(HabitModalDialogueComponent, {});
+    this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
   isCurrentMonth(): boolean {
-
     const currentDate = new Date();
     return currentDate.getMonth() === this.selectedDate.getMonth() && currentDate.getFullYear() === this.selectedDate.getFullYear();
   }
@@ -74,7 +73,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   onMonthChange(event: any) {
     // Update isCurrentMonth based on the current month and the newly selected month
-
     this.isPrevious = this.isPreviousMonth(event);
     this.isCurrent = this.isCurrentMonth();
     if (this.isPrevious) {
@@ -83,33 +81,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   getDisplayValue(date: Date | undefined): string {
-    if (!date) {
-      return ''; // Handle the case when no date is selected
-    }
-
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-
-    if (this.isSameDay(date, today)) {
-      return AppConstants.Today;
-    } else if (this.isSameDay(date, yesterday)) {
-      return AppConstants.Yesterday;
-    } else if (this.isSameDay(date, tomorrow)) {
-      return AppConstants.Tomorrow;
-    } else {
-      return this.datePipe.transform(date, 'MMMM d') || '';
-    }
-  }
-
-  isSameDay(firstDate: Date, secondDate: Date): boolean {
-    return (
-      firstDate.getDate() === secondDate.getDate() &&
-      firstDate.getMonth() === secondDate.getMonth() &&
-      firstDate.getFullYear() === secondDate.getFullYear()
-    );
+    return this.displayService.getDisplayValue(date);
   }
 
   menuItemClicked(item: string): void {
@@ -124,10 +96,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   toggleCalendar(): void {
     this.showCalendar = !this.showCalendar;
 
-  }
-
-  hideCalender() {
-    this.showCalendar = false;
   }
 
   calculateMinMaxDates() {
