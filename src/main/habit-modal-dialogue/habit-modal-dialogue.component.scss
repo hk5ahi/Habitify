@@ -13,6 +13,7 @@
   margin-bottom: 3.75rem;
   max-height: calc(100% - 7.5rem);
   right: 1em;
+  z-index: 1000;
 }
 
 .Header {
@@ -121,8 +122,6 @@
   display: block;
   text-align: start;
   font-size: 10px;
-  margin-inline-end: var(--chakra-space-3);
-  margin-bottom: var(--chakra-space-2);
   font-weight: 600;
   opacity: 1;
   font-family: Inter, sans-serif;
@@ -158,7 +157,16 @@
 
 }
 
-.input-habit:focus, .input-habit:hover, ::ng-deep .goal-value .p-inputtext:focus, ::ng-deep .goal-value .p-inputtext:hover {
+.input-habit:focus,
+.input-habit:hover,
+::ng-deep .goal-value .p-inputtext:focus,
+::ng-deep .goal-value .p-inputtext:hover,
+::ng-deep .goal-frequency:focus,
+::ng-deep .goal-frequency:hover,
+::ng-deep .repeat-frequency:focus,
+::ng-deep .repeat-frequency:hover,
+::ng-deep .tod-input:focus,
+.tod-input:hover {
   border-color: rgb(42, 103, 244);
 }
 
@@ -189,7 +197,6 @@
 .mark {
   width: 1.875em;
   height: 1.75em;
-
 }
 
 .goal-container {
@@ -330,6 +337,7 @@
 
 .frequency-menu {
   position: absolute !important;
+  z-index: 1001;
 }
 
 .repeat-container {
@@ -340,6 +348,10 @@
   top: -8.37em;
   right: -18.2em;
 
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 1005 !important;
 }
 
 .calender-container {
@@ -375,7 +387,7 @@
   position: absolute;
   top: 70%;
   transform: translateY(-50%);
-  right: 11.5px; /* Adjust the right offset based on your design */
+  right: 9.5px; /* Adjust the right offset based on your design */
   color: black;
 }
 
@@ -383,18 +395,17 @@
   position: absolute;
   top: 43%;
   transform: translateY(-50%);
-  right: 11.5px; /* Adjust the right offset based on your design */
+  right: 9.5px; /* Adjust the right offset based on your design */
 }
 
 .repeat-frequency {
-  width: 11.7em;
+  width: 11.5em;
   height: 2.5em;
   background: #ffffff;
   padding: 0 17px 0 10px;
   outline: transparent solid 2px;
   outline-offset: 2px;
   position: relative;
-  appearance: none;
   font-size: 12px;
   padding-inline-start: 10px;
   border-radius: 3px;
@@ -430,6 +441,7 @@
   color: rgb(123, 124, 124);
   margin: 0 12px 8px 0;
   padding-left: 6px;
+
 }
 
 .tod-wrapper {
@@ -466,4 +478,103 @@
   position: relative;
   top: -25px;
   right: -7.25em;
+}
+
+::ng-deep .frequency-menu .mat-mdc-menu-item, ::ng-deep .frequency-period-menu .mat-mdc-menu-item {
+  width: 5em !important;
+}
+
+::ng-deep .frequency-menu .mat-mdc-menu-content {
+  width: 5em !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 5em !important;
+}
+
+.time-tick-icon {
+  position: relative;
+  opacity: 0;
+  top: 4px;
+  right: 0;
+  margin-right: 8px;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .time-tick-icon,
+  .daily-tick-icon,
+  .interval-tick-icon {
+    filter: brightness(0) invert(1);
+  }
+}
+
+
+.hide-icon {
+  opacity: 1;
+}
+
+::ng-deep .calender-container .p-datepicker {
+  position: static !important;
+  overflow: hidden;
+  border: none;
+}
+
+::ng-deep .repeat-menu .mat-mdc-menu-item {
+  width: 8.6em !important;
+}
+
+::ng-deep .day-menu .mat-mdc-menu-item {
+  width: 6.9em !important;
+}
+
+::ng-deep .interval-menu .mat-mdc-menu-item {
+  width: 7.625em !important;
+}
+
+.daily-tick-icon {
+  position: relative;
+  opacity: 0;
+  top: 4px;
+  right: 0;
+  margin-right: 5px;
+}
+
+.interval-tick-icon {
+  position: relative;
+  right: 4px;
+  top: 4px;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1;
+}
+::ng-deep .month-container .p-datepicker .p-datepicker-header,::ng-deep .month-container .p-datepicker table th{
+  display: none;
+}
+::ng-deep .month-container .p-datepicker{
+  width: 217px !important;
+  height: 155px !important;
+  position: relative;
+  top: 1em;
+  left: 0.2em;
+  border: none;
+  overflow:hidden;
+}
+::ng-deep .month-container .p-calendar{
+  display:inline;
+  overflow:hidden;
+
+}
+/* Apply the highlight to all dates in the selectedDates array */
+::ng-deep .selected  {
+
+  background: #2A67F4 !important;
+  color: #ffffff !important;
+  padding:10px;
+}
+::ng-deep .month-container .p-datepicker table td.p-datepicker-today > span{
+  background: white !important;
+  color: black !important;
+  padding:10px;
 }

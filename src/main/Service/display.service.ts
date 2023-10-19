@@ -10,7 +10,7 @@ export class DisplayService {
   constructor(private datePipe: DatePipe) {
   }
 
-  getDisplayValue(date: Date | undefined): string {
+  getCalenderDisplayValue(date: Date | undefined, format: string = 'MMMM d'): string {
     if (!date) {
       return ''; // Handle the case when no date is selected
     }
@@ -28,9 +28,14 @@ export class DisplayService {
     } else if (this.isSameDay(date, tomorrow)) {
       return AppConstants.Tomorrow;
     } else {
-      return this.datePipe.transform(date, 'MMMM d') || '';
+      return this.datePipe.transform(date, format) || '';
     }
   }
+
+  getCalenderDialogueDisplayValue(date: Date | undefined): string {
+    return this.getCalenderDisplayValue(date, 'MMM dd, yyyy');
+  }
+
 
   isSameDay(firstDate: Date, secondDate: Date): boolean {
     return (

@@ -10,6 +10,8 @@ export const AppConstants = {
   Daily: 'Daily',
   Per_Day: 'Per Day',
   habits_Order: 'My Habits Order',
+  repeat: 'Repeat Every 2',
+  months:'Every month on the 1th',
 };
 
 export enum TimeOfDay {
@@ -19,4 +21,13 @@ export enum TimeOfDay {
   Anytime = 'Anytime',
 }
 
+export enum daysOfWeek {
+  Sunday = 'Sunday',
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday'
+}
 

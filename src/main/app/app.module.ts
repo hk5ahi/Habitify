@@ -22,6 +22,7 @@ import { DialogService } from "primeng/dynamicdialog";
 import { PaginatorModule } from "primeng/paginator";
 import { InputNumberModule } from "primeng/inputnumber";
 import { DatePipe } from "@angular/common";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { DatePipe } from "@angular/common";
     DialogModule,
     PaginatorModule,
     InputNumberModule,
-    InputTextModule
+    InputTextModule,
+    MatSelectModule
   ],
   providers: [DialogService, DatePipe],
   bootstrap: [AppComponent]

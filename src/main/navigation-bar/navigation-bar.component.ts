@@ -81,7 +81,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   getDisplayValue(date: Date | undefined): string {
-    return this.displayService.getDisplayValue(date);
+    return this.displayService.getCalenderDisplayValue(date);
   }
 
   menuItemClicked(item: string): void {

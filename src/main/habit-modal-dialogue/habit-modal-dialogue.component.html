@@ -22,7 +22,7 @@
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
+      <div [matMenuTriggerFor]="frequencyPeriod" class="input-wrapper">
         <input [(ngModel)]="frequencyPerPeriod" class="goal-frequency" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -35,8 +35,8 @@
     <div class="repeat-text">REPEAT</div>
     <div class="repeat-input-container">
 
-      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
-        <input [(ngModel)]="repeat" class="repeat-frequency" readonly/>
+      <div [matMenuTriggerFor]="repeatMenu" class="input-wrapper">
+        <input [value]="getDayValue()" class="repeat-frequency" readonly/>
         <img alt="Up" class="up-repeat" src="assets/svg/up.svg"/>
         <img alt="Down" class="down-repeat" src="assets/svg/down.svg"/>
       </div>
@@ -47,8 +47,8 @@
     <div class="tod-text">TIME OF DAY</div>
     <div class="goal-input-container">
 
-      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
-        <input [(ngModel)]="timeOfDay" class="tod-input" readonly/>
+      <div [matMenuTriggerFor]="timeDay" class="input-wrapper">
+        <input [value]="getTimeOfDayDisplayValue(timeOfDay)" class="tod-input" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
@@ -58,17 +58,9 @@
     <div class="repeat-text">START DATE</div>
     <div class="repeat-input-container">
 
-      <div (click)="toggleCalendar()" class="input-wrapper">
-        <input [value]="getDisplayValue(selectedDate)" class="repeat-frequency" readonly/>
+      <div (click)="toggleCalendar()" [matMenuTriggerFor]="calender" class="input-wrapper">
+        <input [value]="getCalenderDisplayValue(startSelectedDate)" class="repeat-frequency" readonly/>
         <img alt="Calender" class="calendar-button" src="assets/svg/calender.svg"/>
-      </div>
-      <div class="calendar-container">
-        <p-calendar
-          *ngIf="showCalendar"
-          [(ngModel)]="selectedDate" [inline]="true"
-          [showIcon]="false"
-          dateFormat="MM d">
-        </p-calendar>
       </div>
 
     </div>
@@ -82,10 +74,156 @@
     </button>
 
   </mat-menu>
+  <mat-menu #frequencyPeriod="matMenu" [hasBackdrop]="false" class="frequency-period-menu" overlapTrigger="false">
+    <button (click)="updateFrequencyPeriod('Per Day')" mat-menu-item>
+      Per Day
+    </button>
+    <button (click)="updateFrequencyPeriod('Per Week')" mat-menu-item>
+      Per Week
+    </button>
+    <button (click)="updateFrequencyPeriod('Per Month')" mat-menu-item>
+      Per Month
+    </button>
+
+  </mat-menu>
+
+  <mat-menu #timeDay="matMenu" [hasBackdrop]="false" class="time-day-menu" overlapTrigger="false">
+    <button (click)="updateTimeOfDay(TimeOfDay.Morning)" mat-menu-item>
+      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Morning)}" alt="tick" class="time-tick-icon"
+           src="assets/svg/tick.svg"/>
+      <span class="menu-text">Morning</span>
+    </button>
+    <button (click)="updateTimeOfDay(TimeOfDay.Evening)" mat-menu-item>
+      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Evening)}" alt="tick" class="time-tick-icon"
+           src="assets/svg/tick.svg"/>
+      <span class="menu-text">Evening</span>
+    </button>
+    <button (click)="updateTimeOfDay(TimeOfDay.Afternoon)" mat-menu-item>
+      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Afternoon)}" alt="tick" class="time-tick-icon"
+           src="assets/svg/tick.svg"/>
+      <span class="menu-text">Afternoon</span>
+    </button>
+
+  </mat-menu>
   <div class="modal-footer">
     <div class="buttons">
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button class="save" label="Save" size="small"></p-button>
     </div>
   </div>
+
+  <mat-menu #calender="matMenu" [hasBackdrop]="false" class="calender-container" overlapTrigger="false">
+    <p-calendar
+      (click)="onCalendarClick($event)"
+      [(ngModel)]="startSelectedDate"
+      [inline]="true"
+      [showIcon]="false"
+      dateFormat="M d, yy">
+
+    </p-calendar>
+
+  </mat-menu>
+  <mat-menu #month="matMenu" [hasBackdrop]="false" class="month-container" overlapTrigger="false">
+    <p-calendar
+      (click)="onCalendarClick($event)"
+      (onSelect)="onDateSelect($event)"
+      [(ngModel)]="selectedDate"
+      [inline]="true"
+      [showIcon]="false">
+      <ng-template let-date pTemplate="date">
+        <div [ngClass]="{'selected': isSelected(date)}" class="custom-date">
+          {{ date.day }}
+        </div>
+      </ng-template>
+    </p-calendar>
+  </mat-menu>
+
+  <mat-menu #repeatMenu="matMenu" [hasBackdrop]="false" class="repeat-menu" overlapTrigger="false">
+    <button [matMenuTriggerFor]="days" mat-menu-item>
+      Daily
+    </button>
+    <button [matMenuTriggerFor]="month" mat-menu-item>
+      Monthly
+    </button>
+    <button [matMenuTriggerFor]="interval" mat-menu-item>
+      Interval
+    </button>
+
+  </mat-menu>
+  <mat-menu #days="matMenu" [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
+    <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Monday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Tuesday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Tuesday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Tuesday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Wednesday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Wednesday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Wednesday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Thursday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Thursday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Thursday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Friday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Friday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Friday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Saturday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Saturday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Saturday
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Sunday)" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Sunday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Sunday
+    </button>
+
+
+  </mat-menu>
+  <mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
+    <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 2'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 2
+    </button>
+    <button (click)="updateIntervalPerDays('Repeat Every 3')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 3'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 3
+    </button>
+    <button (click)="updateIntervalPerDays('Repeat Every 4')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 4'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 4
+    </button>
+    <button (click)="updateIntervalPerDays('Repeat Every 5')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 5'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 5
+    </button>
+    <button (click)="updateIntervalPerDays('Repeat Every 6')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 6'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 6
+    </button>
+    <button (click)="updateIntervalPerDays('Repeat Every 7')" mat-menu-item>
+      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 7'}" alt="tick" class="interval-tick-icon"
+           src="assets/svg/tick.svg"/>
+      Repeat Every 7
+    </button>
+
+
+  </mat-menu>
+
+
 </div>
+
