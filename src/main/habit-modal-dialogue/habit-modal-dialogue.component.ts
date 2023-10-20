@@ -3,14 +3,12 @@ import { DynamicDialogRef } from "primeng/dynamicdialog";
 import { AppConstants, daysOfWeek, TimeOfDay } from "../Constants/app-constant";
 import { DisplayService } from "../Service/display.service";
 
-
-
 @Component({
   selector: 'app-habit-modal-dialogue',
   templateUrl: './habit-modal-dialogue.component.html',
   styleUrls: ['./habit-modal-dialogue.component.scss']
 })
-export class HabitModalDialogueComponent implements OnInit{
+export class HabitModalDialogueComponent implements OnInit {
 
   @ViewChild('calender') calenderDialogue!: ElementRef;
   goalValue: number = 1;
@@ -24,12 +22,13 @@ export class HabitModalDialogueComponent implements OnInit{
   days: string[] = [daysOfWeek.Sunday, daysOfWeek.Monday, daysOfWeek.Tuesday, daysOfWeek.Wednesday, daysOfWeek.Thursday, daysOfWeek.Friday, daysOfWeek.Saturday];
   intervalPerDays: string = AppConstants.repeat;
   months: string = AppConstants.months;
-  checkRepeat: string = 'days';
+  checkRepeat: string = AppConstants.days;
   protected readonly TimeOfDay = TimeOfDay;
   protected readonly daysOfWeek = daysOfWeek;
 
   constructor(private ref: DynamicDialogRef, private displayService: DisplayService) {
   }
+
   ngOnInit(): void {
     const today = new Date();
     const firstDateOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -46,7 +45,7 @@ export class HabitModalDialogueComponent implements OnInit{
 
   updateIntervalPerDays(selectedInterval: string) {
     this.intervalPerDays = selectedInterval;
-    this.checkRepeat = 'interval';
+    this.checkRepeat = AppConstants.interval;
 
   }
 
@@ -60,7 +59,7 @@ export class HabitModalDialogueComponent implements OnInit{
       // If the day is not present, add it
       this.days.push(day);
     }
-    this.checkRepeat = 'days';
+    this.checkRepeat = AppConstants.days;
   }
 
   updateGoalFrequency(selectedFrequency: string) {
@@ -69,28 +68,27 @@ export class HabitModalDialogueComponent implements OnInit{
 
   getDayValue(): string {
     const allDays = Object.values(daysOfWeek);
-    if (this.checkRepeat == 'days') {
+    if (this.checkRepeat == AppConstants.days) {
       if (this.areArraysEqual(this.days, allDays)) {
-        return 'Daily';
+        return AppConstants.Daily;
       } else {
         const selectedDays = this.days.map(day => day.substring(0, 3)); // Abbreviate to three letters
         return selectedDays.join(',');
       }
-    } else if (this.checkRepeat == 'interval') {
+    } else if (this.checkRepeat == AppConstants.interval) {
       return this.intervalPerDays;
-    }
-    else {
+    } else {
       return this.months;
     }
   }
 
-  areArraysEqual(arr1: string[], arr2: string[]): boolean {
-    if (arr1.length !== arr2.length) {
+  areArraysEqual(firstArray: string[], secondArray: string[]): boolean {
+    if (firstArray.length !== secondArray.length) {
       return false;
     }
 
-    const sortedArr1 = arr1.slice().sort();
-    const sortedArr2 = arr2.slice().sort();
+    const sortedArr1 = firstArray.slice().sort();
+    const sortedArr2 = secondArray.slice().sort();
 
     return sortedArr1.every((value, index) => value === sortedArr2[index]);
   }
@@ -131,7 +129,6 @@ export class HabitModalDialogueComponent implements OnInit{
 
   getCalenderDisplayValue(date: Date | undefined): string {
     return this.displayService.getCalenderDialogueDisplayValue(date);
-
   }
 
   onCalendarClick(event: Event) {
@@ -158,33 +155,11 @@ export class HabitModalDialogueComponent implements OnInit{
       // If the date is not present, add it
       this.selectedDates.push(date);
     }
-
-   this.checkRepeat='months';
+    this.checkRepeat = AppConstants.Month;
   }
-
 
   isSelected(date: any): boolean {
     return this.selectedDates.some(d => d.getDate() === date.day && d.getMonth() === date.month);
-  }
-
-  isStartDateSelected(): boolean {
-    const currentDate = new Date();
-
-    return this.startSelectedDate.getDate() === currentDate.getDate() && this.startSelectedDate.getMonth() === currentDate.getMonth();
-  }
-  checkDate(selectedDate: Date): boolean {
-    const currentDate = new Date();
-
-    // Check if the selected date and current date are not equal
-    return !this.isSameDay(selectedDate, currentDate);
-  }
-
-  isSameDay(date1: Date, date2: Date): boolean {
-    return (
-      date1.getDate() === date2.getDate() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getFullYear() === date2.getFullYear()
-    );
   }
 
 }

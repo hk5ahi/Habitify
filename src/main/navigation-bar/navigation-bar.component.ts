@@ -45,7 +45,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.calculateMinMaxDates();
   }
 
-
   onDateSelect() {
     this.showCalendar = false;
   }
@@ -95,7 +94,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   toggleCalendar(): void {
     this.showCalendar = !this.showCalendar;
-
   }
 
   calculateMinMaxDates() {

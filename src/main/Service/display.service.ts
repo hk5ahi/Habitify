@@ -6,7 +6,6 @@ import { DatePipe } from "@angular/common";
   providedIn: 'root'
 })
 export class DisplayService {
-
   constructor(private datePipe: DatePipe) {
   }
 
@@ -35,7 +34,6 @@ export class DisplayService {
   getCalenderDialogueDisplayValue(date: Date | undefined): string {
     return this.getCalenderDisplayValue(date, 'MMM dd, yyyy');
   }
-
 
   isSameDay(firstDate: Date, secondDate: Date): boolean {
     return (

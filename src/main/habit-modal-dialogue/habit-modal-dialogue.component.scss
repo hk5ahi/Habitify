@@ -372,7 +372,7 @@
   font-family: Inter, sans-serif;
   line-height: 12px;
   color: rgb(123, 124, 124);
-  margin: 0 12px 8px 0;
+  margin: 0 12px 0.5em 0;
   padding-left: 6px;
   width: 8em;
   height: 12px;
@@ -549,32 +549,36 @@
 .show {
   opacity: 1;
 }
-::ng-deep .month-container .p-datepicker .p-datepicker-header,::ng-deep .month-container .p-datepicker table th{
+
+::ng-deep .month-container .p-datepicker .p-datepicker-header, ::ng-deep .month-container .p-datepicker table th {
   display: none;
 }
-::ng-deep .month-container .p-datepicker{
-  width: 217px !important;
-  height: 155px !important;
+
+::ng-deep .month-container .p-datepicker {
+  width: 13.5625em !important;
+  height: 9.65em !important;
   position: relative;
   top: 1em;
   left: 0.2em;
   border: none;
-  overflow:hidden;
+  overflow: hidden;
 }
-::ng-deep .month-container .p-calendar{
-  display:inline;
-  overflow:hidden;
+
+::ng-deep .month-container .p-calendar {
+  display: inline;
+  overflow: hidden;
 
 }
-/* Apply the highlight to all dates in the selectedDates array */
-::ng-deep .selected  {
+
+::ng-deep .selected {
 
   background: #2A67F4 !important;
   color: #ffffff !important;
-  padding:10px;
+  padding: 10px;
 }
-::ng-deep .month-container .p-datepicker table td.p-datepicker-today > span{
+
+::ng-deep .month-container .p-datepicker table td.p-datepicker-today > span {
   background: white !important;
   color: black !important;
-  padding:10px;
+  padding: 10px;
 }

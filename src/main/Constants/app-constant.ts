@@ -11,7 +11,11 @@ export const AppConstants = {
   Per_Day: 'Per Day',
   habits_Order: 'My Habits Order',
   repeat: 'Repeat Every 2',
-  months:'Every month on the 1th',
+  months: 'Every month on the 1th',
+  days:'days',
+  interval:'interval',
+  Month:'months',
+
 };
 
 export enum TimeOfDay {
