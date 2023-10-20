@@ -19,10 +19,11 @@ import { HabitsComponent } from "../habits/habits.component";
 import { DialogModule } from "primeng/dialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
-import { PaginatorModule } from "primeng/paginator";
 import { InputNumberModule } from "primeng/inputnumber";
 import { DatePipe } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [
@@ -47,12 +48,12 @@ import { MatSelectModule } from "@angular/material/select";
     MatIconModule,
     MatCheckboxModule,
     DialogModule,
-    PaginatorModule,
     InputNumberModule,
     InputTextModule,
-    MatSelectModule
+    MatSelectModule,
+    ConfirmDialogModule
   ],
-  providers: [DialogService, DatePipe],
+  providers: [DialogService, DatePipe, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

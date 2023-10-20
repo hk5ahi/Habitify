@@ -203,7 +203,7 @@
   width: 16.625em;
   height: 3.125em !important;
   position: relative;
-  top: -4.75em;
+  top: -5.08em;
   right: -13px;
 }
 
@@ -345,7 +345,7 @@
   width: 8.75em;
   height: 3.125em;
   position: relative;
-  top: -8.37em;
+  top: -8.5em;
   right: -18.2em;
 
 }
@@ -423,7 +423,7 @@
   width: 16.625em;
   height: 3.125em;
   position: relative;
-  top: -7.0625em;
+  top: -7.26em;
   right: -11px;
 
 }
@@ -503,7 +503,8 @@
 ::ng-deep .mat-mdc-menu-item:hover {
   .time-tick-icon,
   .daily-tick-icon,
-  .interval-tick-icon {
+  .interval-tick-icon,
+  .habit-icons {
     filter: brightness(0) invert(1);
   }
 }
@@ -581,4 +582,92 @@
   background: white !important;
   color: black !important;
   padding: 10px;
+}
+
+.section-text {
+  width: 22.875em;
+  height: 1.4em;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.4px;
+  color: rgb(42, 103, 244);
+  padding: 4px 10px;
+  text-transform: capitalize;
+  margin-bottom: 7px;
+  margin-top: 4px;
+  overflow-wrap: break-word;
+
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-item {
+  width: 366px !important;
+  height: 30px !important;
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-content {
+  width: 376px !important;
+  height: 389px !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 376px;
+  border-radius: 5px;
+}
+
+.habit-icons {
+  width: 1.35em;
+  height: 1.35em;
+  position: relative;
+  top: 4px;
+  margin-left: -4px;
+  margin-right: 5px;
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-item-text {
+  top: 0.5px !important;
+}
+
+.section-one {
+  width: 366px;
+  height: 184px;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.section-two {
+  width: 366px;
+  height: 244px;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.section-three {
+  width: 366px;
+  height: 274px;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.text {
+  margin-left: 20px;
+
+}
+
+::ng-deep .cdk-overlay-pane ::-webkit-scrollbar {
+  width: 9px;
+  height: 10% !important; /* Adjust the percentage and subtract any additional padding or margin */
+  background: transparent;
+  border-radius: 10px;
+}
+
+::ng-deep .cdk-overlay-pane ::-webkit-scrollbar:hover {
+  background: #e7e5e5;
+}
+
+::ng-deep .cdk-overlay-pane {
+  margin-top: 2px;
 }

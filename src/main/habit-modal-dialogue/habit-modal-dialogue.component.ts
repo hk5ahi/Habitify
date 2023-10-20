@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogRef } from "primeng/dynamicdialog";
-import { AppConstants, daysOfWeek, TimeOfDay } from "../Constants/app-constant";
+import { AppConstants, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
 import { DisplayService } from "../Service/display.service";
+import { HabitService } from "../Service/habit.service";
+import { ConfirmationService } from "primeng/api";
 
 @Component({
   selector: 'app-habit-modal-dialogue',
@@ -11,8 +13,15 @@ import { DisplayService } from "../Service/display.service";
 export class HabitModalDialogueComponent implements OnInit {
 
   @ViewChild('calender') calenderDialogue!: ElementRef;
+  habitName!: string;
+  goal!: number;
+  frequency!: string;
   goalValue: number = 1;
+  runningValue = 3;
+  cyclingValue = 5;
   goalFrequency: string = AppConstants.Times;
+  waterFrequency: string = 'MI';
+  runningFrequency: string = 'Km';
   frequencyPerPeriod: string = AppConstants.Per_Day;
   timeOfDay: TimeOfDay[] = [TimeOfDay.Morning, TimeOfDay.Afternoon, TimeOfDay.Evening];
   showCalendar: boolean = false;
@@ -23,10 +32,12 @@ export class HabitModalDialogueComponent implements OnInit {
   intervalPerDays: string = AppConstants.repeat;
   months: string = AppConstants.months;
   checkRepeat: string = AppConstants.days;
+  goalWater: number = 2000;
+  repeatValue!: string;
   protected readonly TimeOfDay = TimeOfDay;
   protected readonly daysOfWeek = daysOfWeek;
 
-  constructor(private ref: DynamicDialogRef, private displayService: DisplayService) {
+  constructor(private ref: DynamicDialogRef, private displayService: DisplayService, private habitService: HabitService, private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -39,6 +50,10 @@ export class HabitModalDialogueComponent implements OnInit {
     this.ref.close();
   }
 
+  getIconSource(): string {
+    return iconMap[this.habitName] || 'assets/svg/mark.svg';
+  }
+
   checkDays(day: string) {
     return this.days.includes(day);
   }
@@ -46,7 +61,6 @@ export class HabitModalDialogueComponent implements OnInit {
   updateIntervalPerDays(selectedInterval: string) {
     this.intervalPerDays = selectedInterval;
     this.checkRepeat = AppConstants.interval;
-
   }
 
   toggleDay(day: string): void {
@@ -70,14 +84,18 @@ export class HabitModalDialogueComponent implements OnInit {
     const allDays = Object.values(daysOfWeek);
     if (this.checkRepeat == AppConstants.days) {
       if (this.areArraysEqual(this.days, allDays)) {
+        this.repeatValue = AppConstants.Daily;
         return AppConstants.Daily;
       } else {
+        this.repeatValue = this.days.join(' ');
         const selectedDays = this.days.map(day => day.substring(0, 3)); // Abbreviate to three letters
         return selectedDays.join(',');
       }
     } else if (this.checkRepeat == AppConstants.interval) {
+      this.repeatValue = this.intervalPerDays;
       return this.intervalPerDays;
     } else {
+      this.repeatValue = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
       return this.months;
     }
   }
@@ -162,4 +180,32 @@ export class HabitModalDialogueComponent implements OnInit {
     return this.selectedDates.some(d => d.getDate() === date.day && d.getMonth() === date.month);
   }
 
+  updateHabitName(value: string) {
+    this.habitName = value;
+  }
+
+  updateWaterGoalFrequency(times: string) {
+    this.waterFrequency = times;
+  }
+
+  isWaterOrRunning(): boolean {
+    return this.habitName === 'Drink Water' || this.habitName === 'Running' || this.habitName === 'Cycling'
+  }
+
+  updateRunningGoalFrequency(value: string) {
+    this.runningFrequency = value;
+  }
+
+  saveHabit() {
+    this.habitService.addHabit(this.habitName, this.goal, this.frequency, this.frequencyPerPeriod, this.repeatValue, this.timeOfDay, this.startSelectedDate);
+    this.close();
+  }
+
+  updateGoal(value: number) {
+    this.goal = value;
+  }
+
+  updateFrequency(value: string) {
+    this.frequency = value;
+  }
 }

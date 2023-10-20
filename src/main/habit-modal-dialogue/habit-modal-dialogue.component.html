@@ -5,20 +5,57 @@
   <div class="name-container">
     <div class="name-text">NAME</div>
     <div class="name-input">
-      <input class="input-habit">
+      <input [(ngModel)]="habitName" [matMenuTriggerFor]="habit" class="input-habit">
       <div class="habit-icon">
-        <img alt="Question Mark" class="mark" src="assets/svg/mark.svg">
+        <img [src]=getIconSource() alt="Question Mark" class="mark">
       </div>
     </div>
   </div>
   <div class="goal-container">
     <div class="goal-text">GOAL</div>
     <div class="goal-input-container">
-      <p-inputNumber [(ngModel)]="goalValue" [max]="100" [min]="1" [showButtons]="true"
+      <p-inputNumber (ngModelChange)="updateGoal(goalValue)"
+                     *ngIf="!isWaterOrRunning()" [(ngModel)]="goalValue"
+                     [max]="100"
+                     [min]="1" [showButtons]="true"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <div [matMenuTriggerFor]="frequency" class="input-wrapper">
-        <input [(ngModel)]="goalFrequency" class="goal-frequency" readonly/>
+      <p-inputNumber (ngModelChange)="updateGoal(goalWater)" *ngIf="habitName=='Drink Water'" [(ngModel)]="goalWater"
+                     [max]="30000"
+                     [min]="100"
+                     [showButtons]="true"
+                     [step]="100"
+                     class="up-down-arrows goal-value"
+                     inputId="minmax-buttons"></p-inputNumber>
+      <p-inputNumber (ngModelChange)="updateGoal(runningValue)" *ngIf="habitName=='Running'" [(ngModel)]="runningValue"
+                     [max]="50" [min]="1"
+                     [showButtons]="true"
+                     [step]="1"
+                     class="up-down-arrows goal-value"
+                     inputId="minmax-buttons"></p-inputNumber>
+      <p-inputNumber (ngModelChange)="updateGoal(cyclingValue)" *ngIf="habitName=='Cycling'" [(ngModel)]="cyclingValue"
+                     [max]="50" [min]="1"
+                     [showButtons]="true"
+                     [step]="1"
+                     class="up-down-arrows goal-value"
+                     inputId="minmax-buttons"></p-inputNumber>
+      <div *ngIf="!isWaterOrRunning()" [matMenuTriggerFor]="frequency"
+           class="input-wrapper">
+        <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
+               readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div *ngIf="habitName=='Drink Water'" [matMenuTriggerFor]="Waterfrequency" class="input-wrapper">
+        <input (ngModelChange)="updateFrequency(waterFrequency)" [(ngModel)]="waterFrequency" class="goal-frequency"
+               readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div *ngIf="habitName=='Running'|| habitName=='Cycling'" [matMenuTriggerFor]="Runningfrequency"
+           class="input-wrapper">
+        <input (ngModelChange)="updateFrequency(runningFrequency)" [(ngModel)]="runningFrequency" class="goal-frequency"
+               readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
@@ -27,14 +64,12 @@
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-
     </div>
   </div>
 
   <div class="repeat-container">
     <div class="repeat-text">REPEAT</div>
     <div class="repeat-input-container">
-
       <div [matMenuTriggerFor]="repeatMenu" class="input-wrapper">
         <input [value]="getDayValue()" class="repeat-frequency" readonly/>
         <img alt="Up" class="up-repeat" src="assets/svg/up.svg"/>
@@ -46,7 +81,6 @@
   <div class="tod-container">
     <div class="tod-text">TIME OF DAY</div>
     <div class="goal-input-container">
-
       <div [matMenuTriggerFor]="timeDay" class="input-wrapper">
         <input [value]="getTimeOfDayDisplayValue(timeOfDay)" class="tod-input" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
@@ -62,9 +96,40 @@
         <input [value]="getCalenderDisplayValue(startSelectedDate)" class="repeat-frequency" readonly/>
         <img alt="Calender" class="calendar-button" src="assets/svg/calender.svg"/>
       </div>
-
     </div>
   </div>
+  <mat-menu #Waterfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
+    <button (click)="updateWaterGoalFrequency('L')" mat-menu-item>
+      L
+    </button>
+    <button (click)="updateWaterGoalFrequency('MI')" mat-menu-item>
+      MI
+    </button>
+    <button (click)="updateWaterGoalFrequency('US FI Oz')" mat-menu-item>
+      US FI Oz
+    </button>
+    <button (click)="updateWaterGoalFrequency('Cup')" mat-menu-item>
+      Cup
+    </button>
+  </mat-menu>
+  <mat-menu #Runningfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
+    <button (click)="updateRunningGoalFrequency('Km')" mat-menu-item>
+      Km
+    </button>
+    <button (click)="updateRunningGoalFrequency('M')" mat-menu-item>
+      M
+    </button>
+    <button (click)="updateRunningGoalFrequency('Ft')" mat-menu-item>
+      Ft
+    </button>
+    <button (click)="updateRunningGoalFrequency('Yd')" mat-menu-item>
+      Yd
+    </button>
+    <button (click)="updateRunningGoalFrequency('Mi')" mat-menu-item>
+      Mi
+    </button>
+
+  </mat-menu>
   <mat-menu #frequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
     <button (click)="updateGoalFrequency('Times')" mat-menu-item>
       Times
@@ -84,7 +149,6 @@
     <button (click)="updateFrequencyPeriod('Per Month')" mat-menu-item>
       Per Month
     </button>
-
   </mat-menu>
 
   <mat-menu #timeDay="matMenu" [hasBackdrop]="false" class="time-day-menu" overlapTrigger="false">
@@ -108,7 +172,7 @@
   <div class="modal-footer">
     <div class="buttons">
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
-      <p-button class="save" label="Save" size="small"></p-button>
+      <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
     </div>
   </div>
 
@@ -119,9 +183,7 @@
       [inline]="true"
       [showIcon]="false"
       dateFormat="M d, yy">
-
     </p-calendar>
-
   </mat-menu>
   <mat-menu #month="matMenu" [hasBackdrop]="false" class="month-container" overlapTrigger="false">
     <p-calendar
@@ -137,7 +199,6 @@
       </ng-template>
     </p-calendar>
   </mat-menu>
-
   <mat-menu #repeatMenu="matMenu" [hasBackdrop]="false" class="repeat-menu" overlapTrigger="false">
     <button [matMenuTriggerFor]="days" mat-menu-item>
       Daily
@@ -148,7 +209,6 @@
     <button [matMenuTriggerFor]="interval" mat-menu-item>
       Interval
     </button>
-
   </mat-menu>
   <mat-menu #days="matMenu" [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
     <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
@@ -186,8 +246,6 @@
            src="assets/svg/tick.svg"/>
       Sunday
     </button>
-
-
   </mat-menu>
   <mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
     <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
@@ -220,10 +278,107 @@
            src="assets/svg/tick.svg"/>
       Repeat Every 7
     </button>
-
-
   </mat-menu>
-
-
+  <mat-menu #habit="matMenu" [hasBackdrop]="false" class="habit-menu" overlapTrigger="false">
+    <section class="section-one">
+      <p class="section-text">Most Popular Habits</p>
+      <button (click)="updateHabitName('Meditate')" mat-menu-item>
+        <img alt="meditate" class="habit-icons"
+             src="assets/svg/meditate.svg"/>
+        Meditate
+      </button>
+      <button (click)="updateHabitName('Set A To-Do List')" mat-menu-item>
+        <img alt="to-do" class="habit-icons"
+             src="assets/svg/to-do.svg"/>
+        Set A To-Do List
+      </button>
+      <button (click)="updateHabitName('Drink Water')" mat-menu-item>
+        <img alt="water" class="habit-icons"
+             src="assets/svg/drink-water.svg"/>
+        Drink Water
+      </button>
+      <button (click)="updateHabitName('Read Books')" mat-menu-item>
+        <img alt="books" class="habit-icons"
+             src="assets/svg/read-books.svg"/>
+        Read Books
+      </button>
+      <button (click)="updateHabitName('Running')" mat-menu-item>
+        <img alt="running" class="habit-icons"
+             src="assets/svg/running.svg"/>
+        Running
+      </button>
+    </section>
+    <section class="section-two">
+      <p class="section-text">Stay Fit With Exercises</p>
+      <button (click)="updateHabitName('Quick Stretch')" mat-menu-item>
+        <img alt="stretch" class="habit-icons"
+             src="assets/svg/stretch.svg"/>
+        Quick Stretch
+      </button>
+      <button (click)="updateHabitName('Hit The Gym')" mat-menu-item>
+        <img alt="Hit the Gym" class="habit-icons"
+             src="assets/svg/gym.svg"/>
+        Hit The Gym
+      </button>
+      <button (click)="updateHabitName('Swimming')" mat-menu-item>
+        <img alt="swimming" class="habit-icons"
+             src="assets/svg/swimming.svg"/>
+        Swimming
+      </button>
+      <button (click)="updateHabitName('Core Training')" mat-menu-item>
+        <img alt="training" class="habit-icons"
+             src="assets/svg/training.svg"/>
+        Core Training
+      </button>
+      <button (click)="updateHabitName('Practice Yoga')" mat-menu-item>
+        <img alt="yoga" class="habit-icons"
+             src="assets/svg/yoga.svg"/>
+        Practice Yoga
+      </button>
+      <button (click)="updateHabitName(' HIIT Cardio')" mat-menu-item>
+        <img alt="cardio" class="habit-icons"
+             src="assets/svg/cardio.svg"/>
+        HIIT Cardio
+      </button>
+      <button (click)="updateHabitName('Cycling')" mat-menu-item>
+        <img alt="cycling" class="habit-icons"
+             src="assets/svg/cycling.svg"/>
+        Cycling
+      </button>
+    </section>
+    <section class="section-three">
+      <p class="section-text">Stay Healthy</p>
+      <button (click)="updateHabitName('Go For A Walk')" mat-menu-item>
+        <img alt="walk" class="habit-icons"
+             src="assets/svg/cycling.svg"/>
+        Go For A Walk
+      </button>
+      <button (click)="updateHabitName('Get Good Sleep')" mat-menu-item>
+        <img alt="Sleep" class="habit-icons"
+             src="assets/svg/sleep.svg"/>
+        Get Good Sleep
+      </button>
+      <button (click)="updateHabitName('Take a Cold Shower')" mat-menu-item>
+        <img alt="Shower" class="habit-icons"
+             src="assets/svg/sleep.svg"/>
+        Take a Cold Shower
+      </button>
+      <button (click)="updateHabitName('Take Power Naps')" mat-menu-item>
+        <span class="text">Take Power Naps</span>
+      </button>
+      <button (click)="updateHabitName('Wash Your Hands')" mat-menu-item>
+        <span class="text">Wash Your Hands</span>
+      </button>
+      <button (click)="updateHabitName('Apply Sunscreen')" mat-menu-item>
+        <span class="text">Apply Sunscreen</span>
+      </button>
+      <button (click)="updateHabitName('Take A Deep Breath')" mat-menu-item>
+        <span class="text">Take A Deep Breath</span>
+      </button>
+      <button (click)="updateHabitName('Wear A Mask')" mat-menu-item>
+        <span class="text">Wear A Mask</span>
+      </button>
+    </section>
+  </mat-menu>
 </div>
 
