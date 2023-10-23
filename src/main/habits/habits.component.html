@@ -1,4 +1,62 @@
 <div class="habits">
+  <div #habit *ngFor="let habit of habits" class="habit"
+       (contextmenu)="openEditHabitMenu($event)">
+    <div class="habit-identification">
+      <img [src]="getHabitIcon(habit)" alt="habit" class="icon">
+    </div>
+    <div class="habit-content">
+      <div class="minor-details">
+        <div class="habit-name">
+          {{habit.name}}
+        </div>
+        <div class="habit-frequency">
+          0 / 1 times
+        </div>
+      </div>
+      <button class="done-button" pButton type="button">
+        <i class="pi pi-check" style="font-size: 0.88rem"></i>
+        <span class="done">Done</span>
+      </button>
+      <button [matMenuTriggerFor]="editHabit" class="more-button" pButton type="button">
+        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
+      </button>
+
+
+    </div>
+    <mat-menu #editHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
+      <button mat-menu-item>
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/tick.svg"/>
+        Check-In
+      </button>
+      <button mat-menu-item>
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/skip.svg"/>
+        Skip
+      </button>
+      <button mat-menu-item>
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/fail.svg"/>
+        Fail
+      </button>
+      <button mat-menu-item>
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/log.svg"/>
+        Log Progress
+      </button>
+      <button mat-menu-item (click)="openEditModal(habit)">
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/edit.svg"/>
+        Edit
+      </button>
+      <button mat-menu-item>
+        <img alt="tick" class="edit-habit-icon"
+             src="assets/svg/view-progress.svg"/>
+        View Progress
+      </button>
+
+    </mat-menu>
+  </div>
   <div *ngIf="!hasHabits()" class="empty-template">
     <div class="images-container">
       <img alt="image1" class="image" src="assets/svg/image1.svg">

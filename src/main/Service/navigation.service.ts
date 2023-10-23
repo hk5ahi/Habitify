@@ -12,4 +12,8 @@ export class NavigationService {
   setTimeOfDay(value: string) {
     this.timeOfDay.next(value);
   }
+
+  getTimeOfDayValue(): string {
+    return this.timeOfDay.getValue();
+  }
 }

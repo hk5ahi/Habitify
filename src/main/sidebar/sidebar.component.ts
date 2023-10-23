@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 import { AppConstants } from "../Constants/app-constant";
+import { SidebarService } from "../Service/sidebar.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -9,16 +10,26 @@ import { AppConstants } from "../Constants/app-constant";
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  sidebarVisible = true;
+  isAllHabits: boolean = true;
+  isTimeHabits: boolean = false;
   timeOfDay!: string;
+  private isAllHabitsSubscription!: Subscription;
+  private isTimeHabitsSubscription!: Subscription;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService) {
+  constructor(private navService: NavigationService, private sidebarService: SidebarService) {
   }
 
   ngOnInit() {
     this.timeOfDaySubscription = this.navService.timeOfDay$.subscribe((timeOfDay) => {
       this.timeOfDay = timeOfDay;
+    });
+    this.isAllHabitsSubscription = this.sidebarService.isAllHabits$.subscribe(value => {
+      this.isAllHabits = value;
+    });
+
+    this.isTimeHabitsSubscription = this.sidebarService.isTimeHabits$.subscribe(value => {
+      this.isTimeHabits = value;
     });
   }
 
@@ -41,11 +52,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateIsAllHabits() {
+    this.sidebarService.updateIsAllHabits();
+  }
+
+  updateIsTimeHabits() {
+    this.sidebarService.updateIsTimeHabits();
+  }
+
   ngOnDestroy(): void {
     // Unsubscribe to prevent memory leaks
     if (this.timeOfDaySubscription) {
       this.timeOfDaySubscription.unsubscribe();
     }
+    this.isAllHabitsSubscription.unsubscribe();
+    this.isTimeHabitsSubscription.unsubscribe();
 
   }
 

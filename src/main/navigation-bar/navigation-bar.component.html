@@ -1,5 +1,5 @@
 <div class="navigation">
-  <p [ngClass]="{'top':showSearch}" class="time">{{currentTimeOfDay}}</p>
+  <p [ngClass]="{'top':showSearch}" class="time">{{getData()}}</p>
   <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
     <img alt="Search" class="search-icon" src="assets/svg/search.svg"/>
   </div>
@@ -85,7 +85,7 @@
 </div>
 
 <div class="app-habits-container">
-  <app-habits></app-habits>
+  <router-outlet></router-outlet>
 </div>
 
 

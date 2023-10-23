@@ -7,7 +7,7 @@ import { AppConstants } from "../Constants/app-constant";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DisplayService } from "../Service/display.service";
-
+import { SidebarService } from "../Service/sidebar.service";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -34,7 +34,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   isCurrent: boolean = true;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: DisplayService) {
+  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: DisplayService, private sidebarService: SidebarService) {
   }
 
   ngOnInit() {
@@ -115,6 +115,14 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   showSortIcon() {
     this.showSearch = false;
+  }
+
+  getData() {
+    if (this.sidebarService.getIsAllHabitsValue())
+      return AppConstants.allHabits;
+    else {
+      return this.navService.getTimeOfDayValue();
+    }
   }
 
   ngOnDestroy(): void {

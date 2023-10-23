@@ -22,8 +22,13 @@ import { DialogService } from "primeng/dynamicdialog";
 import { InputNumberModule } from "primeng/inputnumber";
 import { DatePipe } from "@angular/common";
 import { MatSelectModule } from "@angular/material/select";
-import { ConfirmationService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { AllHabitsComponent } from "../all-habits/all-habits.component";
+import { TimeHabitsComponent } from "../time-habits/time-habits.component";
+import { ToastModule } from "primeng/toast";
+import { ConfirmPopupModule } from "primeng/confirmpopup";
+import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -31,7 +36,9 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     SidebarComponent,
     NavigationBarComponent,
     HabitsComponent,
-    HabitModalDialogueComponent
+    HabitModalDialogueComponent,
+    AllHabitsComponent,
+    TimeHabitsComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +50,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     ButtonModule,
     CalendarModule,
     SplitButtonModule,
+    MatDialogModule,
     MatMenuModule,
     MatButtonModule,
     MatIconModule,
@@ -51,9 +59,11 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
     InputNumberModule,
     InputTextModule,
     MatSelectModule,
-    ConfirmDialogModule
+    ToastModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
   ],
-  providers: [DialogService, DatePipe, ConfirmationService],
+  providers: [DialogService, DatePipe, MessageService, ConfirmationService, {provide: MAT_DIALOG_DATA, useValue: {}},],
   bootstrap: [AppComponent]
 })
 export class AppModule {

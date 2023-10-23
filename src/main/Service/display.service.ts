@@ -35,11 +35,18 @@ export class DisplayService {
     return this.getCalenderDisplayValue(date, 'MMM dd, yyyy');
   }
 
-  isSameDay(firstDate: Date, secondDate: Date): boolean {
+  isSameDay(firstDate: Date | string, secondDate: Date | string): boolean {
+    // Convert string representations to Date instances
+    const date1 = typeof firstDate === 'string' ? new Date(firstDate) : firstDate;
+    const date2 = typeof secondDate === 'string' ? new Date(secondDate) : secondDate;
+
+
+    // Check if they represent the same day
     return (
-      firstDate.getDate() === secondDate.getDate() &&
-      firstDate.getMonth() === secondDate.getMonth() &&
-      firstDate.getFullYear() === secondDate.getFullYear()
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
     );
   }
+
 }

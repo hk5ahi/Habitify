@@ -9,6 +9,7 @@ export const AppConstants = {
   Times: 'Times',
   Daily: 'Daily',
   Per_Day: 'Per Day',
+  allHabits: 'All Habits',
   habits_Order: 'My Habits Order',
   repeat: 'Repeat Every 2',
   months: 'Every month on the 1th',

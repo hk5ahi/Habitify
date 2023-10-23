@@ -5,7 +5,10 @@
   <div class="name-container">
     <div class="name-text">NAME</div>
     <div class="name-input">
-      <input [(ngModel)]="habitName" [matMenuTriggerFor]="habit" class="input-habit">
+
+      <input *ngIf="!isEditModal()" [(ngModel)]="habitName" [matMenuTriggerFor]="habit" class="input-habit">
+      <input *ngIf="isEditModal()" [(ngModel)]="habitName" class="input-habit">
+
       <div class="habit-icon">
         <img [src]=getIconSource() alt="Question Mark" class="mark">
       </div>
@@ -17,7 +20,8 @@
       <p-inputNumber (ngModelChange)="updateGoal(goalValue)"
                      *ngIf="!isWaterOrRunning()" [(ngModel)]="goalValue"
                      [max]="100"
-                     [min]="1" [showButtons]="true"
+                     [min]="1"
+                     [showButtons]="true" [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
       <p-inputNumber (ngModelChange)="updateGoal(goalWater)" *ngIf="habitName=='Drink Water'" [(ngModel)]="goalWater"
@@ -171,8 +175,14 @@
   </mat-menu>
   <div class="modal-footer">
     <div class="buttons">
+      <p-button (click)="delete(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
+                size="small"></p-button>
+      <p-button (click)="archive()" *ngIf="isEditModal()" class="archive" label="Archive" size="small"></p-button>
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
+      <p-toast></p-toast>
+      <p-confirmPopup></p-confirmPopup>
+
     </div>
   </div>
 

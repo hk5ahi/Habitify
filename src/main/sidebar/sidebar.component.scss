@@ -40,7 +40,6 @@
   flex-direction: row;
   align-items: center;
   padding: 7px;
-
 }
 
 .icon {
@@ -79,7 +78,7 @@
   top: 4.5px;
 }
 
-.item:hover {
+.item:not(.background-color):hover {
   background-color: #e7e7e7;
   cursor: default;
   border-radius: 5px;
@@ -91,20 +90,19 @@
   cursor: default;
 }
 
-.item:hover .item-container img.item-icon {
+.item:not(.background-color):hover .item-container img.item-icon {
   filter: brightness(0) invert(0); /* Adjust the color of the image to black on hover */
 }
 
-.habit-time:active .item-container img.item-icon {
-  filter: brightness(0) invert(1); /* Adjust the color of the image to white on click */
+.white-icon{
+  filter: brightness(0) invert(1);
 }
 
-.habit-time:active .text-container {
-  color: #fff; /* Set the text color to white */
+.white-text {
+  color: #fff !important; /* Set the text color to white */
 }
 
 .text-container {
-
   display: inline-block !important;
   width: 10.8125em !important;
   height: 1.725em !important;
@@ -181,3 +179,10 @@
 .plus {
   width: 1.0625em;
 }
+.background-color{
+  background-color: #2A67F4;
+  border-radius: 5px;
+  cursor: default;
+
+}
+
