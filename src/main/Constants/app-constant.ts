@@ -18,14 +18,15 @@ export const AppConstants = {
   Month: 'months',
   habitsKey: 'habits',
   gaolValue: 1,
-  goalWater:2000,
-  runningValue:3,
+  goalWater: 2000,
+  runningValue: 3,
   cyclingValue: 5,
   waterFrequency: 'MI',
   runningFrequency: 'Km',
   drinkWater: 'Drink Water',
   running: 'Running',
   cycling: 'Cycling',
+
 
 };
 
@@ -38,6 +39,15 @@ export enum TimeOfDay {
 
 type IconMap = {
   [key: string]: string;
+};
+export const daysMapping: { [key: string]: string } = {
+  'Mon': 'Monday',
+  'Tue': 'Tuesday',
+  'Wed': 'Wednesday',
+  'Thu': 'Thursday',
+  'Fri': 'Friday',
+  'Sat': 'Saturday',
+  'Sun': 'Sunday'
 };
 
 export enum daysOfWeek {
@@ -67,3 +77,4 @@ export const iconMap: IconMap = {
   "Get Good Sleep": "assets/svg/sleep-blue.svg",
   "Take A Cold Shower": "assets/svg/sleep-blue.svg",
 }
+export const activeTabIndices = [0, 1, 2]

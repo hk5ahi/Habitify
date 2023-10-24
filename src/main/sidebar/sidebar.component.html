@@ -31,8 +31,9 @@
     <ng-container *ngIf="calculateTimeOfDay()=='Morning'">
       <div [routerLink]="['/time-of-day']" class="item habit-time" (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}">
         <div class="item-container">
-          <img alt="Morning" class="item-icon" src="assets/svg/afternoon.svg">
-          <span class="text-container">Morning</span>
+          <img alt="Morning" class="item-icon" src="assets/svg/afternoon.svg" [ngClass]="{'white-icon':isTimeHabits}">
+          <span class="text-container"  [ngClass]="{'white-text':isTimeHabits}">Morning</span>
+
         </div>
       </div>
     </ng-container>
@@ -40,8 +41,8 @@
     <ng-container *ngIf="calculateTimeOfDay()=='Evening'">
       <div [routerLink]="['/time-of-day']" class="item habit-time" [ngClass]="{'background-color':isTimeHabits}" (click)="updateIsTimeHabits()">
         <div class="item-container">
-          <img alt="Evening" class="item-icon" src="assets/svg/afternoon.svg">
-          <span class="text-container">Evening</span>
+          <img alt="Evening" class="item-icon" src="assets/svg/afternoon.svg" [ngClass]="{'white-icon':isTimeHabits}">
+          <span class="text-container"  [ngClass]="{'white-text':isTimeHabits}">Evening</span>
         </div>
       </div>
     </ng-container>

@@ -2,88 +2,6 @@
   margin: 0;
 }
 
-.empty-template {
-  width: 18.625em; /* 298px / 16 */
-  height: 17.8125em; /* 285px / 16 */
-  position: relative;
-  top: 20.75em;
-  right: -29.5em;
-}
-
-.habits {
-  width: 77.625em; /* 1242px / 16 */
-  height: 59.5625em; /* 953px / 16 */
-  border-right: 1px solid rgb(234, 234, 234);
-  position: relative;
-  right: -15.05em;
-}
-
-.images-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin: 0 0 2.1875em;
-}
-
-.images-container img {
-  margin: 10px; /* Add margin between images if needed */
-}
-
-.bold-text {
-  height: 1.125em;
-  width: 19.8em;
-  font-family: "Inter", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.125em;
-  color: rgb(0, 0, 0);
-  margin-bottom: 6px;
-  text-align: center;
-}
-
-.light-text {
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 18px;
-  color: rgb(123, 124, 124);
-  height: 2.25em;
-  width: 22.9em;
-  text-align: center;
-}
-
-::ng-deep .add {
-
-  width: 8.5em;
-  line-height: 1.125em;
-  font-weight: 500;
-  height: 2.5em;
-  font-size: 12px;
-  color: black;
-  background-color: rgb(255, 255, 255);
-  font-family: Inter, sans-serif;
-  cursor: default;
-  border-radius: 5px;
-  border: 1px solid rgb(237, 237, 237);
-}
-
-.image {
-  margin: 0 0 0.5em !important;
-}
-
-.add {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  right: -7.5em;
-  margin-top: 1.1875em;
-}
-
-.last-image {
-  margin: 0 !important;
-}
 
 .habit {
   width: 1242px;
@@ -95,6 +13,7 @@
   position: relative;
   -webkit-box-align: center;
   align-items: center;
+
 }
 
 .habit-identification {
@@ -185,6 +104,15 @@
 
 }
 
+.log {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 30px;
+  color: rgb(0, 0, 0);
+  margin-left: 8px;
+}
+
 ::ng-deep .pi {
   width: 1em;
   height: 1em;
@@ -233,21 +161,83 @@
   }
 }
 
-.accord {
-  width: 1242px;
-  height: 44px;
+.canceled-text {
+  text-decoration: line-through;
 }
 
-::ng-deep .p-accordion .p-accordion-content {
-  padding: 0;
-  border: none;
-  background: #ffffff;
-  color: #212529;
+::ng-deep .log-button {
+  width: 62.5px !important;
+  height: 30px !important;
+  padding: 0 8px !important;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 3px;
+  margin-right: 1em !important;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+::ng-deep .log-habit-bar {
+  width: 152.3px !important;
+  height: 30px;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 3px;
+  margin-right: 1em !important;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-left: -5.1875em;
+}
+
+.log-input {
+  width: 59px;
+  min-width: 0;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  height: 30px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 30px;
+  cursor: default;
+  outline: transparent solid 2px;
+  border-color: inherit;
+  background: inherit;
+  border-width: 0;
+}
+
+.log-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px !important;
+  font-weight: 500;
+  line-height: 30px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  white-space: nowrap;
 
 }
 
-::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
-  border: none;
-  background: #ffffff;
+.log-tick-icon {
+  width: 32px;
+  height: 30px;
+  padding: 0 6px 0 14px;
+
+}
+
+.log-cross-icon {
+  width: 18px;
+  height: 30px;
+  padding: 0 0 0 6px;
 
 }

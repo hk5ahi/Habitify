@@ -1,35 +1,22 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
-import { HabitService } from "../Service/habit.service";
-import { Subscription } from "rxjs";
-import { iconMap } from "../Constants/app-constant";
-import { MatMenuTrigger } from "@angular/material/menu";
-
+import { activeTabIndices, AppConstants } from "../Constants/app-constant";
 
 @Component({
   selector: 'app-habits',
   templateUrl: './habits.component.html',
   styleUrls: ['./habits.component.scss']
 })
-export class HabitsComponent implements OnInit, OnDestroy {
+export class HabitsComponent {
 
-  @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
+  @Input() habits: Habit[] = [];
+  protected readonly AppConstants = AppConstants;
+  protected readonly activeTabIndices = activeTabIndices;
 
-  habits: Habit[] = [];
-  private habitsSubscription!: Subscription;
-
-  constructor(private dialogService: DialogService, private habitService: HabitService) {
+  constructor(private dialogService: DialogService) {
   }
-
-  ngOnInit(): void {
-    this.habitsSubscription = this.habitService.habitSubject.subscribe((habits: Habit[]) => {
-      // Filter habits with isArchived === false
-      this.habits = habits.filter(habit => !habit.isArchived);
-    });
-  }
-
 
   hasHabits(): boolean {
     return this.habits.length > 0;
@@ -39,28 +26,59 @@ export class HabitsComponent implements OnInit, OnDestroy {
     this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
-  ngOnDestroy() {
-    this.habitsSubscription.unsubscribe();
+  isHabitCompleted(): boolean {
+    // Assuming habits is an array of Habit objects
+    return this.habits.some(habit => habit.isCompleted);
   }
 
-  getHabitIcon(habit: Habit): string {
-    return iconMap[habit.name] || 'assets/svg/mark.svg';
+  getCompletedHabitsCount(): number {
+    // Assuming habits is an array of Habit objects
+    return this.habits.filter(habit => habit.isCompleted).length;
   }
 
-  openEditHabitMenu(event: MouseEvent) {
-    event.preventDefault();
-    this.editHabitTrigger.openMenu();
+  getSkippedHabitsCount(): number {
 
+    return this.habits.filter(habit => habit.isSkipped).length;
   }
 
-  openEditModal(habit: Habit) {
+  getFailedHabitsCount(): number {
+    // Assuming habits is an array of Habit objects
+    return this.habits.filter(habit => habit.isFailed).length;
+  }
 
-    this.dialogService.open(HabitModalDialogueComponent, {
-      data: {
-        habit: habit,
-        editModal: true
-      }
-    });
+  getSuccessHeader(): string {
+    return `${this.getCompletedHabitsCount()} Success`;
+  }
 
+  getSkipHeader() {
+    return `${this.getSkippedHabitsCount()} Skip`;
+  }
+
+  isHabitSkipped() {
+    return this.habits.some(habit => habit.isSkipped);
+  }
+
+  getFailHeader() {
+    return `${this.getFailedHabitsCount()} Fail`;
+  }
+
+  isHabitFailed() {
+    return this.habits.some(habit => habit.isFailed);
+  }
+
+  sendCompletedHabits() {
+    return this.habits.filter(habit => habit.isCompleted);
+  }
+
+  sendSkippedHabits() {
+    return this.habits.filter(habit => habit.isSkipped);
+  }
+
+  sendFailedHabits() {
+    return this.habits.filter(habit => habit.isFailed);
+  }
+
+  sendHabits(): Habit[] {
+    return this.habits.filter(habit => !habit.isCompleted && !habit.isSkipped && !habit.isFailed);
   }
 }

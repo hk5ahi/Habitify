@@ -17,48 +17,74 @@
   <div class="goal-container">
     <div class="goal-text">GOAL</div>
     <div class="goal-input-container">
-      <p-inputNumber (ngModelChange)="updateGoal(goalValue)"
+      <p-inputNumber (ngModelChange)="onGoalChange($event)"
                      *ngIf="!isWaterOrRunningOrCycling()" [(ngModel)]="goalValue"
                      [max]="100"
                      [min]="1"
                      [showButtons]="true" [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <p-inputNumber (ngModelChange)="updateGoal(goalWater)" *ngIf="habitName=='Drink Water'" [(ngModel)]="goalWater"
+
+      <p-inputNumber (ngModelChange)="onGoalChange($event)" *ngIf="habitName==AppConstants.drinkWater"
+                     [(ngModel)]="goalWater"
                      [max]="30000"
                      [min]="100"
                      [showButtons]="true"
                      [step]="100"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <p-inputNumber (ngModelChange)="updateGoal(runningValue)" *ngIf="habitName=='Running'" [(ngModel)]="runningValue"
+      <p-inputNumber (ngModelChange)="onGoalChange($event)" *ngIf="habitName==AppConstants.running"
+                     [(ngModel)]="runningValue"
                      [max]="50" [min]="1"
                      [showButtons]="true"
                      [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <p-inputNumber (ngModelChange)="updateGoal(cyclingValue)" *ngIf="habitName=='Cycling'" [(ngModel)]="cyclingValue"
+      <p-inputNumber (ngModelChange)="onGoalChange($event)" *ngIf="habitName==AppConstants.cycling"
+                     [(ngModel)]="cyclingValue"
                      [max]="50" [min]="1"
                      [showButtons]="true"
                      [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <div *ngIf="!isWaterOrRunningOrCycling()" [matMenuTriggerFor]="frequency"
+      <div *ngIf="!isWaterOrRunningOrCycling() && !isEditModal()" [matMenuTriggerFor]="frequency"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div *ngIf="habitName=='Drink Water'" [matMenuTriggerFor]="Waterfrequency" class="input-wrapper">
+      <div *ngIf="!isWaterOrRunningOrCycling() && isEditModal()"
+           class="input-wrapper">
+        <input [(ngModel)]="goalFrequency" class="goal-frequency"
+               readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div *ngIf="habitName==AppConstants.drinkWater && !isEditModal()" [matMenuTriggerFor]="Waterfrequency"
+           class="input-wrapper">
         <input (ngModelChange)="updateFrequency(waterFrequency)" [(ngModel)]="waterFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div *ngIf="habitName=='Running'|| habitName=='Cycling'" [matMenuTriggerFor]="Runningfrequency"
+      <div *ngIf="habitName==AppConstants.drinkWater && isEditModal()" class="input-wrapper">
+        <input [(ngModel)]="waterFrequency" class="goal-frequency"
+               readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && !isEditModal()"
+           [matMenuTriggerFor]="Runningfrequency"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(runningFrequency)" [(ngModel)]="runningFrequency" class="goal-frequency"
+               readonly/>
+        <img alt="Up" class="up" src="assets/svg/up.svg"/>
+        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+      </div>
+      <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && isEditModal()"
+           class="input-wrapper">
+        <input [(ngModel)]="runningFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -175,9 +201,9 @@
   </mat-menu>
   <div class="modal-footer">
     <div class="buttons">
-      <p-button (click)="delete(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
+      <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
                 size="small"></p-button>
-      <p-button (click)="archive()" *ngIf="isEditModal()" class="archive" label="Archive" size="small"></p-button>
+      <p-button (click)="archiveHabit()" *ngIf="isEditModal()" class="archive" label="Archive" size="small"></p-button>
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
       <p-toast></p-toast>
@@ -189,6 +215,7 @@
   <mat-menu #calender="matMenu" [hasBackdrop]="false" class="calender-container" overlapTrigger="false">
     <p-calendar
       (click)="onCalendarClick($event)"
+      (onSelect)="onStartDateSelect($event)"
       [(ngModel)]="startSelectedDate"
       [inline]="true"
       [showIcon]="false"
@@ -259,32 +286,32 @@
   </mat-menu>
   <mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
     <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 2'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 2')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 2
     </button>
     <button (click)="updateIntervalPerDays('Repeat Every 3')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 3'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 3')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 3
     </button>
     <button (click)="updateIntervalPerDays('Repeat Every 4')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 4'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 4')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 4
     </button>
     <button (click)="updateIntervalPerDays('Repeat Every 5')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 5'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 5')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 5
     </button>
     <button (click)="updateIntervalPerDays('Repeat Every 6')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 6'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 6')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 6
     </button>
     <button (click)="updateIntervalPerDays('Repeat Every 7')" mat-menu-item>
-      <img [ngClass]="{'show': intervalPerDays ==='Repeat Every 7'}" alt="tick" class="interval-tick-icon"
+      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 7')}" alt="tick" class="interval-tick-icon"
            src="assets/svg/tick.svg"/>
       Repeat Every 7
     </button>

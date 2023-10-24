@@ -29,6 +29,8 @@ import { TimeHabitsComponent } from "../time-habits/time-habits.component";
 import { ToastModule } from "primeng/toast";
 import { ConfirmPopupModule } from "primeng/confirmpopup";
 import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
+import { AccordionModule } from "primeng/accordion";
+import { SingleHabitComponent } from "../single-habit/single-habit.component";
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
     HabitsComponent,
     HabitModalDialogueComponent,
     AllHabitsComponent,
-    TimeHabitsComponent
+    TimeHabitsComponent,
+    SingleHabitComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
     ToastModule,
     ConfirmDialogModule,
     ConfirmPopupModule,
+    AccordionModule,
   ],
   providers: [DialogService, DatePipe, MessageService, ConfirmationService, {provide: MAT_DIALOG_DATA, useValue: {}},],
   bootstrap: [AppComponent]

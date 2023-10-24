@@ -671,17 +671,20 @@
 ::ng-deep .cdk-overlay-pane {
   margin-top: 2px;
 }
-::ng-deep .p-confirm-popup{
-  width:28em;
-  left:737px;
-  top:-12px;
+
+::ng-deep .p-confirm-popup {
+  width: 28em;
+  left: 737px;
+  top: -12px;
 }
-::ng-deep .p-button.p-button-text{
-  color:#ffffff;
+
+::ng-deep .p-button.p-button-text {
+  color: #ffffff;
 }
-::ng-deep .delete .p-button{
-  width:71.2px;
-  height:30px;
+
+::ng-deep .delete .p-button {
+  width: 71.2px;
+  height: 30px;
   display: inline-flex;
   appearance: none;
   -webkit-box-align: center;
@@ -690,13 +693,13 @@
   justify-content: center;
   user-select: none;
   position: absolute;
-  right:30em;
+  right: 30em;
   vertical-align: middle;
   outline-offset: 2px;
   line-height: 30px;
   font-weight: 500;
   font-size: 12px;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   color: rgb(210, 55, 55);
   background-color: rgb(255, 255, 255);
   margin-right: 8px;
@@ -708,6 +711,7 @@
   border-color: rgb(229, 228, 229);
   border-image: initial;
 }
+
 ::ng-deep .archive .p-button {
   width: 6.2em;
   background: #ffffff !important;
@@ -719,6 +723,6 @@
   font-weight: 500;
   color: #000000;
   border-color: rgb(229, 228, 229);
-  position:absolute;
-  right:23.2em;
+  position: absolute;
+  right: 23.2em;
 }

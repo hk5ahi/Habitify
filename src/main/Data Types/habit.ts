@@ -10,4 +10,8 @@ export interface Habit {
   repeat: string;
   startDate: Date;
   isArchived: boolean;
+  isCompleted: boolean;
+  isSkipped: boolean;
+  isFailed: boolean;
+  showLogValueBar: boolean;
 }

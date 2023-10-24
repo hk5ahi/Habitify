@@ -24,7 +24,11 @@ export class HabitService {
       timeOfDay: timeOfDay,
       repeat: repeat,
       startDate: startDate,
-      isArchived: false
+      isArchived: false,
+      isCompleted: false,
+      isSkipped: false,
+      isFailed: false,
+      showLogValueBar: false
     };
 
     this.habits.push(newHabit);
@@ -46,7 +50,6 @@ export class HabitService {
   }
 
   updateHabit(receivedHabit: Habit) {
-    console.log(receivedHabit);
     const index = this.habits.findIndex((h: Habit) => h.id === receivedHabit.id);
 
     if (index !== -1) {
@@ -66,6 +69,33 @@ export class HabitService {
     }
   }
 
+  toggleCompleteHabit(habit: Habit, status: boolean) {
+    const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+    this.habits[index].isCompleted = status;
+    this.habitSubject.next(this.habits);
+    this.saveHabitsToLocalStorage();
+  }
+
+  toggleSkipHabit(habit: Habit, status: boolean) {
+    const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+    this.habits[index].isSkipped = status;
+    this.habitSubject.next(this.habits);
+    this.saveHabitsToLocalStorage();
+  }
+
+  toggleFailHabit(habit: Habit, status: boolean) {
+    const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+    this.habits[index].isFailed = status;
+    this.habitSubject.next(this.habits);
+    this.saveHabitsToLocalStorage();
+  }
+
+  toggleLogValueBar() {
+    this.habits.forEach((habit: Habit) => {
+      habit.showLogValueBar = false;
+    });
+  }
+
   private loadHabitsFromLocalStorage(): void {
     const storedHabits = localStorage.getItem(AppConstants.habitsKey);
     if (storedHabits) {
@@ -77,5 +107,4 @@ export class HabitService {
   private saveHabitsToLocalStorage(): void {
     localStorage.setItem(AppConstants.habitsKey, JSON.stringify(this.habits));
   }
-
 }

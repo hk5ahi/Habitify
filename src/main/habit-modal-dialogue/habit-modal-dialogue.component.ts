@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
-import { AppConstants, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
+import { AppConstants, daysMapping, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
 import { CalenderDisplayService } from "../Service/calender-display.service";
 import { HabitService } from "../Service/habit.service";
 import { ConfirmationService, MessageService } from "primeng/api";
@@ -41,6 +41,7 @@ export class HabitModalDialogueComponent implements OnInit {
   repeatValue!: string;
   protected readonly TimeOfDay = TimeOfDay;
   protected readonly daysOfWeek = daysOfWeek;
+  protected readonly AppConstants = AppConstants;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -106,27 +107,83 @@ export class HabitModalDialogueComponent implements OnInit {
     return iconMap[this.habitName] || 'assets/svg/mark.svg';
   }
 
-  checkDays(day: string) {
-    return this.days.includes(day);
+  checkDays(day: string): boolean {
+    if (this.editModal) {
+      const repeat = (this.receivedHabit?.repeat as string).toLowerCase();
+      const dayToCheck = day.toLowerCase();
+
+      // Check if the repeat string contains either the abbreviated or full name of the day
+      return repeat === 'daily' || repeat.includes(dayToCheck) || repeat.includes(dayToCheck.substring(0, 3));
+
+    } else {
+      return this.days.includes(day);
+    }
   }
 
+
   updateIntervalPerDays(selectedInterval: string) {
-    this.intervalPerDays = selectedInterval;
-    this.checkRepeat = AppConstants.interval;
+
+    if (this.editModal) {
+      this.receivedHabit.repeat = selectedInterval;
+      this.intervalPerDays = selectedInterval;
+
+    } else {
+      this.intervalPerDays = selectedInterval;
+      this.repeatValue = selectedInterval;
+      this.checkRepeat = AppConstants.interval;
+    }
   }
 
   toggleDay(day: string): void {
-    const index = this.days.indexOf(day);
+    const allDays = Object.values(daysOfWeek);
 
-    if (index !== -1 && this.days.length > 1) {
+    if (this.editModal) {
+
+
+      let daysArray: string[] = [];
+
+      if (this.receivedHabit.repeat === AppConstants.Daily) {
+        daysArray = [...allDays];
+      } else {
+
+        const isValidRepeat = this.receivedHabit.repeat
+          .split(',')
+          .map(day => day.trim())
+          .some(day => Object.keys(daysMapping).includes(day) || Object.values(daysMapping).includes(day));
+
+        if (isValidRepeat) {
+          daysArray = this.receivedHabit.repeat.split(',').map(day => daysMapping[day.trim()]);
+        }
+      }
+
+      daysArray = this.updateDaysArray(day, daysArray);
+      this.checkRepeat = AppConstants.days;
+      this.repeatValue = this.getRepeatValueForDays(allDays, daysArray);
+      this.receivedHabit.repeat = this.repeatValue;
+    } else {
+      this.days = this.updateDaysArray(day, this.days);
+      this.checkRepeat = AppConstants.days;
+      this.repeatValue = this.getRepeatValueForDays(allDays, this.days);
+    }
+  }
+
+  updateDaysArray(day: string, daysArray: string[]): string[] {
+    const updatedDaysArray = [...daysArray]; // Create a copy of the array
+
+    const index = updatedDaysArray.indexOf(day);
+
+    if (index !== -1 && updatedDaysArray.length > 1) {
       // If the day is present and there is more than one day, remove it
-      this.days.splice(index, 1);
+      updatedDaysArray.splice(index, 1);
+
     } else if (index === -1) {
       // If the day is not present, add it
-      this.days.push(day);
+      updatedDaysArray.push(day);
     }
-    this.checkRepeat = AppConstants.days;
+
+    return updatedDaysArray; // Return the modified array
   }
+
 
   updateGoalFrequency(selectedFrequency: string) {
 
@@ -148,16 +205,26 @@ export class HabitModalDialogueComponent implements OnInit {
 
     if (repeatValue === AppConstants.Daily) {
       return AppConstants.days;
-    } else if (repeatValue.includes(',')) {
-      // If repeatValue contains a comma, assume it's a list of days
+    } else if (this.containsDaysOfWeek(repeatValue)) {
+      // If repeatValue contains days of the week, assume it's a daily repeat
       return AppConstants.days;
-    } else if (repeatValue.includes('/')) {
+    } else if (this.containsDateSeparator(repeatValue)) {
       // If repeatValue contains a forward slash, assume it's a date
       return AppConstants.Month;
     } else {
       // If none of the above conditions are met, assume it's an interval
       return AppConstants.interval;
     }
+  }
+
+  containsDaysOfWeek(repeatValue: string): boolean {
+
+    return [...Object.keys(daysMapping), ...Object.values(daysMapping)].some(day => repeatValue.includes(day));
+  }
+
+
+  containsDateSeparator(repeatValue: string): boolean {
+    return repeatValue.includes('/');
   }
 
 
@@ -177,6 +244,7 @@ export class HabitModalDialogueComponent implements OnInit {
     } else if (this.checkRepeat === AppConstants.interval) {
       return this.receivedHabit?.repeat as string;
     } else {
+      this.receivedHabit.repeat = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
       return this.months as string;
     }
   }
@@ -185,7 +253,7 @@ export class HabitModalDialogueComponent implements OnInit {
     const allDays = Object.values(daysOfWeek);
 
     if (this.checkRepeat === AppConstants.days) {
-      return this.getRepeatValueForDays(allDays);
+      return this.getRepeatValueForDays(allDays, this.days);
     } else if (this.checkRepeat === AppConstants.interval) {
       return this.intervalPerDays as string;
     } else {
@@ -194,6 +262,7 @@ export class HabitModalDialogueComponent implements OnInit {
   }
 
   getDayValueForDays(): string {
+
     return this.receivedHabit?.repeat === AppConstants.Daily
       ? AppConstants.Daily
       : this.getAbbreviatedDays();
@@ -201,23 +270,30 @@ export class HabitModalDialogueComponent implements OnInit {
 
   // Returns the abbreviated days like 'Mon, Tue, Wed'
   getAbbreviatedDays(): string {
-    const dayArray = (this.receivedHabit?.repeat as string).split(' ');
-    const abbreviatedDays = dayArray.map(day => day.substring(0, 3));
+    const dayArray = (this.receivedHabit?.repeat as string).split(',');
+    const abbreviatedDays = dayArray.map(day => {
+      const trimmedDay = day.trim().toLowerCase(); // Convert to lowercase for case-insensitive comparison
+      return trimmedDay.length === 3 ? trimmedDay : trimmedDay.substring(0, 3);
+    });
     return abbreviatedDays.join(', ');
   }
 
-  getRepeatValueForDays(allDays: string[]): string {
-    if (this.areArraysEqual(this.days, allDays)) {
+
+  getRepeatValueForDays(allDays: string[], days: string[]): string {
+
+
+    if (this.areArraysEqual(days, allDays)) {
+
       this.repeatValue = AppConstants.Daily;
       return this.repeatValue as string;
     } else {
-      this.repeatValue = this.days.join(' ');
-      return this.getAbbreviatedDaysForNonEditModal();
+      this.repeatValue = days.join(' ');
+      return this.getAbbreviatedDaysForNonEditModal(days);
     }
   }
 
-  getAbbreviatedDaysForNonEditModal(): string {
-    const selectedDays = this.days.map(day => day.substring(0, 3));
+  getAbbreviatedDaysForNonEditModal(days: string[]): string {
+    const selectedDays = days.map(day => day.substring(0, 3));
     return selectedDays.join(',');
   }
 
@@ -225,7 +301,6 @@ export class HabitModalDialogueComponent implements OnInit {
     this.repeatValue = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
     return this.months as string;
   }
-
 
   areArraysEqual(firstArray: string[], secondArray: string[]): boolean {
     if (firstArray.length !== secondArray.length) {
@@ -237,7 +312,13 @@ export class HabitModalDialogueComponent implements OnInit {
   }
 
   updateFrequencyPeriod(selectedFrequency: string) {
-    this.frequencyPerPeriod = selectedFrequency;
+    if (this.editModal) {
+      this.receivedHabit.frequencyPerPeriod = selectedFrequency;
+      this.frequencyPerPeriod = selectedFrequency;
+    } else {
+      this.frequencyPerPeriod = selectedFrequency;
+
+    }
   }
 
   updateTimeOfDay(selectedTime: TimeOfDay) {
@@ -288,6 +369,7 @@ export class HabitModalDialogueComponent implements OnInit {
   }
 
   onDateSelect(selectedDate: Date) {
+
     // Check if the date is already present in the array
     const isDateSelected = this.selectedDates.some(date => date.getDate() === selectedDate.getDate() && date.getMonth() === selectedDate.getMonth());
 
@@ -300,7 +382,11 @@ export class HabitModalDialogueComponent implements OnInit {
       // If the date is not present, add it
       this.selectedDates.push(selectedDate);
     }
+
     this.checkRepeat = AppConstants.Month;
+    if (this.editModal) {
+      this.receivedHabit.repeat = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
+    }
   }
 
   isSelected(selectedDate: any): boolean {
@@ -308,7 +394,11 @@ export class HabitModalDialogueComponent implements OnInit {
   }
 
   updateHabitName(value: string) {
-    this.habitName = value;
+    if (this.editModal) {
+      this.receivedHabit.name = value;
+    } else {
+      this.habitName = value;
+    }
   }
 
   updateWaterGoalFrequency(times: string) {
@@ -351,6 +441,12 @@ export class HabitModalDialogueComponent implements OnInit {
     this.ref.close();
   }
 
+  onGoalChange(value: number) {
+    setTimeout(() => {
+      this.updateGoal(value);
+    });
+  }
+
   updateGoal(value: number) {
 
     if (this.editModal) {
@@ -367,22 +463,44 @@ export class HabitModalDialogueComponent implements OnInit {
     } else {
       this.frequency = value;
     }
-
   }
 
-  delete(habit: Habit) {
+  deleteHabit(habit: Habit) {
 
     this.habitService.deleteHabit(habit);
     this.ref.close();
   }
 
-  archive() {
+  archiveHabit() {
     this.habitService.archiveHabit(this.receivedHabit);
     this.ref.close();
   }
 
   isEditModal() {
     return this.editModal;
+  }
+
+  checkIntervalPerDays(repeat: string) {
+    if (this.editModal) {
+
+      if (this.receivedHabit.repeat === repeat) {
+        return true;
+      }
+    } else {
+      if (this.intervalPerDays === repeat) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  onStartDateSelect(date: Date) {
+
+    if (this.editModal) {
+      this.receivedHabit.startDate = date;
+    } else {
+      this.selectedDate = date;
+    }
   }
 
   private getHabitGoalValue(): number {

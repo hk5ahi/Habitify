@@ -1,79 +1,39 @@
 <div class="habits">
-  <div #habit *ngFor="let habit of habits" class="habit"
-       (contextmenu)="openEditHabitMenu($event)">
-    <div class="habit-identification">
-      <img [src]="getHabitIcon(habit)" alt="habit" class="icon">
-    </div>
-    <div class="habit-content">
-      <div class="minor-details">
-        <div class="habit-name">
-          {{habit.name}}
-        </div>
-        <div class="habit-frequency">
-          0 / 1 times
-        </div>
-      </div>
-      <button class="done-button" pButton type="button">
-        <i class="pi pi-check" style="font-size: 0.88rem"></i>
-        <span class="done">Done</span>
-      </button>
-      <button [matMenuTriggerFor]="editHabit" class="more-button" pButton type="button">
-        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
-      </button>
 
+  <app-single-habit [habits]="sendHabits()"></app-single-habit>
+  <div>
+    <p-accordion [activeIndex]=activeTabIndices [multiple]="true">
+      <p-accordionTab *ngIf="isHabitCompleted()" [header]="getSuccessHeader()" class="accord">
+        <app-single-habit [habits]="sendCompletedHabits()"></app-single-habit>
+      </p-accordionTab>
+      <p-accordionTab *ngIf="isHabitSkipped()" [header]="getSkipHeader()" class="accord">
+        <app-single-habit [habits]="sendSkippedHabits()"></app-single-habit>
+      </p-accordionTab>
+      <p-accordionTab *ngIf="isHabitFailed()" [header]="getFailHeader()" class="accord">
+        <app-single-habit [habits]="sendFailedHabits()"></app-single-habit>
+      </p-accordionTab>
 
-    </div>
-    <mat-menu #editHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
-      <button mat-menu-item>
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/tick.svg"/>
-        Check-In
-      </button>
-      <button mat-menu-item>
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/skip.svg"/>
-        Skip
-      </button>
-      <button mat-menu-item>
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/fail.svg"/>
-        Fail
-      </button>
-      <button mat-menu-item>
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/log.svg"/>
-        Log Progress
-      </button>
-      <button mat-menu-item (click)="openEditModal(habit)">
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/edit.svg"/>
-        Edit
-      </button>
-      <button mat-menu-item>
-        <img alt="tick" class="edit-habit-icon"
-             src="assets/svg/view-progress.svg"/>
-        View Progress
-      </button>
-
-    </mat-menu>
+    </p-accordion>
   </div>
-  <div *ngIf="!hasHabits()" class="empty-template">
-    <div class="images-container">
-      <img alt="image1" class="image" src="assets/svg/image1.svg">
-      <img alt="image2" class="image" src="assets/svg/image2.svg">
-      <img alt="image3" class="last-image" src="assets/svg/image3.svg">
-    </div>
-    <div class="bold-text">
-      The Start of a Better You!
-    </div>
-    <div class="light-text">
-      Habits are like dominos. As one is formed, all others will follow!
-    </div>
 
-    <button (click)="openDialog()" class="add">
-      <mat-icon class="add-icon">add</mat-icon>
-      <span class="button-text">Add Habits</span>
-    </button>
-  </div>
 </div>
+<div *ngIf="!hasHabits()" class="empty-template">
+  <div class="images-container">
+    <img alt="image1" class="image" src="assets/svg/image1.svg">
+    <img alt="image2" class="image" src="assets/svg/image2.svg">
+    <img alt="image3" class="last-image" src="assets/svg/image3.svg">
+  </div>
+  <div class="bold-text">
+    The Start of a Better You!
+  </div>
+  <div class="light-text">
+    Habits are like dominos. As one is formed, all others will follow!
+  </div>
+
+  <button (click)="openDialog()" class="add">
+    <mat-icon class="add-icon">add</mat-icon>
+    <span class="button-text">Add Habits</span>
+  </button>
+</div>
+
 
