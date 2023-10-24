@@ -17,6 +17,16 @@ export const AppConstants = {
   interval: 'interval',
   Month: 'months',
   habitsKey: 'habits',
+  gaolValue: 1,
+  goalWater:2000,
+  runningValue:3,
+  cyclingValue: 5,
+  waterFrequency: 'MI',
+  runningFrequency: 'Km',
+  drinkWater: 'Drink Water',
+  running: 'Running',
+  cycling: 'Cycling',
+
 };
 
 export enum TimeOfDay {

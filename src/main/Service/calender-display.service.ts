@@ -5,7 +5,7 @@ import { DatePipe } from "@angular/common";
 @Injectable({
   providedIn: 'root'
 })
-export class DisplayService {
+export class CalenderDisplayService {
   constructor(private datePipe: DatePipe) {
   }
 

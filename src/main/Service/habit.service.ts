@@ -30,7 +30,6 @@ export class HabitService {
     this.habits.push(newHabit);
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
-
   }
 
   deleteHabit(habit: Habit) {
@@ -44,19 +43,6 @@ export class HabitService {
     this.habits[index].isArchived = true;
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
-  }
-
-  private loadHabitsFromLocalStorage(): void {
-    const storedHabits = localStorage.getItem(AppConstants.habitsKey);
-    if (storedHabits) {
-      this.habits = JSON.parse(storedHabits);
-
-      this.habitSubject.next(this.habits);
-    }
-  }
-
-  private saveHabitsToLocalStorage(): void {
-    localStorage.setItem(AppConstants.habitsKey, JSON.stringify(this.habits));
   }
 
   updateHabit(receivedHabit: Habit) {
@@ -73,13 +59,23 @@ export class HabitService {
       this.habits[index].repeat = receivedHabit.repeat;
       this.habits[index].startDate = receivedHabit.startDate;
       this.habits[index].isArchived = receivedHabit.isArchived;
-
       // Notify subscribers about the change
       this.habitSubject.next(this.habits);
-
       // Save updated habits to localStorage
       this.saveHabitsToLocalStorage();
     }
+  }
+
+  private loadHabitsFromLocalStorage(): void {
+    const storedHabits = localStorage.getItem(AppConstants.habitsKey);
+    if (storedHabits) {
+      this.habits = JSON.parse(storedHabits);
+      this.habitSubject.next(this.habits);
+    }
+  }
+
+  private saveHabitsToLocalStorage(): void {
+    localStorage.setItem(AppConstants.habitsKey, JSON.stringify(this.habits));
   }
 
 }

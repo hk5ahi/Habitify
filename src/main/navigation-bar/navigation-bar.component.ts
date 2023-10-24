@@ -6,7 +6,7 @@ import { MatMenuTrigger } from "@angular/material/menu";
 import { AppConstants } from "../Constants/app-constant";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
-import { DisplayService } from "../Service/display.service";
+import { CalenderDisplayService } from "../Service/calender-display.service";
 import { SidebarService } from "../Service/sidebar.service";
 
 @Component({
@@ -34,7 +34,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   isCurrent: boolean = true;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: DisplayService, private sidebarService: SidebarService) {
+  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: CalenderDisplayService, private sidebarService: SidebarService) {
   }
 
   ngOnInit() {

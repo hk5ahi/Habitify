@@ -18,7 +18,7 @@
     <div class="goal-text">GOAL</div>
     <div class="goal-input-container">
       <p-inputNumber (ngModelChange)="updateGoal(goalValue)"
-                     *ngIf="!isWaterOrRunning()" [(ngModel)]="goalValue"
+                     *ngIf="!isWaterOrRunningOrCycling()" [(ngModel)]="goalValue"
                      [max]="100"
                      [min]="1"
                      [showButtons]="true" [step]="1"
@@ -43,7 +43,7 @@
                      [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <div *ngIf="!isWaterOrRunning()" [matMenuTriggerFor]="frequency"
+      <div *ngIf="!isWaterOrRunningOrCycling()" [matMenuTriggerFor]="frequency"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>

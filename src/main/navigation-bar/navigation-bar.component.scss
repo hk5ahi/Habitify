@@ -128,8 +128,6 @@ input::placeholder {
   background: #2A67F4;
 }
 
-/* Remove background color for non-selected dates when the calendar is open */
-
 ::ng-deep .p-datepicker table td.today span,
 ::ng-deep .p-datepicker table td.ui-state-active span {
   color: #ffffff;
@@ -293,7 +291,6 @@ input::placeholder {
 }
 
 .button-text {
-
   width: 5em !important;
   height: 2.5em !important;
 }
@@ -323,7 +320,6 @@ input::placeholder {
   padding: 0 6px 0 10px !important;
   width: 13em !important;
   min-height: 1.875em !important;
-
 }
 
 ::ng-deep .mat-mdc-menu-item:hover {
@@ -343,9 +339,7 @@ input::placeholder {
   filter: brightness(0) invert(1);
 }
 
-
 ::ng-deep .mat-mdc-menu-item:hover .mat-mdc-menu-submenu-icon {
-
   filter: brightness(0) invert(1);
 }
 
@@ -360,7 +354,6 @@ input::placeholder {
   overflow: hidden !important;
 }
 
-/* Styles for the sort menu */
 ::ng-deep .mat-mdc-menu-content,
 {
   padding: 0 !important;
@@ -399,7 +392,6 @@ input::placeholder {
   top: 3px;
   text-align: center;
   margin-right: 5px;
-
 }
 
 .custom-calendar-input {
@@ -480,13 +472,11 @@ input::placeholder {
   font-weight: 400 !important;
   line-height: 30px !important;
   text-overflow: ellipsis;
-
 }
 
 ::ng-deep.mat-elevation-z8, .mat-mdc-elevation-specific.mat-elevation-z8 {
   box-shadow: none !important;
   border: 1px solid #ececec !important;
-
 }
 
 ::ng-deep .mat-elevation-z9, .mat-mdc-elevation-specific.mat-elevation-z9 {
@@ -520,8 +510,3 @@ input::placeholder {
   left: -1px; /* Adjust as needed */
   z-index: 2; /* Ensure it has a higher z-index than other components */
 }
-
-
-
-
-

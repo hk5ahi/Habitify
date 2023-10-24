@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { AppConstants, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
-import { DisplayService } from "../Service/display.service";
+import { CalenderDisplayService } from "../Service/calender-display.service";
 import { HabitService } from "../Service/habit.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
@@ -21,12 +21,12 @@ export class HabitModalDialogueComponent implements OnInit {
   habitName!: string;
   goal!: number;
   frequency!: string;
-  goalValue: number = 1;
-  runningValue = 3;
-  cyclingValue = 5;
+  goalValue = AppConstants.gaolValue;
+  runningValue = AppConstants.runningValue;
+  cyclingValue = AppConstants.cyclingValue;
   goalFrequency: string = AppConstants.Times;
-  waterFrequency: string = 'MI';
-  runningFrequency: string = 'Km';
+  waterFrequency = AppConstants.waterFrequency;
+  runningFrequency: string = AppConstants.runningFrequency;
   frequencyPerPeriod: string = AppConstants.Per_Day;
   timeOfDay: TimeOfDay[] = [TimeOfDay.Morning, TimeOfDay.Afternoon, TimeOfDay.Evening];
   showCalendar: boolean = false;
@@ -37,14 +37,14 @@ export class HabitModalDialogueComponent implements OnInit {
   intervalPerDays: string = AppConstants.repeat;
   months: string = AppConstants.months;
   checkRepeat: string = AppConstants.days;
-  goalWater: number = 2000;
+  goalWater: number = AppConstants.goalWater;
   repeatValue!: string;
   protected readonly TimeOfDay = TimeOfDay;
   protected readonly daysOfWeek = daysOfWeek;
 
   constructor(
     private ref: DynamicDialogRef,
-    private displayService: DisplayService,
+    private displayService: CalenderDisplayService,
     private habitService: HabitService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -77,14 +77,12 @@ export class HabitModalDialogueComponent implements OnInit {
     }
   }
 
-
   close() {
     if (this.habitName) {
       this.confirmDialogue();
     } else {
       this.ref.close();
     }
-
   }
 
   confirmDialogue() {
@@ -165,50 +163,76 @@ export class HabitModalDialogueComponent implements OnInit {
 
   getDayValue(): string {
     if (this.editModal) {
-      this.checkRepeat = this.inferCheckRepeat(this.receivedHabit?.repeat);
-      if (this.checkRepeat == AppConstants.days) {
-        if (this.receivedHabit?.repeat == AppConstants.Daily) {
-          return AppConstants.Daily;
-        } else {
-
-          const dayArray = this.receivedHabit.repeat.split(' ');
-          const abbreviatedDays = dayArray.map(day => day.substring(0, 3));
-          return abbreviatedDays.join(', ');
-        }
-      } else if (this.checkRepeat == AppConstants.interval) {
-        return this.receivedHabit.repeat;
-      } else {
-        return this.months;
-      }
-    }
-
-    const allDays = Object.values(daysOfWeek);
-    if (this.checkRepeat == AppConstants.days) {
-      if (this.areArraysEqual(this.days, allDays)) {
-        this.repeatValue = AppConstants.Daily;
-        return this.repeatValue;
-      } else {
-        this.repeatValue = this.days.join(' ');
-        const selectedDays = this.days.map(day => day.substring(0, 3)); // Abbreviate to three letters
-        return selectedDays.join(',');
-      }
-    } else if (this.checkRepeat == AppConstants.interval) {
-      this.repeatValue = this.intervalPerDays;
-      return this.repeatValue;
+      return this.getDayValueForEditModal();
     } else {
-      this.repeatValue = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
-      return this.months;
+      return this.getDayValueForNonEditModal();
     }
   }
+
+  getDayValueForEditModal(): string {
+    this.checkRepeat = this.inferCheckRepeat(this.receivedHabit?.repeat);
+
+    if (this.checkRepeat === AppConstants.days) {
+      return this.getDayValueForDays();
+    } else if (this.checkRepeat === AppConstants.interval) {
+      return this.receivedHabit?.repeat as string;
+    } else {
+      return this.months as string;
+    }
+  }
+
+  getDayValueForNonEditModal(): string {
+    const allDays = Object.values(daysOfWeek);
+
+    if (this.checkRepeat === AppConstants.days) {
+      return this.getRepeatValueForDays(allDays);
+    } else if (this.checkRepeat === AppConstants.interval) {
+      return this.intervalPerDays as string;
+    } else {
+      return this.getRepeatValueForMonths();
+    }
+  }
+
+  getDayValueForDays(): string {
+    return this.receivedHabit?.repeat === AppConstants.Daily
+      ? AppConstants.Daily
+      : this.getAbbreviatedDays();
+  }
+
+  // Returns the abbreviated days like 'Mon, Tue, Wed'
+  getAbbreviatedDays(): string {
+    const dayArray = (this.receivedHabit?.repeat as string).split(' ');
+    const abbreviatedDays = dayArray.map(day => day.substring(0, 3));
+    return abbreviatedDays.join(', ');
+  }
+
+  getRepeatValueForDays(allDays: string[]): string {
+    if (this.areArraysEqual(this.days, allDays)) {
+      this.repeatValue = AppConstants.Daily;
+      return this.repeatValue as string;
+    } else {
+      this.repeatValue = this.days.join(' ');
+      return this.getAbbreviatedDaysForNonEditModal();
+    }
+  }
+
+  getAbbreviatedDaysForNonEditModal(): string {
+    const selectedDays = this.days.map(day => day.substring(0, 3));
+    return selectedDays.join(',');
+  }
+
+  getRepeatValueForMonths(): string {
+    this.repeatValue = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
+    return this.months as string;
+  }
+
 
   areArraysEqual(firstArray: string[], secondArray: string[]): boolean {
     if (firstArray.length !== secondArray.length) {
       return false;
     }
-
     const sortedArr1 = firstArray.slice().sort();
     const sortedArr2 = secondArray.slice().sort();
-
     return sortedArr1.every((value, index) => value === sortedArr2[index]);
   }
 
@@ -232,10 +256,12 @@ export class HabitModalDialogueComponent implements OnInit {
     }
   }
 
+  // Returns true if the time is present in time of days array to display tick mark
   isTimeOfDaySelected(time: TimeOfDay): boolean {
     return this.timeOfDay.includes(time);
   }
 
+  // Returns the display value for the time of day like 'Morning, Afternoon, Evening' or 'Anytime'
   getTimeOfDayDisplayValue(timeOfDay: TimeOfDay[]): string {
     const allTimesIncluded = timeOfDay.length === 3 && timeOfDay.includes(TimeOfDay.Morning) && timeOfDay.includes(TimeOfDay.Afternoon) && timeOfDay.includes(TimeOfDay.Evening);
 
@@ -261,24 +287,24 @@ export class HabitModalDialogueComponent implements OnInit {
     this.showCalendar = !this.showCalendar;
   }
 
-  onDateSelect(date: Date) {
+  onDateSelect(selectedDate: Date) {
     // Check if the date is already present in the array
-    const isDateSelected = this.selectedDates.some(d => d.getDate() === date.getDate() && d.getMonth() === date.getMonth());
+    const isDateSelected = this.selectedDates.some(date => date.getDate() === selectedDate.getDate() && date.getMonth() === selectedDate.getMonth());
 
     if (isDateSelected) {
       // If the date is already present, remove it only if there are more than one date
       if (this.selectedDates.length > 1) {
-        this.selectedDates = this.selectedDates.filter(d => d.getDate() !== date.getDate() || d.getMonth() !== date.getMonth());
+        this.selectedDates = this.selectedDates.filter(date => date.getDate() !== selectedDate.getDate() || date.getMonth() !== selectedDate.getMonth());
       }
     } else {
       // If the date is not present, add it
-      this.selectedDates.push(date);
+      this.selectedDates.push(selectedDate);
     }
     this.checkRepeat = AppConstants.Month;
   }
 
-  isSelected(date: any): boolean {
-    return this.selectedDates.some(d => d.getDate() === date.day && d.getMonth() === date.month);
+  isSelected(selectedDate: any): boolean {
+    return this.selectedDates.some(date => date.getDate() === selectedDate.day && date.getMonth() === selectedDate.month);
   }
 
   updateHabitName(value: string) {
@@ -293,8 +319,8 @@ export class HabitModalDialogueComponent implements OnInit {
     }
   }
 
-  isWaterOrRunning(): boolean {
-    return this.habitName === 'Drink Water' || this.habitName === 'Running' || this.habitName === 'Cycling'
+  isWaterOrRunningOrCycling(): boolean {
+    return this.habitName === AppConstants.drinkWater || this.habitName === AppConstants.running || this.habitName === AppConstants.cycling;
   }
 
   updateRunningGoalFrequency(value: string) {
@@ -303,7 +329,6 @@ export class HabitModalDialogueComponent implements OnInit {
     } else {
       this.runningFrequency = value;
     }
-
   }
 
   saveHabit() {
@@ -313,7 +338,6 @@ export class HabitModalDialogueComponent implements OnInit {
       this.habitService.updateHabit(this.receivedHabit);
 
     } else {
-
       // Set goal if not provided
       this.goal = this.goal || this.getHabitGoalValue();
 
@@ -363,11 +387,11 @@ export class HabitModalDialogueComponent implements OnInit {
 
   private getHabitGoalValue(): number {
     switch (this.habitName) {
-      case 'Drink Water':
+      case AppConstants.drinkWater:
         return this.goalWater;
-      case 'Running':
+      case AppConstants.running:
         return this.runningValue;
-      case 'Cycling':
+      case AppConstants.cycling:
         return this.cyclingValue;
       default:
         return this.goalValue;
@@ -376,10 +400,10 @@ export class HabitModalDialogueComponent implements OnInit {
 
   private getHabitFrequency(): string {
     switch (this.habitName) {
-      case 'Drink Water':
+      case AppConstants.drinkWater:
         return this.waterFrequency;
-      case 'Running':
-      case 'Cycling':
+      case AppConstants.running:
+      case AppConstants.cycling:
         return this.runningFrequency;
       default:
         return this.goalFrequency;
