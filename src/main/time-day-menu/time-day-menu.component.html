@@ -1,0 +1,18 @@
+<mat-menu #timeDay="matMenu" [hasBackdrop]="false" class="time-day-menu" overlapTrigger="false">
+  <button (click)="updateTimeOfDay(TimeOfDay.Morning)" mat-menu-item>
+    <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Morning)}" alt="tick" class="time-tick-icon"
+         src="assets/svg/tick.svg"/>
+    <span class="menu-text">Morning</span>
+  </button>
+  <button (click)="updateTimeOfDay(TimeOfDay.Evening)" mat-menu-item>
+    <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Evening)}" alt="tick" class="time-tick-icon"
+         src="assets/svg/tick.svg"/>
+    <span class="menu-text">Evening</span>
+  </button>
+  <button (click)="updateTimeOfDay(TimeOfDay.Afternoon)" mat-menu-item>
+    <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Afternoon)}" alt="tick" class="time-tick-icon"
+         src="assets/svg/tick.svg"/>
+    <span class="menu-text">Afternoon</span>
+  </button>
+
+</mat-menu>

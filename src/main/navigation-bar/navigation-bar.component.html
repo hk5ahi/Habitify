@@ -74,11 +74,14 @@
 
 <div class="calendar-container">
   <p-calendar
-    (ngModelChange)="onDateSelect()" (onMonthChange)="onMonthChange($event)" *ngIf="showCalendar"
-    [(ngModel)]="selectedDate" [inline]="true"
+    (ngModelChange)="onDateSelect()"
+    (onMonthChange)="onMonthChange($event)"
+    *ngIf="showCalendar"
+    [(ngModel)]="selectedDate"
+    [inline]="true"
     [maxDate]="maxDate"
     [minDate]="minDate"
-    [ngClass]="{ 'disable-next': isCurrent, 'disable-prev': isPrevious}"
+    [ngClass]="{'disable-next': isCurrent,'disable-prev': isPrevious}"
     [showIcon]="false"
     dateFormat="MM d">
   </p-calendar>

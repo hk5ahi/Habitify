@@ -31,6 +31,16 @@ import { ConfirmPopupModule } from "primeng/confirmpopup";
 import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
 import { AccordionModule } from "primeng/accordion";
 import { SingleHabitComponent } from "../single-habit/single-habit.component";
+import { OverlayPanelModule } from "primeng/overlaypanel";
+import { WaterFrequencyMenuComponent } from "../water-frequency-menu/water-frequency-menu.component";
+import { RunningFrequencyMenuComponent } from "../running-frequency-menu/running-frequency-menu.component";
+import { FrequencyMenuComponent } from "../frequency-menu/frequency-menu.component";
+import { FrequencyPeriodMenuComponent } from "../frequency-period-menu/frequency-period-menu.component";
+import { TimeDayMenuComponent } from "../time-day-menu/time-day-menu.component";
+import { DaysMenuComponent } from "../days-menu/days-menu.component";
+import { HabitMenuComponent } from "../habit-menu/habit-menu.component";
+import { IntervalMenuComponent } from "../interval-menu/interval-menu.component";
+import { ManageHabitsSidebarComponent } from "../manage-habits-sidebar/manage-habits-sidebar.component";
 
 @NgModule({
   declarations: [
@@ -41,32 +51,48 @@ import { SingleHabitComponent } from "../single-habit/single-habit.component";
     HabitModalDialogueComponent,
     AllHabitsComponent,
     TimeHabitsComponent,
-    SingleHabitComponent
+    SingleHabitComponent,
+    WaterFrequencyMenuComponent,
+    WaterFrequencyMenuComponent,
+    RunningFrequencyMenuComponent,
+    RunningFrequencyMenuComponent,
+    FrequencyMenuComponent,
+    FrequencyPeriodMenuComponent,
+    TimeDayMenuComponent,
+    TimeDayMenuComponent,
+    TimeDayMenuComponent,
+    FrequencyPeriodMenuComponent,
+    DaysMenuComponent,
+    HabitMenuComponent,
+    HabitMenuComponent,
+    IntervalMenuComponent,
+    ManageHabitsSidebarComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    SidebarModule,
-    InputTextModule,
-    FormsModule,
-    ButtonModule,
-    CalendarModule,
-    SplitButtonModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCheckboxModule,
-    DialogModule,
-    InputNumberModule,
-    InputTextModule,
-    MatSelectModule,
-    ToastModule,
-    ConfirmDialogModule,
-    ConfirmPopupModule,
-    AccordionModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        SidebarModule,
+        InputTextModule,
+        FormsModule,
+        ButtonModule,
+        CalendarModule,
+        SplitButtonModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatIconModule,
+        MatCheckboxModule,
+        DialogModule,
+        InputNumberModule,
+        InputTextModule,
+        MatSelectModule,
+        ToastModule,
+        ConfirmDialogModule,
+        ConfirmPopupModule,
+        AccordionModule,
+        OverlayPanelModule,
+    ],
   providers: [DialogService, DatePipe, MessageService, ConfirmationService, {provide: MAT_DIALOG_DATA, useValue: {}},],
   bootstrap: [AppComponent]
 })

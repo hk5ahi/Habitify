@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
-import { activeTabIndices, AppConstants } from "../Constants/app-constant";
+import { activeTabIndices } from "../Constants/app-constant";
 
 @Component({
   selector: 'app-habits',
@@ -12,7 +12,6 @@ import { activeTabIndices, AppConstants } from "../Constants/app-constant";
 export class HabitsComponent {
 
   @Input() habits: Habit[] = [];
-  protected readonly AppConstants = AppConstants;
   protected readonly activeTabIndices = activeTabIndices;
 
   constructor(private dialogService: DialogService) {
@@ -32,7 +31,6 @@ export class HabitsComponent {
   }
 
   getCompletedHabitsCount(): number {
-    // Assuming habits is an array of Habit objects
     return this.habits.filter(habit => habit.isCompleted).length;
   }
 

@@ -106,7 +106,6 @@
   -webkit-box-pack: center;
   justify-content: center;
   grid-area: circle / circle / circle / circle;
-
 }
 
 .icon {
@@ -140,11 +139,9 @@
   font-weight: 500;
   line-height: 15.6px;
   color: rgb(0, 0, 0);
-
 }
 
 .habit-frequency {
-
   width: 1053px;
   margin-top: 6px;
   height: 15px;
@@ -182,7 +179,6 @@
   line-height: 30px;
   color: rgb(0, 0, 0);
   margin-left: 5px;
-
 }
 
 ::ng-deep .pi {
@@ -220,7 +216,6 @@
   top: 4px;
   right: 2.5px;
   margin-right: 4px;
-
 }
 
 ::ng-deep .edit-habit-menu .mat-mdc-menu-item-text {
@@ -243,11 +238,17 @@
   border: none;
   background: #ffffff;
   color: #212529;
-
 }
 
 ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
   border: none;
   background: #ffffff;
+}
 
+.none-habits {
+  width: 77.625em; /* 1242px / 16 */
+  height: 59.5625em; /* 953px / 16 */
+  border-right: 1px solid rgb(234, 234, 234);
+  position: relative;
+  right: -15.05em;
 }

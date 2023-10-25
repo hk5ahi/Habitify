@@ -6,7 +6,8 @@
     <div class="name-text">NAME</div>
     <div class="name-input">
 
-      <input *ngIf="!isEditModal()" [(ngModel)]="habitName" [matMenuTriggerFor]="habit" class="input-habit">
+      <input *ngIf="!isEditModal()" [(ngModel)]="habitName" [matMenuTriggerFor]="habit.getMatMenu()"
+             class="input-habit">
       <input *ngIf="isEditModal()" [(ngModel)]="habitName" class="input-habit">
 
       <div class="habit-icon">
@@ -47,7 +48,7 @@
                      [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <div *ngIf="!isWaterOrRunningOrCycling() && !isEditModal()" [matMenuTriggerFor]="frequency"
+      <div *ngIf="!isWaterOrRunningOrCycling() && !isEditModal()" [matMenuTriggerFor]="frequency.getMatMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>
@@ -61,7 +62,8 @@
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div *ngIf="habitName==AppConstants.drinkWater && !isEditModal()" [matMenuTriggerFor]="Waterfrequency"
+      <div *ngIf="habitName==AppConstants.drinkWater && !isEditModal()"
+           [matMenuTriggerFor]="Waterfrequency.getMatMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(waterFrequency)" [(ngModel)]="waterFrequency" class="goal-frequency"
                readonly/>
@@ -75,7 +77,7 @@
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
       <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && !isEditModal()"
-           [matMenuTriggerFor]="Runningfrequency"
+           [matMenuTriggerFor]="Runningfrequency.getMatMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(runningFrequency)" [(ngModel)]="runningFrequency" class="goal-frequency"
                readonly/>
@@ -89,7 +91,7 @@
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div [matMenuTriggerFor]="frequencyPeriod" class="input-wrapper">
+      <div [matMenuTriggerFor]="frequencyPeriod.getMatMenu()" class="input-wrapper">
         <input [(ngModel)]="frequencyPerPeriod" class="goal-frequency" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -111,7 +113,7 @@
   <div class="tod-container">
     <div class="tod-text">TIME OF DAY</div>
     <div class="goal-input-container">
-      <div [matMenuTriggerFor]="timeDay" class="input-wrapper">
+      <div [matMenuTriggerFor]="timeDay.getMatMenu()" class="input-wrapper">
         <input [value]="getTimeOfDayDisplayValue(timeOfDay)" class="tod-input" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -128,77 +130,15 @@
       </div>
     </div>
   </div>
-  <mat-menu #Waterfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
-    <button (click)="updateWaterGoalFrequency('L')" mat-menu-item>
-      L
-    </button>
-    <button (click)="updateWaterGoalFrequency('MI')" mat-menu-item>
-      MI
-    </button>
-    <button (click)="updateWaterGoalFrequency('US FI Oz')" mat-menu-item>
-      US FI Oz
-    </button>
-    <button (click)="updateWaterGoalFrequency('Cup')" mat-menu-item>
-      Cup
-    </button>
-  </mat-menu>
-  <mat-menu #Runningfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
-    <button (click)="updateRunningGoalFrequency('Km')" mat-menu-item>
-      Km
-    </button>
-    <button (click)="updateRunningGoalFrequency('M')" mat-menu-item>
-      M
-    </button>
-    <button (click)="updateRunningGoalFrequency('Ft')" mat-menu-item>
-      Ft
-    </button>
-    <button (click)="updateRunningGoalFrequency('Yd')" mat-menu-item>
-      Yd
-    </button>
-    <button (click)="updateRunningGoalFrequency('Mi')" mat-menu-item>
-      Mi
-    </button>
+  <app-water-frequency-menu #Waterfrequency (waterGoal)="updateWaterGoalFrequency($event)"></app-water-frequency-menu>
+  <app-running-frequency-menu #Runningfrequency
+                              (runningGoal)="updateRunningGoalFrequency($event)"></app-running-frequency-menu>
+  <app-frequency-menu #frequency (frequency)="updateGoalFrequency($event)"></app-frequency-menu>
 
-  </mat-menu>
-  <mat-menu #frequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
-    <button (click)="updateGoalFrequency('Times')" mat-menu-item>
-      Times
-    </button>
-    <button (click)="updateGoalFrequency('Mins')" mat-menu-item>
-      Mins
-    </button>
+  <app-frequency-period-menu #frequencyPeriod
+                             (frequencyPeriod)="updateFrequencyPeriod($event)"></app-frequency-period-menu>
 
-  </mat-menu>
-  <mat-menu #frequencyPeriod="matMenu" [hasBackdrop]="false" class="frequency-period-menu" overlapTrigger="false">
-    <button (click)="updateFrequencyPeriod('Per Day')" mat-menu-item>
-      Per Day
-    </button>
-    <button (click)="updateFrequencyPeriod('Per Week')" mat-menu-item>
-      Per Week
-    </button>
-    <button (click)="updateFrequencyPeriod('Per Month')" mat-menu-item>
-      Per Month
-    </button>
-  </mat-menu>
-
-  <mat-menu #timeDay="matMenu" [hasBackdrop]="false" class="time-day-menu" overlapTrigger="false">
-    <button (click)="updateTimeOfDay(TimeOfDay.Morning)" mat-menu-item>
-      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Morning)}" alt="tick" class="time-tick-icon"
-           src="assets/svg/tick.svg"/>
-      <span class="menu-text">Morning</span>
-    </button>
-    <button (click)="updateTimeOfDay(TimeOfDay.Evening)" mat-menu-item>
-      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Evening)}" alt="tick" class="time-tick-icon"
-           src="assets/svg/tick.svg"/>
-      <span class="menu-text">Evening</span>
-    </button>
-    <button (click)="updateTimeOfDay(TimeOfDay.Afternoon)" mat-menu-item>
-      <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Afternoon)}" alt="tick" class="time-tick-icon"
-           src="assets/svg/tick.svg"/>
-      <span class="menu-text">Afternoon</span>
-    </button>
-
-  </mat-menu>
+  <app-time-day-menu #timeDay (timeDay)="updateTimeOfDay($event)"></app-time-day-menu>
   <div class="modal-footer">
     <div class="buttons">
       <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
@@ -237,185 +177,19 @@
     </p-calendar>
   </mat-menu>
   <mat-menu #repeatMenu="matMenu" [hasBackdrop]="false" class="repeat-menu" overlapTrigger="false">
-    <button [matMenuTriggerFor]="days" mat-menu-item>
+    <button [matMenuTriggerFor]="days.getMatMenu()" mat-menu-item>
       Daily
     </button>
     <button [matMenuTriggerFor]="month" mat-menu-item>
       Monthly
     </button>
-    <button [matMenuTriggerFor]="interval" mat-menu-item>
+    <button [matMenuTriggerFor]="interval.getMatMenu()" mat-menu-item>
       Interval
     </button>
   </mat-menu>
-  <mat-menu #days="matMenu" [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
-    <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Monday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Tuesday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Tuesday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Tuesday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Wednesday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Wednesday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Wednesday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Thursday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Thursday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Thursday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Friday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Friday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Friday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Saturday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Saturday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Saturday
-    </button>
-    <button (click)="toggleDay(daysOfWeek.Sunday)" mat-menu-item>
-      <img [ngClass]="{'show':checkDays(daysOfWeek.Sunday)}" alt="tick" class="daily-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Sunday
-    </button>
-  </mat-menu>
-  <mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
-    <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 2')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 2
-    </button>
-    <button (click)="updateIntervalPerDays('Repeat Every 3')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 3')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 3
-    </button>
-    <button (click)="updateIntervalPerDays('Repeat Every 4')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 4')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 4
-    </button>
-    <button (click)="updateIntervalPerDays('Repeat Every 5')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 5')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 5
-    </button>
-    <button (click)="updateIntervalPerDays('Repeat Every 6')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 6')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 6
-    </button>
-    <button (click)="updateIntervalPerDays('Repeat Every 7')" mat-menu-item>
-      <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 7')}" alt="tick" class="interval-tick-icon"
-           src="assets/svg/tick.svg"/>
-      Repeat Every 7
-    </button>
-  </mat-menu>
-  <mat-menu #habit="matMenu" [hasBackdrop]="false" class="habit-menu" overlapTrigger="false">
-    <section class="section-one">
-      <p class="section-text">Most Popular Habits</p>
-      <button (click)="updateHabitName('Meditate')" mat-menu-item>
-        <img alt="meditate" class="habit-icons"
-             src="assets/svg/meditate.svg"/>
-        Meditate
-      </button>
-      <button (click)="updateHabitName('Set A To-Do List')" mat-menu-item>
-        <img alt="to-do" class="habit-icons"
-             src="assets/svg/to-do.svg"/>
-        Set A To-Do List
-      </button>
-      <button (click)="updateHabitName('Drink Water')" mat-menu-item>
-        <img alt="water" class="habit-icons"
-             src="assets/svg/drink-water.svg"/>
-        Drink Water
-      </button>
-      <button (click)="updateHabitName('Read Books')" mat-menu-item>
-        <img alt="books" class="habit-icons"
-             src="assets/svg/read-books.svg"/>
-        Read Books
-      </button>
-      <button (click)="updateHabitName('Running')" mat-menu-item>
-        <img alt="running" class="habit-icons"
-             src="assets/svg/running.svg"/>
-        Running
-      </button>
-    </section>
-    <section class="section-two">
-      <p class="section-text">Stay Fit With Exercises</p>
-      <button (click)="updateHabitName('Quick Stretch')" mat-menu-item>
-        <img alt="stretch" class="habit-icons"
-             src="assets/svg/stretch.svg"/>
-        Quick Stretch
-      </button>
-      <button (click)="updateHabitName('Hit The Gym')" mat-menu-item>
-        <img alt="Hit the Gym" class="habit-icons"
-             src="assets/svg/gym.svg"/>
-        Hit The Gym
-      </button>
-      <button (click)="updateHabitName('Swimming')" mat-menu-item>
-        <img alt="swimming" class="habit-icons"
-             src="assets/svg/swimming.svg"/>
-        Swimming
-      </button>
-      <button (click)="updateHabitName('Core Training')" mat-menu-item>
-        <img alt="training" class="habit-icons"
-             src="assets/svg/training.svg"/>
-        Core Training
-      </button>
-      <button (click)="updateHabitName('Practice Yoga')" mat-menu-item>
-        <img alt="yoga" class="habit-icons"
-             src="assets/svg/yoga.svg"/>
-        Practice Yoga
-      </button>
-      <button (click)="updateHabitName(' HIIT Cardio')" mat-menu-item>
-        <img alt="cardio" class="habit-icons"
-             src="assets/svg/cardio.svg"/>
-        HIIT Cardio
-      </button>
-      <button (click)="updateHabitName('Cycling')" mat-menu-item>
-        <img alt="cycling" class="habit-icons"
-             src="assets/svg/cycling.svg"/>
-        Cycling
-      </button>
-    </section>
-    <section class="section-three">
-      <p class="section-text">Stay Healthy</p>
-      <button (click)="updateHabitName('Go For A Walk')" mat-menu-item>
-        <img alt="walk" class="habit-icons"
-             src="assets/svg/cycling.svg"/>
-        Go For A Walk
-      </button>
-      <button (click)="updateHabitName('Get Good Sleep')" mat-menu-item>
-        <img alt="Sleep" class="habit-icons"
-             src="assets/svg/sleep.svg"/>
-        Get Good Sleep
-      </button>
-      <button (click)="updateHabitName('Take a Cold Shower')" mat-menu-item>
-        <img alt="Shower" class="habit-icons"
-             src="assets/svg/sleep.svg"/>
-        Take a Cold Shower
-      </button>
-      <button (click)="updateHabitName('Take Power Naps')" mat-menu-item>
-        <span class="text">Take Power Naps</span>
-      </button>
-      <button (click)="updateHabitName('Wash Your Hands')" mat-menu-item>
-        <span class="text">Wash Your Hands</span>
-      </button>
-      <button (click)="updateHabitName('Apply Sunscreen')" mat-menu-item>
-        <span class="text">Apply Sunscreen</span>
-      </button>
-      <button (click)="updateHabitName('Take A Deep Breath')" mat-menu-item>
-        <span class="text">Take A Deep Breath</span>
-      </button>
-      <button (click)="updateHabitName('Wear A Mask')" mat-menu-item>
-        <span class="text">Wear A Mask</span>
-      </button>
-    </section>
-  </mat-menu>
+  <app-days-menu #days (timeDay)="toggleDay($event)" [editModal]="editModal"
+                 [receivedHabit]="receivedHabit"></app-days-menu>
+  <app-interval-menu #interval (interval)="updateIntervalPerDays($event)"></app-interval-menu>
+  <app-habit-menu #habit (habit)="updateHabitName($event)"></app-habit-menu>
 </div>
 

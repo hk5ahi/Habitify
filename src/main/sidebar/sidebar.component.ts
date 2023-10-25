@@ -3,6 +3,7 @@ import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 import { AppConstants } from "../Constants/app-constant";
 import { SidebarService } from "../Service/sidebar.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sidebar',
@@ -13,11 +14,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAllHabits: boolean = true;
   isTimeHabits: boolean = false;
   timeOfDay!: string;
+  showManageHabits: boolean = false;
   private isAllHabitsSubscription!: Subscription;
   private isTimeHabitsSubscription!: Subscription;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private sidebarService: SidebarService) {
+  constructor(private navService: NavigationService, private sidebarService: SidebarService,private router: Router) {
   }
 
   ngOnInit() {
@@ -54,10 +56,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   updateIsAllHabits() {
     this.sidebarService.updateIsAllHabits();
+    this.showManageHabits = false;
   }
 
   updateIsTimeHabits() {
     this.sidebarService.updateIsTimeHabits();
+    this.showManageHabits = false;
   }
 
   ngOnDestroy(): void {
@@ -65,9 +69,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.timeOfDaySubscription) {
       this.timeOfDaySubscription.unsubscribe();
     }
-    this.isAllHabitsSubscription.unsubscribe();
-    this.isTimeHabitsSubscription.unsubscribe();
-
+    if (this.isAllHabitsSubscription) {
+      this.isAllHabitsSubscription.unsubscribe();
+    }
+    if (this.isTimeHabitsSubscription) {
+      this.isTimeHabitsSubscription.unsubscribe();
+    }
   }
 
+  routeToManageHabits() {
+    this.router.navigate(['/manage-habits-sidebar']);
+    this.showManageHabits = true;
+  }
 }

@@ -1,0 +1,16 @@
+.daily-tick-icon {
+  position: relative;
+  opacity: 0;
+  top: 4px;
+  right: 0;
+  margin-right: 5px;
+}
+.show {
+  opacity: 1 !important;
+}
+::ng-deep .mat-mdc-menu-item:hover {
+  .daily-tick-icon,
+   {
+    filter: brightness(0) invert(1);
+  }
+}

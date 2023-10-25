@@ -2,30 +2,27 @@
   margin: 0;
 }
 
-
 .habit {
-  width: 1242px;
-  height: 64.6px;
+  width: 77.625em;
+  height: 4.0375em;
   background-color: #FFFEFF;
   display: grid;
   grid-template-areas: "circle name";
-  grid-template-columns: 62px 1fr;
+  grid-template-columns: 3.875em 1fr;
   position: relative;
   -webkit-box-align: center;
   align-items: center;
-
 }
 
 .habit-identification {
-  width: 62px;
-  height: 40px;
+  width: 3.875em;
+  height: 2.5em;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
   grid-area: circle / circle / circle / circle;
-
 }
 
 .icon {
@@ -36,9 +33,9 @@
 }
 
 .habit-content {
-  width: 1180px;
-  height: 64.6px;
-  padding: 13.5px 0;
+  width: 73.75em;
+  height: 4.0375em;
+  padding: 0.84375em 0;
   display: grid;
   grid-area: name / name / name / name;
   grid-template-areas: "name smartAction otherAction";
@@ -50,8 +47,8 @@
 }
 
 .habit-name {
-  width: 1053px;
-  height: 15.6px;
+  width: 65.8125em;
+  height: 0.975em;
   overflow: hidden;
   word-break: break-word;
   font-family: Inter, sans-serif;
@@ -59,14 +56,12 @@
   font-weight: 500;
   line-height: 15.6px;
   color: rgb(0, 0, 0);
-
 }
 
 .habit-frequency {
-
-  width: 1053px;
-  margin-top: 6px;
-  height: 15px;
+  width: 65.8125em;
+  margin-top: 7px;
+  height: 0.9375em;
   font-family: Inter, sans-serif;
   font-size: 12px;
   font-weight: 400;
@@ -76,15 +71,15 @@
 }
 
 .minor-details {
-  width: 1053px;
-  height: 36.6px;
+  width: 65.8125em;
+  height: 2.2875em;
 }
 
 ::ng-deep .done-button {
-  width: 71.1px !important;
-  height: 30px;
+  width: 4.44375em !important;
+  height: 1.875em;
   color: rgb(0, 0, 0);
-  padding: 0 8px;
+  padding: 0 0.5em;
   background: rgb(255, 255, 255) !important;
   border: 1px solid rgb(229, 228, 229);
   border-radius: 3px;
@@ -101,7 +96,6 @@
   line-height: 30px;
   color: rgb(0, 0, 0);
   margin-left: 5px;
-
 }
 
 .log {
@@ -110,7 +104,7 @@
   font-weight: 500;
   line-height: 30px;
   color: rgb(0, 0, 0);
-  margin-left: 8px;
+  margin-left: 0.5em;
 }
 
 ::ng-deep .pi {
@@ -126,8 +120,8 @@
 }
 
 .more-button {
-  width: 32px;
-  height: 30px;
+  width: 2em;
+  height: 1.875em;
   background: rgb(255, 255, 255) !important;
   border: 1px solid rgb(229, 228, 229);
   border-radius: 3px;
@@ -148,7 +142,6 @@
   top: 4px;
   right: 2.5px;
   margin-right: 4px;
-
 }
 
 ::ng-deep .edit-habit-menu .mat-mdc-menu-item-text {
@@ -166,8 +159,8 @@
 }
 
 ::ng-deep .log-button {
-  width: 62.5px !important;
-  height: 30px !important;
+  width: 3.90625em !important;
+  height: 1.875em !important;
   padding: 0 8px !important;
   color: rgb(0, 0, 0);
   background: rgb(255, 255, 255) !important;
@@ -180,8 +173,8 @@
 }
 
 ::ng-deep .log-habit-bar {
-  width: 152.3px !important;
-  height: 30px;
+  width: 9.51875em !important;
+  height: 1.5875em;
   color: rgb(0, 0, 0);
   background: rgb(255, 255, 255) !important;
   border: 1px solid rgb(229, 228, 229);
@@ -193,8 +186,25 @@
   margin-left: -5.1875em;
 }
 
+::ng-deep .progress-habit-bar {
+  width: 10.225em !important;
+  height: 1.875em !important;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 5px;
+  margin-right: 1em !important;
+  display: flex;
+  padding: 0 0.5em 0 3px;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  top: -1.875em;
+  right: -6.0625em;
+}
+
 .log-input {
-  width: 59px;
+  width: 3.6875em;
   min-width: 0;
   outline-offset: 2px;
   position: relative;
@@ -202,7 +212,7 @@
   font-size: 12px;
   padding-inline-start: 0;
   padding-inline-end: 0;
-  height: 30px;
+  height: 1.875em;
   font-family: Inter, sans-serif;
   font-weight: 500;
   line-height: 30px;
@@ -213,11 +223,15 @@
   border-width: 0;
 }
 
+.progress-input {
+  margin-left: 9px;
+}
+
 .log-text {
   font-family: Inter, sans-serif;
   font-size: 12px !important;
   font-weight: 500;
-  line-height: 30px;
+  line-height: 1.875em;
   color: rgb(0, 0, 0);
   display: flex;
   -webkit-box-pack: center;
@@ -225,19 +239,68 @@
   -webkit-box-align: center;
   align-items: center;
   white-space: nowrap;
-
+  cursor: default;
 }
 
 .log-tick-icon {
-  width: 32px;
-  height: 30px;
-  padding: 0 6px 0 14px;
-
+  width: 2em;
+  height: 1.875em;
+  padding: 0 6px 0 0.875em;
 }
 
 .log-cross-icon {
-  width: 18px;
-  height: 30px;
+  width: 1.125em;
+  height: 1.875em;
   padding: 0 0 0 6px;
+}
 
+.down-icon {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  right: -3.5em;
+  cursor: default !important;
+}
+
+.calender-text {
+  width: 5.25em;
+  height: 2.5em;
+  position: relative;
+  top: 1px;
+  right: 1.375em;
+}
+
+::ng-deep .p-overlaypanel .p-overlaypanel-content {
+  width: 17.4375em;
+  height: 2.875em;
+  padding: 0.5625em 0.5625em 7px;
+}
+
+::ng-deep .calender-button {
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  vertical-align: middle;
+  width: 7.45em;
+  line-height: 1.875em;
+  font-weight: 500;
+  height: 30px;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
+  margin-right: 0.5em;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
 }

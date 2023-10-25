@@ -1,22 +1,30 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
-import { AppConstants, iconMap } from "../Constants/app-constant";
+import { AppConstants, disabledDates, iconMap } from "../Constants/app-constant";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
 import { MatMenuTrigger } from "@angular/material/menu";
+import { OverlayPanel } from "primeng/overlaypanel";
+import { CalenderDisplayService } from "../Service/calender-display.service";
 
 @Component({
   selector: 'app-single-habit',
   templateUrl: './single-habit.component.html',
-  styleUrls: ['./single-habit.component.scss']
+  styleUrls: ['./single-habit.component.scss'],
+  providers: [OverlayPanel]
 })
 export class SingleHabitComponent {
   @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
+  @ViewChild('calendar') calender!: ElementRef;
+  @ViewChild('overlayPanel') overlayPanel!: OverlayPanel;
   @Input() habits: Habit[] = [];
-  protected readonly AppConstants = AppConstants;
+  progressData!: string;
+  protected readonly disabledDates = disabledDates;
+  showCalendar = false;
+  selectedDate: Date= new Date();
 
-  constructor(private habitService: HabitService, private dialogService: DialogService) {
+  constructor(private habitService: HabitService, private dialogService: DialogService, private displayService: CalenderDisplayService, private cdr: ChangeDetectorRef) {
   }
 
   getHabitIcon(habit: Habit): string {
@@ -40,6 +48,21 @@ export class SingleHabitComponent {
 
   completeHabit(habit: Habit) {
     this.habitService.toggleCompleteHabit(habit, true);
+  }
+
+  showOverlayPanel(event: Event, habit: Habit) {
+    this.overlayPanel.show(event);
+
+    if (habit.name == AppConstants.cycling || habit.name == AppConstants.running) {
+      this.progressData = AppConstants.runningFrequency;
+    } else {
+      this.progressData = AppConstants.Times;
+    }
+
+  }
+
+  getDisplayValue(date: Date | undefined): string {
+    return this.displayService.getCalenderDisplayValue(date);
   }
 
   undoComplete(habit: Habit) {
@@ -79,7 +102,6 @@ export class SingleHabitComponent {
     habit.showLogValueBar = true;
   }
 
-
   showLogButton(habit: Habit) {
     return !habit.showLogValueBar && (habit.name == AppConstants.cycling || habit.name == AppConstants.running);
   }
@@ -88,4 +110,19 @@ export class SingleHabitComponent {
     habit.showLogValueBar = false;
   }
 
+  closeOverLay() {
+    if (this.overlayPanel) {
+      this.overlayPanel.hide();
+     this.showCalendar = false;
+    }
+  }
+
+  toggleCalendarDisplay(habit: Habit) {
+   this.showCalendar = !this.showCalendar;
+  }
+
+  onDateClick(event: any) {
+
+    this.overlayPanel.show(event);
+  }
 }

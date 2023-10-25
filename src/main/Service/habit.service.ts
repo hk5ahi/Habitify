@@ -28,7 +28,8 @@ export class HabitService {
       isCompleted: false,
       isSkipped: false,
       isFailed: false,
-      showLogValueBar: false
+      showLogValueBar: false,
+
     };
 
     this.habits.push(newHabit);

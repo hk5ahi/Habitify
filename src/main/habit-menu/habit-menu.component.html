@@ -1,0 +1,101 @@
+<mat-menu #habit="matMenu" [hasBackdrop]="false" class="habit-menu" overlapTrigger="false">
+  <section class="section-one">
+    <p class="section-text">Most Popular Habits</p>
+    <button (click)="updateHabitName('Meditate')" mat-menu-item>
+      <img alt="meditate" class="habit-icons"
+           src="assets/svg/meditate.svg"/>
+      Meditate
+    </button>
+    <button (click)="updateHabitName('Set A To-Do List')" mat-menu-item>
+      <img alt="to-do" class="habit-icons"
+           src="assets/svg/to-do.svg"/>
+      Set A To-Do List
+    </button>
+    <button (click)="updateHabitName('Drink Water')" mat-menu-item>
+      <img alt="water" class="habit-icons"
+           src="assets/svg/drink-water.svg"/>
+      Drink Water
+    </button>
+    <button (click)="updateHabitName('Read Books')" mat-menu-item>
+      <img alt="books" class="habit-icons"
+           src="assets/svg/read-books.svg"/>
+      Read Books
+    </button>
+    <button (click)="updateHabitName('Running')" mat-menu-item>
+      <img alt="running" class="habit-icons"
+           src="assets/svg/running.svg"/>
+      Running
+    </button>
+  </section>
+  <section class="section-two">
+    <p class="section-text">Stay Fit With Exercises</p>
+    <button (click)="updateHabitName('Quick Stretch')" mat-menu-item>
+      <img alt="stretch" class="habit-icons"
+           src="assets/svg/stretch.svg"/>
+      Quick Stretch
+    </button>
+    <button (click)="updateHabitName('Hit The Gym')" mat-menu-item>
+      <img alt="Hit the Gym" class="habit-icons"
+           src="assets/svg/gym.svg"/>
+      Hit The Gym
+    </button>
+    <button (click)="updateHabitName('Swimming')" mat-menu-item>
+      <img alt="swimming" class="habit-icons"
+           src="assets/svg/swimming.svg"/>
+      Swimming
+    </button>
+    <button (click)="updateHabitName('Core Training')" mat-menu-item>
+      <img alt="training" class="habit-icons"
+           src="assets/svg/training.svg"/>
+      Core Training
+    </button>
+    <button (click)="updateHabitName('Practice Yoga')" mat-menu-item>
+      <img alt="yoga" class="habit-icons"
+           src="assets/svg/yoga.svg"/>
+      Practice Yoga
+    </button>
+    <button (click)="updateHabitName(' HIIT Cardio')" mat-menu-item>
+      <img alt="cardio" class="habit-icons"
+           src="assets/svg/cardio.svg"/>
+      HIIT Cardio
+    </button>
+    <button (click)="updateHabitName('Cycling')" mat-menu-item>
+      <img alt="cycling" class="habit-icons"
+           src="assets/svg/cycling.svg"/>
+      Cycling
+    </button>
+  </section>
+  <section class="section-three">
+    <p class="section-text">Stay Healthy</p>
+    <button (click)="updateHabitName('Go For A Walk')" mat-menu-item>
+      <img alt="walk" class="habit-icons"
+           src="assets/svg/cycling.svg"/>
+      Go For A Walk
+    </button>
+    <button (click)="updateHabitName('Get Good Sleep')" mat-menu-item>
+      <img alt="Sleep" class="habit-icons"
+           src="assets/svg/sleep.svg"/>
+      Get Good Sleep
+    </button>
+    <button (click)="updateHabitName('Take a Cold Shower')" mat-menu-item>
+      <img alt="Shower" class="habit-icons"
+           src="assets/svg/sleep.svg"/>
+      Take a Cold Shower
+    </button>
+    <button (click)="updateHabitName('Take Power Naps')" mat-menu-item>
+      <span class="text">Take Power Naps</span>
+    </button>
+    <button (click)="updateHabitName('Wash Your Hands')" mat-menu-item>
+      <span class="text">Wash Your Hands</span>
+    </button>
+    <button (click)="updateHabitName('Apply Sunscreen')" mat-menu-item>
+      <span class="text">Apply Sunscreen</span>
+    </button>
+    <button (click)="updateHabitName('Take A Deep Breath')" mat-menu-item>
+      <span class="text">Take A Deep Breath</span>
+    </button>
+    <button (click)="updateHabitName('Wear A Mask')" mat-menu-item>
+      <span class="text">Wear A Mask</span>
+    </button>
+  </section>
+</mat-menu>

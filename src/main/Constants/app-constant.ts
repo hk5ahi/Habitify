@@ -12,7 +12,7 @@ export const AppConstants = {
   allHabits: 'All Habits',
   habits_Order: 'My Habits Order',
   repeat: 'Repeat Every 2',
-  months: 'Every month on the 1th',
+  months: 'Every month on the 1st',
   days: 'days',
   interval: 'interval',
   Month: 'months',
@@ -78,3 +78,34 @@ export const iconMap: IconMap = {
   "Take A Cold Shower": "assets/svg/sleep-blue.svg",
 }
 export const activeTabIndices = [0, 1, 2]
+
+export const disabledDates: Date[] = (() => {
+  const today = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  // Calculate the first day of the current month
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  // Calculate the last day of the current month
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+  // Generate an array of all dates in the current month
+  const allDatesInMonth = [];
+  for (let d = new Date(firstDayOfMonth); d <= lastDayOfMonth; d.setDate(d.getDate() + 1)) {
+    allDatesInMonth.push(new Date(d));
+  }
+
+  // Filter out today, yesterday, and tomorrow
+  return allDatesInMonth.filter(
+    date => !(
+      date.toDateString() === today.toDateString() ||
+      date.toDateString() === yesterday.toDateString() ||
+      date.toDateString() === tomorrow.toDateString()
+    )
+  );
+})();
+
+

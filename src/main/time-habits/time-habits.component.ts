@@ -33,7 +33,9 @@ export class TimeHabitsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.habitsSubscription.unsubscribe();
+    if (this.habitsSubscription) {
+      this.habitsSubscription.unsubscribe();
+    }
     if (this.timeOfDaySubscription) {
       this.timeOfDaySubscription.unsubscribe();
     }

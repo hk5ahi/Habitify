@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { AppConstants, daysMapping, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
 import { CalenderDisplayService } from "../Service/calender-display.service";
@@ -6,6 +6,9 @@ import { HabitService } from "../Service/habit.service";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Habit } from "../Data Types/habit";
+import { TimeAndDayService } from "../Service/time-day.service";
+import { Subscription } from "rxjs";
+import { IntervalService } from "../Service/interval.service";
 
 
 @Component({
@@ -13,7 +16,7 @@ import { Habit } from "../Data Types/habit";
   templateUrl: './habit-modal-dialogue.component.html',
   styleUrls: ['./habit-modal-dialogue.component.scss']
 })
-export class HabitModalDialogueComponent implements OnInit {
+export class HabitModalDialogueComponent implements OnInit, OnDestroy {
 
   editModal: boolean = false;
   @ViewChild('calender') calenderDialogue!: ElementRef;
@@ -28,20 +31,21 @@ export class HabitModalDialogueComponent implements OnInit {
   waterFrequency = AppConstants.waterFrequency;
   runningFrequency: string = AppConstants.runningFrequency;
   frequencyPerPeriod: string = AppConstants.Per_Day;
-  timeOfDay: TimeOfDay[] = [TimeOfDay.Morning, TimeOfDay.Afternoon, TimeOfDay.Evening];
+  timeOfDay: TimeOfDay[] = [];
   showCalendar: boolean = false;
   selectedDate: Date = new Date();
   startSelectedDate: Date = new Date();
   selectedDates: Date[] = [];
-  days: string[] = [daysOfWeek.Sunday, daysOfWeek.Monday, daysOfWeek.Tuesday, daysOfWeek.Wednesday, daysOfWeek.Thursday, daysOfWeek.Friday, daysOfWeek.Saturday];
-  intervalPerDays: string = AppConstants.repeat;
+  days: string[] = [];
+  intervalPerDays!: string;
   months: string = AppConstants.months;
   checkRepeat: string = AppConstants.days;
   goalWater: number = AppConstants.goalWater;
   repeatValue!: string;
-  protected readonly TimeOfDay = TimeOfDay;
-  protected readonly daysOfWeek = daysOfWeek;
   protected readonly AppConstants = AppConstants;
+  private timeDaySubscription!: Subscription;
+  private intervalSubscription!: Subscription;
+  private DaySubscription!: Subscription;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -49,7 +53,9 @@ export class HabitModalDialogueComponent implements OnInit {
     private habitService: HabitService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private config: DynamicDialogConfig, // Inject DynamicDialogConfig
+    private config: DynamicDialogConfig,
+    private timeOfDayService: TimeAndDayService,
+    private intervalService: IntervalService,
     @Inject(MAT_DIALOG_DATA) public data: { habit: Habit, editModal: boolean }
   ) {
     this.receivedHabit = this.config.data?.habit;
@@ -60,7 +66,16 @@ export class HabitModalDialogueComponent implements OnInit {
     const today = new Date();
     const firstDateOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.selectedDates.push(firstDateOfMonth);
-
+    this.timeOfDay = this.timeOfDayService.getTimeOfDay();
+    this.timeDaySubscription = this.timeOfDayService.timeOfDay$.subscribe((data) => {
+      this.timeOfDay = data;
+    });
+    this.DaySubscription = this.timeOfDayService.day$.subscribe((data) => {
+      this.days = data;
+    });
+    this.intervalSubscription = this.intervalService.interval$.subscribe((data) => {
+      this.intervalPerDays = data;
+    });
     const habit = this.receivedHabit;
 
     if (habit) {
@@ -75,6 +90,9 @@ export class HabitModalDialogueComponent implements OnInit {
       this.frequencyPerPeriod = habit.frequencyPerPeriod;
       this.timeOfDay = habit.timeOfDay;
       this.startSelectedDate = habit.startDate;
+    }
+    if (this.receivedHabit) {
+      this.intervalService.setReceivedHabit(this.receivedHabit);
     }
   }
 
@@ -107,28 +125,19 @@ export class HabitModalDialogueComponent implements OnInit {
     return iconMap[this.habitName] || 'assets/svg/mark.svg';
   }
 
-  checkDays(day: string): boolean {
-    if (this.editModal) {
-      const repeat = (this.receivedHabit?.repeat as string).toLowerCase();
-      const dayToCheck = day.toLowerCase();
-
-      // Check if the repeat string contains either the abbreviated or full name of the day
-      return repeat === 'daily' || repeat.includes(dayToCheck) || repeat.includes(dayToCheck.substring(0, 3));
-
-    } else {
-      return this.days.includes(day);
-    }
-  }
-
-
   updateIntervalPerDays(selectedInterval: string) {
 
     if (this.editModal) {
       this.receivedHabit.repeat = selectedInterval;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
       this.intervalPerDays = selectedInterval;
+      this.intervalService.setIntervalPerDays(selectedInterval);
 
     } else {
       this.intervalPerDays = selectedInterval;
+      this.intervalService.setIntervalPerDays(selectedInterval);
       this.repeatValue = selectedInterval;
       this.checkRepeat = AppConstants.interval;
     }
@@ -138,8 +147,6 @@ export class HabitModalDialogueComponent implements OnInit {
     const allDays = Object.values(daysOfWeek);
 
     if (this.editModal) {
-
-
       let daysArray: string[] = [];
 
       if (this.receivedHabit.repeat === AppConstants.Daily) {
@@ -160,8 +167,12 @@ export class HabitModalDialogueComponent implements OnInit {
       this.checkRepeat = AppConstants.days;
       this.repeatValue = this.getRepeatValueForDays(allDays, daysArray);
       this.receivedHabit.repeat = this.repeatValue;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.days = this.updateDaysArray(day, this.days);
+      this.timeOfDayService.setDay(this.days);
       this.checkRepeat = AppConstants.days;
       this.repeatValue = this.getRepeatValueForDays(allDays, this.days);
     }
@@ -189,12 +200,14 @@ export class HabitModalDialogueComponent implements OnInit {
 
     if (this.editModal) {
       this.receivedHabit.Frequency = selectedFrequency;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
       this.goalFrequency = selectedFrequency;
     } else {
       this.frequency = selectedFrequency;
       this.goalFrequency = selectedFrequency;
     }
-
   }
 
   inferCheckRepeat(repeatValue: string): string {
@@ -218,10 +231,8 @@ export class HabitModalDialogueComponent implements OnInit {
   }
 
   containsDaysOfWeek(repeatValue: string): boolean {
-
     return [...Object.keys(daysMapping), ...Object.values(daysMapping)].some(day => repeatValue.includes(day));
   }
-
 
   containsDateSeparator(repeatValue: string): boolean {
     return repeatValue.includes('/');
@@ -245,6 +256,9 @@ export class HabitModalDialogueComponent implements OnInit {
       return this.receivedHabit?.repeat as string;
     } else {
       this.receivedHabit.repeat = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
       return this.months as string;
     }
   }
@@ -281,7 +295,6 @@ export class HabitModalDialogueComponent implements OnInit {
 
   getRepeatValueForDays(allDays: string[], days: string[]): string {
 
-
     if (this.areArraysEqual(days, allDays)) {
 
       this.repeatValue = AppConstants.Daily;
@@ -314,10 +327,12 @@ export class HabitModalDialogueComponent implements OnInit {
   updateFrequencyPeriod(selectedFrequency: string) {
     if (this.editModal) {
       this.receivedHabit.frequencyPerPeriod = selectedFrequency;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
       this.frequencyPerPeriod = selectedFrequency;
     } else {
       this.frequencyPerPeriod = selectedFrequency;
-
     }
   }
 
@@ -329,17 +344,14 @@ export class HabitModalDialogueComponent implements OnInit {
       if (this.timeOfDay.length > 1) {
         // If there is more than one item, remove it
         this.timeOfDay.splice(index, 1);
+        this.timeOfDayService.setTimeOfDay(this.timeOfDay);
       }
       // If there is only one item, do nothing (prevent removal)
     } else {
       // If the time is not in the array, add it
       this.timeOfDay.push(selectedTime);
+      this.timeOfDayService.setTimeOfDay(this.timeOfDay);
     }
-  }
-
-  // Returns true if the time is present in time of days array to display tick mark
-  isTimeOfDaySelected(time: TimeOfDay): boolean {
-    return this.timeOfDay.includes(time);
   }
 
   // Returns the display value for the time of day like 'Morning, Afternoon, Evening' or 'Anytime'
@@ -382,10 +394,12 @@ export class HabitModalDialogueComponent implements OnInit {
       // If the date is not present, add it
       this.selectedDates.push(selectedDate);
     }
-
     this.checkRepeat = AppConstants.Month;
     if (this.editModal) {
       this.receivedHabit.repeat = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     }
   }
 
@@ -396,6 +410,9 @@ export class HabitModalDialogueComponent implements OnInit {
   updateHabitName(value: string) {
     if (this.editModal) {
       this.receivedHabit.name = value;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.habitName = value;
     }
@@ -404,6 +421,9 @@ export class HabitModalDialogueComponent implements OnInit {
   updateWaterGoalFrequency(times: string) {
     if (this.editModal) {
       this.receivedHabit.Frequency = times;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.waterFrequency = times;
     }
@@ -416,6 +436,9 @@ export class HabitModalDialogueComponent implements OnInit {
   updateRunningGoalFrequency(value: string) {
     if (this.editModal) {
       this.receivedHabit.Frequency = value;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.runningFrequency = value;
     }
@@ -425,6 +448,9 @@ export class HabitModalDialogueComponent implements OnInit {
 
     if (this.editModal) {
       this.receivedHabit.name = this.habitName;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
       this.habitService.updateHabit(this.receivedHabit);
 
     } else {
@@ -451,6 +477,9 @@ export class HabitModalDialogueComponent implements OnInit {
 
     if (this.editModal) {
       this.receivedHabit.goal = value;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.goal = value;
     }
@@ -460,6 +489,9 @@ export class HabitModalDialogueComponent implements OnInit {
 
     if (this.editModal) {
       this.receivedHabit.Frequency = value;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.frequency = value;
     }
@@ -480,26 +512,21 @@ export class HabitModalDialogueComponent implements OnInit {
     return this.editModal;
   }
 
-  checkIntervalPerDays(repeat: string) {
-    if (this.editModal) {
-
-      if (this.receivedHabit.repeat === repeat) {
-        return true;
-      }
-    } else {
-      if (this.intervalPerDays === repeat) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   onStartDateSelect(date: Date) {
 
     if (this.editModal) {
       this.receivedHabit.startDate = date;
+      if (this.receivedHabit) {
+        this.intervalService.setReceivedHabit(this.receivedHabit);
+      }
     } else {
       this.selectedDate = date;
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.timeDaySubscription) {
+      this.timeDaySubscription.unsubscribe();
     }
   }
 

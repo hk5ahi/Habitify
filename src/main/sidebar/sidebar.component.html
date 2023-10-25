@@ -58,7 +58,7 @@
     <div class="preferences-area">
       <p class="pre-text">Preferences</p>
       <div class="end-area">
-        <div class="item">
+        <div class="item" (click)="routeToManageHabits()">
           <div class="item-container">
             <img alt="Manage Habits" class="item-icon" src="assets/svg/manage.svg">
             <span class="text-container">Manage Habits</span>
@@ -80,4 +80,7 @@
     </div>
   </div>
 </p-sidebar>
-<app-navigation-bar></app-navigation-bar>
+
+<app-navigation-bar *ngIf="!showManageHabits"></app-navigation-bar>
+<app-manage-habits-sidebar *ngIf="showManageHabits"></app-manage-habits-sidebar>
+
