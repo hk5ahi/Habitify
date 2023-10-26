@@ -41,6 +41,12 @@ import { DaysMenuComponent } from "../days-menu/days-menu.component";
 import { HabitMenuComponent } from "../habit-menu/habit-menu.component";
 import { IntervalMenuComponent } from "../interval-menu/interval-menu.component";
 import { ManageHabitsSidebarComponent } from "../manage-habits-sidebar/manage-habits-sidebar.component";
+import { ManageHabitsNavbarComponent } from "../manage-habits-navbar/manage-habits-navbar.component";
+import { ManageHabitsComponent } from "../manage-habits/manage-habits.component";
+import { EditHabitMenuComponent } from "../edit-habit-menu/edit-habit-menu.component";
+import { FailedHabitMenuComponent } from "../failed-habit-menu/failed-habit-menu.component";
+import { OverlayPanelService } from "../Service/overlay-panel.service";
+import { OverlayPanelMenuComponent } from "../overlay-panel-menu/overlay-panel-menu.component";
 
 @NgModule({
   declarations: [
@@ -67,33 +73,41 @@ import { ManageHabitsSidebarComponent } from "../manage-habits-sidebar/manage-ha
     HabitMenuComponent,
     IntervalMenuComponent,
     ManageHabitsSidebarComponent,
+    ManageHabitsNavbarComponent,
+    ManageHabitsComponent,
+    EditHabitMenuComponent,
+    FailedHabitMenuComponent,
+    OverlayPanelMenuComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        SidebarModule,
-        InputTextModule,
-        FormsModule,
-        ButtonModule,
-        CalendarModule,
-        SplitButtonModule,
-        MatDialogModule,
-        MatMenuModule,
-        MatButtonModule,
-        MatIconModule,
-        MatCheckboxModule,
-        DialogModule,
-        InputNumberModule,
-        InputTextModule,
-        MatSelectModule,
-        ToastModule,
-        ConfirmDialogModule,
-        ConfirmPopupModule,
-        AccordionModule,
-        OverlayPanelModule,
-    ],
-  providers: [DialogService, DatePipe, MessageService, ConfirmationService, {provide: MAT_DIALOG_DATA, useValue: {}},],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    SidebarModule,
+    InputTextModule,
+    FormsModule,
+    ButtonModule,
+    CalendarModule,
+    SplitButtonModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+    DialogModule,
+    InputNumberModule,
+    InputTextModule,
+    MatSelectModule,
+    ToastModule,
+    ConfirmDialogModule,
+    ConfirmPopupModule,
+    AccordionModule,
+    OverlayPanelModule,
+  ],
+  providers: [DialogService, DatePipe, MessageService, ConfirmationService, {
+    provide: MAT_DIALOG_DATA,
+    useValue: {}
+  }, OverlayPanelService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

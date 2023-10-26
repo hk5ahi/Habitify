@@ -1,6 +1,6 @@
 <div *ngIf="hasHabits()" class="habits">
 
-  <app-single-habit [habits]="sendHabits()"></app-single-habit>
+  <app-single-habit (showEmpty)="showEmptyHabit($event)" [habits]="sendHabits()"></app-single-habit>
   <div>
     <p-accordion [activeIndex]=activeTabIndices [multiple]="true">
       <p-accordionTab *ngIf="isHabitCompleted()" [header]="getSuccessHeader()" class="accord">
@@ -17,7 +17,7 @@
   </div>
 
 </div>
-<div *ngIf="!hasHabits()" class="none-habits">
+<div *ngIf="!hasHabits() || showEmpty" class="none-habits" [ngClass]="{'move-empty-habit':showEmpty}">
   <div class="empty-template">
     <div class="images-container">
       <img alt="image1" class="image" src="assets/svg/image1.svg">

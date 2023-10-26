@@ -1,4 +1,4 @@
-<div #habit (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of habits"
+<div #habit (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of filteredHabits"
      class="habit">
   <div class="habit-identification">
     <img [src]="getHabitIcon(habit)" alt="habit" class="icon">
@@ -33,7 +33,7 @@
     </button>
 
     <button *ngIf="!habit.isCompleted && !habit.isSkipped && !habit.isFailed"
-            [matMenuTriggerFor]="editHabit" class="more-button" pButton type="button">
+            [matMenuTriggerFor]="editHabit.getMenu()" class="more-button" pButton type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
     <button *ngIf="habit.isCompleted" [matMenuTriggerFor]="compHabit" class="more-button" pButton type="button">
@@ -42,61 +42,11 @@
     <button *ngIf="habit.isSkipped" [matMenuTriggerFor]="skippedHabit" class="more-button" pButton type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
-    <button *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit" class="more-button" pButton type="button">
+    <button *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit.getMenu()" class="more-button" pButton type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
   </div>
-  <mat-menu #editHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
-    <button (click)="completeHabit(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/tick.svg"/>
-      Check-In
-    </button>
-    <button (click)="skipHabit(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/skip.svg"/>
-      Skip
-    </button>
-    <button (click)="failHabit(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/fail.svg"/>
-      Fail
-    </button>
-    <button (click)="showOverlayPanel($event,habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/log.svg"/>
-      Log Progress
-    </button>
-    <button (click)="openEditModal(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/edit.svg"/>
-      Edit
-    </button>
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/view-progress.svg"/>
-      View Progress
-    </button>
-
-  </mat-menu>
-  <p-overlayPanel #overlayPanel [dismissable]="false" class="move-panel">
-    <button (click)="toggleCalendarDisplay(habit)" class="calender-button">
-      <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
-      <span class="calender-text">{{getDisplayValue(selectedDate)}}</span>
-    </button>
-    <button class="progress-habit-bar" pButton type="button">
-      <input autofocus class="progress-input log-input" placeholder="Value">
-      <span class="log-text">{{progressData}}</span>
-      <img alt="log" class="log-tick-icon"
-           src="assets/svg/small-tick.svg"/>
-      <img (click)="closeOverLay()" alt="log"
-           class="log-cross-icon" src="assets/svg/cross.svg"/>
-    </button>
-  </p-overlayPanel>
-  <p-calendar #calendar (onSelect)="onDateClick($event)" *ngIf="showCalendar" [(ngModel)]="selectedDate"
-              [disabledDates]="disabledDates" [inline]="true"
-              class="log-calender disable-next disable-prev"></p-calendar>
-
+  <app-edit-habit-menu #editHabit [habit]="habit"></app-edit-habit-menu>
   <mat-menu #compHabit="matMenu" [hasBackdrop]="false" class="complete-habit-menu" overlapTrigger="false">
     <button (click)="undoComplete(habit)" mat-menu-item>
       <img alt="tick" class="edit-habit-icon"
@@ -144,28 +94,5 @@
     </button>
 
   </mat-menu>
-  <mat-menu #failedHabit="matMenu" [hasBackdrop]="false" class="skip-habit-menu" overlapTrigger="false">
-
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/log.svg"/>
-      Log Progress
-    </button>
-    <button (click)="undoFailHabit(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/undo.svg"/>
-      Undo Fail
-    </button>
-    <button (click)="openEditModal(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/edit.svg"/>
-      Edit
-    </button>
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/view-progress.svg"/>
-      View Progress
-    </button>
-
-  </mat-menu>
+ <app-failed-habit-menu #failedHabit [habit]="habit"></app-failed-habit-menu>
 </div>

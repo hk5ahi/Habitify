@@ -14,4 +14,5 @@ export interface Habit {
   isSkipped: boolean;
   isFailed: boolean;
   showLogValueBar: boolean;
+  showOverLayPanel: boolean;
 }

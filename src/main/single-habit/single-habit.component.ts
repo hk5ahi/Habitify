@@ -1,12 +1,25 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
-import { AppConstants, disabledDates, iconMap } from "../Constants/app-constant";
+import { AppConstants, iconMap } from "../Constants/app-constant";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { OverlayPanel } from "primeng/overlaypanel";
 import { CalenderDisplayService } from "../Service/calender-display.service";
+import { NavigationService } from "../Service/navigation.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-single-habit',
@@ -14,17 +27,70 @@ import { CalenderDisplayService } from "../Service/calender-display.service";
   styleUrls: ['./single-habit.component.scss'],
   providers: [OverlayPanel]
 })
-export class SingleHabitComponent {
+export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
-  @ViewChild('calendar') calender!: ElementRef;
-  @ViewChild('overlayPanel') overlayPanel!: OverlayPanel;
   @Input() habits: Habit[] = [];
-  progressData!: string;
-  protected readonly disabledDates = disabledDates;
-  showCalendar = false;
-  selectedDate: Date= new Date();
+  @Output() showEmpty: EventEmitter<boolean> = new EventEmitter<boolean>();
+  searchValue!: string;
+  filteredHabits: Habit[] = [];
+  unSortedHabits: Habit[] = [];
+  searchValueSubscription!: Subscription;
+  sortText!: string;
+  private sortSubscription!: Subscription;
 
-  constructor(private habitService: HabitService, private dialogService: DialogService, private displayService: CalenderDisplayService, private cdr: ChangeDetectorRef) {
+  constructor(private habitService: HabitService, private dialogService: DialogService, private displayService: CalenderDisplayService, private navService: NavigationService) {
+  }
+
+  ngOnInit(): void {
+    this.filteredHabits = this.habits;
+    this.searchValueSubscription = this.navService.habitSearchValue$.subscribe((value) => {
+      this.searchValue = value;
+      this.filterHabits();
+      this.unSortedHabits = this.filteredHabits;
+    });
+    this.sortSubscription = this.navService.sortText.subscribe((value) => {
+      this.sortText = value;
+      this.sortHabits();
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['habits'] && !changes['habits'].firstChange) {
+      const prevHabitsLength = changes['habits'].previousValue.length;
+      const currentHabitsLength = changes['habits'].currentValue.length;
+      // Check if the length of habits array has not changed
+      if (prevHabitsLength != currentHabitsLength) {
+        // habits array has not changed in length, update filteredHabits
+        this.filteredHabits = changes['habits'].currentValue;
+      }
+    }
+  }
+
+  sortHabits() {
+
+    if (this.sortText == 'A-Z') {
+      this.filteredHabits = [...this.filteredHabits].sort((a, b) => (a.name > b.name) ? 1 : -1);
+    } else if (this.sortText == 'Z-A') {
+      this.filteredHabits = [...this.filteredHabits].sort((a, b) => (a.name < b.name) ? 1 : -1);
+    } else {
+      this.filteredHabits = this.unSortedHabits;
+    }
+  }
+
+  filterHabits(): void {
+    if (this.searchValue) {
+      const lowerCaseSearch = this.searchValue.toLowerCase();
+      this.filteredHabits = this.habits.filter(habit =>
+        habit.name.toLowerCase().includes(lowerCaseSearch)
+      );
+    } else {
+      this.filteredHabits = this.habits;
+    }
+    if (this.filteredHabits.length == 0) {
+      this.showEmpty.emit(true);
+    } else {
+      this.showEmpty.emit(false);
+    }
   }
 
   getHabitIcon(habit: Habit): string {
@@ -37,7 +103,6 @@ export class SingleHabitComponent {
   }
 
   openEditModal(habit: Habit) {
-
     this.dialogService.open(HabitModalDialogueComponent, {
       data: {
         habit: habit,
@@ -50,35 +115,8 @@ export class SingleHabitComponent {
     this.habitService.toggleCompleteHabit(habit, true);
   }
 
-  showOverlayPanel(event: Event, habit: Habit) {
-    this.overlayPanel.show(event);
-
-    if (habit.name == AppConstants.cycling || habit.name == AppConstants.running) {
-      this.progressData = AppConstants.runningFrequency;
-    } else {
-      this.progressData = AppConstants.Times;
-    }
-
-  }
-
-  getDisplayValue(date: Date | undefined): string {
-    return this.displayService.getCalenderDisplayValue(date);
-  }
-
   undoComplete(habit: Habit) {
     this.habitService.toggleCompleteHabit(habit, false);
-  }
-
-  skipHabit(habit: Habit) {
-    this.habitService.toggleSkipHabit(habit, true);
-  }
-
-  failHabit(habit: Habit) {
-    this.habitService.toggleFailHabit(habit, true);
-  }
-
-  undoFailHabit(habit: Habit) {
-    this.habitService.toggleFailHabit(habit, false);
   }
 
   undoSkip(habit: Habit) {
@@ -110,19 +148,12 @@ export class SingleHabitComponent {
     habit.showLogValueBar = false;
   }
 
-  closeOverLay() {
-    if (this.overlayPanel) {
-      this.overlayPanel.hide();
-     this.showCalendar = false;
+  ngOnDestroy(): void {
+    if (this.searchValueSubscription) {
+      this.searchValueSubscription.unsubscribe();
     }
-  }
-
-  toggleCalendarDisplay(habit: Habit) {
-   this.showCalendar = !this.showCalendar;
-  }
-
-  onDateClick(event: any) {
-
-    this.overlayPanel.show(event);
+    if (this.sortSubscription) {
+      this.sortSubscription.unsubscribe();
+    }
   }
 }

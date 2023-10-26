@@ -1,0 +1,58 @@
+<div class="manage-habits">
+  <div (click)="updateSelectedHabit(habit)" (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of habits"
+       [matMenuTriggerFor]="manageHabit" [ngClass]="{'background-color':selectedHabit==habit.id}"
+       class="manage-habit">
+    <div class="habit-content">
+      <div>
+        <img [ngClass]="{'white-icon':selectedHabit==habit.id}" [src]=getIconSource(habit) alt="Question Mark"
+             class="mark">
+      </div>
+      <div [ngClass]="{'white-text':selectedHabit==habit.id}" class="habit-name">
+        {{habit.name}}
+      </div>
+    </div>
+    <mat-menu #manageHabit="matMenu" [hasBackdrop]="false" class="manage-menu" overlapTrigger="false">
+      <button class="margin-up" mat-menu-item>
+        <img alt="View Progress" class="edit-habit-icon"
+             src="assets/svg/progress.svg"/>
+        View Progress
+      </button>
+      <button mat-menu-item (click)="openEditModal(habit)">
+        <img alt="Edit" class="edit-habit-icon"
+             src="assets/svg/edit.svg"/>
+        Edit
+      </button>
+      <button mat-menu-item (click)="archiveHabit(habit)" *ngIf="!habit.isArchived">
+        <img alt="archive" class="edit-habit-icon"
+             src="assets/svg/archive.svg"/>
+        Archive
+      </button>
+      <button class="border" mat-menu-item (click)="deleteHabit(habit)">
+        <img alt="delete" class="edit-habit-icon"
+             src="assets/svg/delete.svg"/>
+        Delete
+      </button>
+      <button [matMenuTriggerFor]="moveHabit" class="up-height" mat-menu-item>
+        <span class="move-to">Move to...</span>
+      </button>
+    </mat-menu>
+    <mat-menu #moveHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
+      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Morning)">
+        <img alt="tick" class="edit-habit-icon small-icon"
+             src="assets/svg/afternoon.svg"/>
+        Morning
+      </button>
+      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Afternoon)">
+        <img alt="tick" class="edit-habit-icon small-icon"
+             src="assets/svg/afternoon.svg"/>
+        Afternoon
+      </button>
+      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Evening)">
+        <img alt="tick" class="edit-habit-icon small-icon"
+             src="assets/svg/evening.svg"/>
+        Evening
+      </button>
+
+    </mat-menu>
+  </div>
+</div>

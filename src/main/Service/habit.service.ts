@@ -29,6 +29,7 @@ export class HabitService {
       isSkipped: false,
       isFailed: false,
       showLogValueBar: false,
+      showOverLayPanel: false
 
     };
 
@@ -43,9 +44,9 @@ export class HabitService {
     this.saveHabitsToLocalStorage();
   }
 
-  archiveHabit(habit: Habit) {
+  toggleArchiveHabit(habit: Habit, value: boolean) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
-    this.habits[index].isArchived = true;
+    this.habits[index].isArchived = value;
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
   }
@@ -87,6 +88,13 @@ export class HabitService {
   toggleFailHabit(habit: Habit, status: boolean) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
     this.habits[index].isFailed = status;
+    this.habitSubject.next(this.habits);
+    this.saveHabitsToLocalStorage();
+  }
+  updateTimeOfDay(habit: Habit, timeOfDay: TimeOfDay) {
+    const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+    this.habits[index].timeOfDay = [];
+    this.habits[index].timeOfDay.push(timeOfDay);
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
   }

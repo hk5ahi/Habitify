@@ -1,8 +1,98 @@
-<div class="manage-habits-sidebar">
-  <div class="manage-text">
-  <span class="text">Manage Habits</span>
-  </div>
-  <div class="items-container">
+<div *ngIf="showManageHabits">
+  <div class="manage-habits-sidebar">
+    <div class="manage-text">
+      <span class="text">Manage Habits</span>
+    </div>
+    <div class="items-container">
+      <div class="empty-container"></div>
+      <div (click)="updateSelectedItem(AppConstants.active)"
+           [ngClass]="{'background-color':selectedItem==AppConstants.active}"
+           class="item">
+        <img [ngClass]="{'white-icon':selectedItem==AppConstants.active}" alt="active-habits" class="item-icon"
+             src="assets/svg/habit.svg">
+        <span [ngClass]="{'white-text':selectedItem==AppConstants.active}"
+              class="text-container">{{AppConstants.active}}</span>
+        <div class="ng-prime-badge">
+          <span [ngClass]="{'white-text':selectedItem==AppConstants.active}"
+                class="ng-prime-badge-text">{{getLengthOfActiveHabits()}}</span>
+        </div>
+      </div>
+      <div (click)="updateSelectedItem(AppConstants.archived)"
+           [ngClass]="{'background-color':selectedItem==AppConstants.archived}"
+           class="item">
+        <img [ngClass]="{'white-icon':selectedItem==AppConstants.archived}" alt="active-habits" class="item-icon"
+             src="assets/svg/habit.svg">
+        <span [ngClass]="{'white-text':selectedItem==AppConstants.archived}" class="text-container">Archived</span>
+        <div class="ng-prime-badge">
+          <span [ngClass]="{'white-text':selectedItem==AppConstants.archived}"
+                class="ng-prime-badge-text">{{getLengthOfArchiveHabits()}}</span>
+        </div>
+      </div>
+      <div class="preferences-area">
+        <p class="pre-text">Time of day</p>
+        <div class="end-area">
+          <div (click)="updateSelectedItem(TimeOfDay.Anytime)"
+               [ngClass]="{'background-color':selectedItem==TimeOfDay.Anytime}"
+               class="item">
+            <img [ngClass]="{'white-icon':selectedItem==TimeOfDay.Anytime}" alt="Any Time" class="item-icon"
+                 src="assets/svg/habit.svg">
+            <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Anytime}" class="text-container">Any Time</span>
+            <div class="ng-prime-badge">
+              <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Anytime}"
+                    class="ng-prime-badge-text">{{getLengthOfAnyTimeHabits()}}</span>
+            </div>
+          </div>
+          <div (click)="updateSelectedItem(TimeOfDay.Morning)"
+               [ngClass]="{'background-color':selectedItem==TimeOfDay.Morning}"
+               class="item">
 
+            <img [ngClass]="{'white-icon':selectedItem==TimeOfDay.Morning}" alt="Morning" class="item-icon"
+                 src="assets/svg/afternoon.svg">
+            <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Morning}" class="text-container">Morning</span>
+            <div class="ng-prime-badge">
+              <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Morning}"
+                    class="ng-prime-badge-text">{{getLengthOfMorningHabits()}}</span>
+            </div>
+          </div>
+          <div (click)="updateSelectedItem(TimeOfDay.Afternoon)"
+               [ngClass]="{'background-color':selectedItem==TimeOfDay.Afternoon}"
+               class="item">
+
+            <img [ngClass]="{'white-icon':selectedItem==TimeOfDay.Afternoon}" alt="Afternoon" class="item-icon"
+                 src="assets/svg/afternoon.svg">
+            <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Afternoon}" class="text-container">Afternoon</span>
+            <div class="ng-prime-badge">
+              <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Afternoon}"
+                    class="ng-prime-badge-text">{{getLengthOfAfternoonHabits()}}</span>
+            </div>
+          </div>
+          <div (click)="updateSelectedItem(TimeOfDay.Evening)"
+               [ngClass]="{'background-color':selectedItem==TimeOfDay.Evening}"
+               class="item">
+
+            <img [ngClass]="{'white-icon':selectedItem==TimeOfDay.Evening}" alt="Evening" class="item-icon"
+                 src="assets/svg/evening.svg">
+            <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Evening}" class="text-container">Evening</span>
+            <div class="ng-prime-badge">
+              <span [ngClass]="{'white-text':selectedItem==TimeOfDay.Evening}"
+                    class="ng-prime-badge-text">{{getLengthOfEveningHabits()}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side-bar-sideline">
+        <p class="side-line-text">areas</p>
+        <div class="area-container">
+          <img alt="uncategorized" class="item-icon" src="assets/svg/habit.svg">
+          <p class="area">Uncategorized</p>
+          <div class="ng-prime-badge move-right">
+            <span class="ng-prime-badge-text">0</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+  <app-manage-habits-navbar></app-manage-habits-navbar>
 </div>
+<app-manage-habits [habits]="sendHabits()"></app-manage-habits>

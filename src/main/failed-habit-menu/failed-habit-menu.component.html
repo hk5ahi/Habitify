@@ -1,0 +1,24 @@
+<mat-menu #failedHabit="matMenu" [hasBackdrop]="false" class="skip-habit-menu" overlapTrigger="false">
+
+  <button mat-menu-item (click)="showOverlayPanel($event,habit)">
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/log.svg"/>
+    Log Progress
+  </button>
+  <button (click)="undoFailHabit(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/undo.svg"/>
+    Undo Fail
+  </button>
+  <button (click)="openEditModal(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/edit.svg"/>
+    Edit
+  </button>
+  <button mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/view-progress.svg"/>
+    View Progress
+  </button>
+
+</mat-menu>

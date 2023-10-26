@@ -504,12 +504,25 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   archiveHabit() {
-    this.habitService.archiveHabit(this.receivedHabit);
+    this.habitService.toggleArchiveHabit(this.receivedHabit, true);
+    this.ref.close();
+  }
+
+  unArchiveHabit() {
+    this.habitService.toggleArchiveHabit(this.receivedHabit, false);
     this.ref.close();
   }
 
   isEditModal() {
     return this.editModal;
+  }
+
+  isEditModalAndIsArchived() {
+    return this.editModal && this.receivedHabit.isArchived;
+  }
+
+  isEditModalAndIsNotArchived() {
+    return this.editModal && !this.receivedHabit.isArchived;
   }
 
   onStartDateSelect(date: Date) {
@@ -554,4 +567,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
         return this.goalFrequency;
     }
   }
+
+
 }

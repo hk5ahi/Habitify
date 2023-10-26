@@ -10,7 +10,7 @@ export class FrequencyPeriodMenuComponent {
   @Output() frequencyPeriod: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(MatMenu) menu!: MatMenu;
 
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
 

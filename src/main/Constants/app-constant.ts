@@ -26,7 +26,8 @@ export const AppConstants = {
   drinkWater: 'Drink Water',
   running: 'Running',
   cycling: 'Cycling',
-
+  active: 'Active',
+  archived: 'Archived',
 
 };
 

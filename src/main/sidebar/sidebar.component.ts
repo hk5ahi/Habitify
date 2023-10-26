@@ -14,12 +14,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isAllHabits: boolean = true;
   isTimeHabits: boolean = false;
   timeOfDay!: string;
-  showManageHabits: boolean = false;
+  showManageHabits!: boolean;
   private isAllHabitsSubscription!: Subscription;
   private isTimeHabitsSubscription!: Subscription;
   private timeOfDaySubscription!: Subscription;
+  private showManageHabitsSubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private sidebarService: SidebarService,private router: Router) {
+  constructor(private navService: NavigationService, private sidebarService: SidebarService, private router: Router) {
   }
 
   ngOnInit() {
@@ -32,6 +33,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     this.isTimeHabitsSubscription = this.sidebarService.isTimeHabits$.subscribe(value => {
       this.isTimeHabits = value;
+    });
+    this.showManageHabitsSubscription = this.sidebarService.showManageHabits$.subscribe(value => {
+      this.showManageHabits = value;
     });
   }
 
@@ -56,12 +60,23 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   updateIsAllHabits() {
     this.sidebarService.updateIsAllHabits();
-    this.showManageHabits = false;
+    this.sidebarService.setShowManageHabits(false);
   }
 
   updateIsTimeHabits() {
     this.sidebarService.updateIsTimeHabits();
-    this.showManageHabits = false;
+    this.sidebarService.setShowManageHabits(false);
+  }
+
+  routeToManageHabits() {
+    this.sidebarService.setShowManageHabits(true);
+    this.sidebarService.setIsTimeHabitsAndAllHabits(false);
+    this.router.navigate(['/manage-habits-sidebar']);
+
+  }
+  getManageHabitsValue(): boolean {
+
+    return this.sidebarService.getShowManageHabitsValue();
   }
 
   ngOnDestroy(): void {
@@ -75,10 +90,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.isTimeHabitsSubscription) {
       this.isTimeHabitsSubscription.unsubscribe();
     }
-  }
-
-  routeToManageHabits() {
-    this.router.navigate(['/manage-habits-sidebar']);
-    this.showManageHabits = true;
+    if (this.showManageHabitsSubscription) {
+      this.showManageHabitsSubscription.unsubscribe();
+    }
   }
 }

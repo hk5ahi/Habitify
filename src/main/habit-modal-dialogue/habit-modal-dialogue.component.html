@@ -6,7 +6,7 @@
     <div class="name-text">NAME</div>
     <div class="name-input">
 
-      <input *ngIf="!isEditModal()" [(ngModel)]="habitName" [matMenuTriggerFor]="habit.getMatMenu()"
+      <input *ngIf="!isEditModal()" [(ngModel)]="habitName" [matMenuTriggerFor]="habit.getMenu()"
              class="input-habit">
       <input *ngIf="isEditModal()" [(ngModel)]="habitName" class="input-habit">
 
@@ -48,7 +48,7 @@
                      [step]="1"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
-      <div *ngIf="!isWaterOrRunningOrCycling() && !isEditModal()" [matMenuTriggerFor]="frequency.getMatMenu()"
+      <div *ngIf="!isWaterOrRunningOrCycling() && !isEditModal()" [matMenuTriggerFor]="frequency.getMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>
@@ -63,7 +63,7 @@
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
       <div *ngIf="habitName==AppConstants.drinkWater && !isEditModal()"
-           [matMenuTriggerFor]="Waterfrequency.getMatMenu()"
+           [matMenuTriggerFor]="Waterfrequency.getMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(waterFrequency)" [(ngModel)]="waterFrequency" class="goal-frequency"
                readonly/>
@@ -77,7 +77,7 @@
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
       <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && !isEditModal()"
-           [matMenuTriggerFor]="Runningfrequency.getMatMenu()"
+           [matMenuTriggerFor]="Runningfrequency.getMenu()"
            class="input-wrapper">
         <input (ngModelChange)="updateFrequency(runningFrequency)" [(ngModel)]="runningFrequency" class="goal-frequency"
                readonly/>
@@ -91,7 +91,7 @@
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
       </div>
-      <div [matMenuTriggerFor]="frequencyPeriod.getMatMenu()" class="input-wrapper">
+      <div [matMenuTriggerFor]="frequencyPeriod.getMenu()" class="input-wrapper">
         <input [(ngModel)]="frequencyPerPeriod" class="goal-frequency" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -113,7 +113,7 @@
   <div class="tod-container">
     <div class="tod-text">TIME OF DAY</div>
     <div class="goal-input-container">
-      <div [matMenuTriggerFor]="timeDay.getMatMenu()" class="input-wrapper">
+      <div [matMenuTriggerFor]="timeDay.getMenu()" class="input-wrapper">
         <input [value]="getTimeOfDayDisplayValue(timeOfDay)" class="tod-input" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
         <img alt="Down" class="down" src="assets/svg/down.svg"/>
@@ -143,7 +143,10 @@
     <div class="buttons">
       <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
                 size="small"></p-button>
-      <p-button (click)="archiveHabit()" *ngIf="isEditModal()" class="archive" label="Archive" size="small"></p-button>
+      <p-button (click)="unArchiveHabit()" *ngIf="isEditModalAndIsArchived()" class="archive" label="Unarchive"
+                size="small"></p-button>
+      <p-button (click)="archiveHabit()" *ngIf="isEditModalAndIsNotArchived()" class="archive" label="Archive"
+                size="small"></p-button>
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
       <p-toast></p-toast>
@@ -177,13 +180,13 @@
     </p-calendar>
   </mat-menu>
   <mat-menu #repeatMenu="matMenu" [hasBackdrop]="false" class="repeat-menu" overlapTrigger="false">
-    <button [matMenuTriggerFor]="days.getMatMenu()" mat-menu-item>
+    <button [matMenuTriggerFor]="days.getMenu()" mat-menu-item>
       Daily
     </button>
     <button [matMenuTriggerFor]="month" mat-menu-item>
       Monthly
     </button>
-    <button [matMenuTriggerFor]="interval.getMatMenu()" mat-menu-item>
+    <button [matMenuTriggerFor]="interval.getMenu()" mat-menu-item>
       Interval
     </button>
   </mat-menu>

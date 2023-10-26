@@ -10,7 +10,7 @@ export class FrequencyMenuComponent {
   @Output() frequency: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(MatMenu) menu!: MatMenu;
 
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
   updateGoalFrequency(times: string) {

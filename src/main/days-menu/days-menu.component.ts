@@ -29,7 +29,7 @@ export class DaysMenuComponent implements OnInit, OnDestroy {
     });
   }
 
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
 

@@ -13,7 +13,7 @@ export class HabitMenuComponent {
   updateHabitName(habit: string) {
     this.habit.emit(habit);
   }
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
 }

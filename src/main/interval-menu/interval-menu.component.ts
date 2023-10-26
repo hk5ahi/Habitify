@@ -32,7 +32,7 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
 
   }
 
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
 

@@ -1,0 +1,10 @@
+<div class="Navigation">
+  <div class="Habits-Text">
+    <span>Habits</span>
+  </div>
+  <div class="input-container">
+    <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
+    <input [(ngModel)]="searchValue" (ngModelChange)="sendSearchValue()" class="search-input" name="searchInput" placeholder="Search" type="text"/>
+  </div>
+</div>
+

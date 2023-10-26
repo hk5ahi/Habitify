@@ -10,6 +10,8 @@ export class SidebarService {
   isAllHabits$ = this.isAllHabitsSubject.asObservable();
   private isTimeHabitsSubject = new BehaviorSubject<boolean>(false);
   isTimeHabits$ = this.isTimeHabitsSubject.asObservable();
+  private showManageHabitsSubject = new BehaviorSubject<boolean>(false);
+  showManageHabits$ = this.showManageHabitsSubject.asObservable();
 
   updateIsAllHabits() {
     this.isAllHabitsSubject.next(true);
@@ -22,5 +24,18 @@ export class SidebarService {
   updateIsTimeHabits() {
     this.isAllHabitsSubject.next(false);
     this.isTimeHabitsSubject.next(true);
+  }
+  setIsTimeHabitsAndAllHabits(value: boolean) {
+    this.isAllHabitsSubject.next(value);
+    this.isTimeHabitsSubject.next(value);
+  }
+  getIsTimeHabitsValue(): boolean {
+    return this.isTimeHabitsSubject.getValue();
+  }
+  setShowManageHabits(value: boolean) {
+    this.showManageHabitsSubject.next(value);
+  }
+  getShowManageHabitsValue(): boolean {
+    return this.showManageHabitsSubject.getValue();
   }
 }

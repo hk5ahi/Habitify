@@ -12,6 +12,7 @@ import { activeTabIndices } from "../Constants/app-constant";
 export class HabitsComponent {
 
   @Input() habits: Habit[] = [];
+  showEmpty = false;
   protected readonly activeTabIndices = activeTabIndices;
 
   constructor(private dialogService: DialogService) {
@@ -79,4 +80,11 @@ export class HabitsComponent {
   sendHabits(): Habit[] {
     return this.habits.filter(habit => !habit.isCompleted && !habit.isSkipped && !habit.isFailed);
   }
+
+  // display empty habit when search does not match any habit
+  showEmptyHabit(value: boolean) {
+    this.showEmpty = value;
+  }
+
+
 }

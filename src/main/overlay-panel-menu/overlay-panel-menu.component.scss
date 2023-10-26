@@ -1,0 +1,136 @@
+::ng-deep .calender-button {
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  vertical-align: middle;
+  width: 7.45em;
+  line-height: 1.875em;
+  font-weight: 500;
+  height: 30px;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
+  margin-right: 0.5em;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
+}
+
+.down-icon {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  right: -4.5em;
+  cursor: default !important;
+}
+.calender-text {
+  width: 5.25em;
+  height: 2.5em;
+  position: relative;
+  top: 4px;
+  right: 1.375em;
+}
+
+::ng-deep .progress-habit-bar {
+  width: 10.225em !important;
+  height: 1.875em !important;
+  color: rgb(0, 0, 0);
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 5px;
+  margin-right: 1em !important;
+  display: flex;
+  padding: 0 0.5em 0 3px;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  top: -1.875em;
+  right: -6.0625em;
+}
+
+.progress-input {
+  margin-left: 9px;
+}
+
+.log-input {
+  width: 3.6875em;
+  min-width: 0;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  height: 1.875em;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 30px;
+  cursor: default;
+  outline: transparent solid 2px;
+  border-color: inherit;
+  background: inherit;
+  border-width: 0;
+}
+
+.log-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px !important;
+  font-weight: 500;
+  line-height: 1.875em;
+  color: rgb(0, 0, 0);
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.log-tick-icon {
+  width: 2em;
+  height: 1.875em;
+  padding: 0 6px 0 0.875em;
+}
+
+
+.log-cross-icon {
+  width: 1.125em;
+  height: 1.875em;
+  padding: 0 0 0 6px;
+}
+
+::ng-deep .p-overlaypanel .p-overlaypanel-content {
+  width: 17.4375em;
+  height: 2.875em;
+  padding: 0.5625em 0.5625em 7px;
+}
+
+::ng-deep .disable-next .p-ripple.p-element.p-datepicker-next.p-link {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+::ng-deep .disable-prev .p-ripple.p-element.p-datepicker-prev.p-link {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+::ng-deep .log-calender .p-datepicker {
+  width: 14.4375em !important;
+  height: 13.6875em !important;
+  position: absolute;
+  top: -1.2em;
+  left: -0.7em;
+}

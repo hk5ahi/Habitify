@@ -12,7 +12,7 @@ export class WaterFrequencyMenuComponent {
   updateWaterGoalFrequency(times: string) {
     this.waterGoal.emit(times);
   }
-  getMatMenu(): MatMenu {
+  getMenu(): MatMenu {
     return this.menu;
   }
 

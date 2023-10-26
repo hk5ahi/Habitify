@@ -41,7 +41,7 @@
     <ng-container *ngIf="calculateTimeOfDay()=='Evening'">
       <div [routerLink]="['/time-of-day']" class="item habit-time" [ngClass]="{'background-color':isTimeHabits}" (click)="updateIsTimeHabits()">
         <div class="item-container">
-          <img alt="Evening" class="item-icon" src="assets/svg/afternoon.svg" [ngClass]="{'white-icon':isTimeHabits}">
+          <img alt="Evening" class="item-icon" src="assets/svg/evening.svg" [ngClass]="{'white-icon':isTimeHabits}">
           <span class="text-container"  [ngClass]="{'white-text':isTimeHabits}">Evening</span>
         </div>
       </div>
@@ -81,6 +81,8 @@
   </div>
 </p-sidebar>
 
-<app-navigation-bar *ngIf="!showManageHabits"></app-navigation-bar>
-<app-manage-habits-sidebar *ngIf="showManageHabits"></app-manage-habits-sidebar>
+<app-navigation-bar *ngIf="!getManageHabitsValue()"></app-navigation-bar>
+<app-manage-habits-sidebar *ngIf="getManageHabitsValue()"></app-manage-habits-sidebar>
+
+
 
