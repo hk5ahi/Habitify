@@ -17,7 +17,7 @@
   </div>
 
 </div>
-<div *ngIf="!hasHabits() || showEmpty" class="none-habits" [ngClass]="{'move-empty-habit':showEmpty}">
+<div *ngIf="!hasHabits() || showEmpty" [ngClass]="{'move-empty-habit':showEmpty}" class="none-habits">
   <div class="empty-template">
     <div class="images-container">
       <img alt="image1" class="image" src="assets/svg/image1.svg">

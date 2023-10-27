@@ -47,6 +47,8 @@ import { EditHabitMenuComponent } from "../edit-habit-menu/edit-habit-menu.compo
 import { FailedHabitMenuComponent } from "../failed-habit-menu/failed-habit-menu.component";
 import { OverlayPanelService } from "../Service/overlay-panel.service";
 import { OverlayPanelMenuComponent } from "../overlay-panel-menu/overlay-panel-menu.component";
+import { SkipHabitMenuComponent } from "../skip-habit-menu/skip-habit-menu.component";
+import { CompleteHabitMenuComponent } from "../complete-habit-menu/complete-habit-menu.component";
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { OverlayPanelMenuComponent } from "../overlay-panel-menu/overlay-panel-m
     ManageHabitsComponent,
     EditHabitMenuComponent,
     FailedHabitMenuComponent,
-    OverlayPanelMenuComponent
+    OverlayPanelMenuComponent,
+    SkipHabitMenuComponent,
+    CompleteHabitMenuComponent,
   ],
   imports: [
     BrowserModule,

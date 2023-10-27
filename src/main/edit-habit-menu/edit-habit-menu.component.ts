@@ -14,7 +14,6 @@ import { OverlayPanelService } from "../Service/overlay-panel.service";
 })
 export class EditHabitMenuComponent {
 
-
   @ViewChild('calendar') calender!: ElementRef;
   @Input() habit!: Habit;
   @ViewChild(MatMenu) menu!: MatMenu;
@@ -48,11 +47,9 @@ export class EditHabitMenuComponent {
     });
   }
 
-  showOverlayPanel(event: Event,habit: Habit) {
-    this.overlayPanelService.setShowPanelOverlay();
+  showOverlayPanel(event: Event, habit: Habit) {
+    this.overlayPanelService.setShowPanelOverlay(true);
     this.overlayPanelService.sendEvent(event);
     habit.showOverLayPanel = true;
   }
-
-
 }

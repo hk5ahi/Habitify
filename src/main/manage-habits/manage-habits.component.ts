@@ -21,8 +21,9 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   searchValue!: string;
   searchValueSubscription!: Subscription;
   protected readonly AppConstants = AppConstants;
+  protected readonly TimeOfDay = TimeOfDay;
 
-  constructor(private NavigationService: NavigationService,private dialogService: DialogService,private habitService: HabitService) {
+  constructor(private NavigationService: NavigationService, private dialogService: DialogService, private habitService: HabitService) {
   }
 
   ngOnInit(): void {
@@ -40,8 +41,8 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
       );
     }
   }
-  openEditModal(habit: Habit) {
 
+  openEditModal(habit: Habit) {
     this.dialogService.open(HabitModalDialogueComponent, {
       data: {
         habit: habit,
@@ -63,28 +64,25 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
       this.filterHabits();
     }
   }
+
   openEditHabitMenu(event: MouseEvent) {
     event.preventDefault();
     this.manageHabitTrigger.openMenu();
   }
-
-  ngOnDestroy(): void {
-    if (this.searchValueSubscription) {
-      this.searchValueSubscription.unsubscribe();
-    }
-  }
-
   archiveHabit(habit: Habit) {
-    this.habitService.toggleArchiveHabit(habit,true);
+    this.habitService.toggleArchiveHabit(habit, true);
   }
 
   deleteHabit(habit: Habit) {
     this.habitService.deleteHabit(habit);
   }
 
-  updateTimeOfDay(habit: Habit,timeOfDay: TimeOfDay) {
-    this.habitService.updateTimeOfDay(habit,timeOfDay);
+  updateTimeOfDay(habit: Habit, timeOfDay: TimeOfDay) {
+    this.habitService.updateTimeOfDay(habit, timeOfDay);
   }
-
-  protected readonly TimeOfDay = TimeOfDay;
+  ngOnDestroy(): void {
+    if (this.searchValueSubscription) {
+      this.searchValueSubscription.unsubscribe();
+    }
+  }
 }

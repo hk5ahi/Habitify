@@ -9,9 +9,11 @@ import { MatMenu } from "@angular/material/menu";
 export class WaterFrequencyMenuComponent {
   @Output() waterGoal: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(MatMenu) menu!: MatMenu;
+
   updateWaterGoalFrequency(times: string) {
     this.waterGoal.emit(times);
   }
+
   getMenu(): MatMenu {
     return this.menu;
   }

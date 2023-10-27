@@ -17,17 +17,17 @@
              src="assets/svg/progress.svg"/>
         View Progress
       </button>
-      <button mat-menu-item (click)="openEditModal(habit)">
+      <button (click)="openEditModal(habit)" mat-menu-item>
         <img alt="Edit" class="edit-habit-icon"
              src="assets/svg/edit.svg"/>
         Edit
       </button>
-      <button mat-menu-item (click)="archiveHabit(habit)" *ngIf="!habit.isArchived">
+      <button (click)="archiveHabit(habit)" *ngIf="!habit.isArchived" mat-menu-item>
         <img alt="archive" class="edit-habit-icon"
              src="assets/svg/archive.svg"/>
         Archive
       </button>
-      <button class="border" mat-menu-item (click)="deleteHabit(habit)">
+      <button (click)="deleteHabit(habit)" class="border" mat-menu-item>
         <img alt="delete" class="edit-habit-icon"
              src="assets/svg/delete.svg"/>
         Delete
@@ -37,22 +37,21 @@
       </button>
     </mat-menu>
     <mat-menu #moveHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
-      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Morning)">
+      <button (click)="updateTimeOfDay(habit,TimeOfDay.Morning)" mat-menu-item>
         <img alt="tick" class="edit-habit-icon small-icon"
              src="assets/svg/afternoon.svg"/>
-        Morning
+        {{TimeOfDay.Morning}}
       </button>
-      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Afternoon)">
+      <button (click)="updateTimeOfDay(habit,TimeOfDay.Afternoon)" mat-menu-item>
         <img alt="tick" class="edit-habit-icon small-icon"
              src="assets/svg/afternoon.svg"/>
-        Afternoon
+        {{TimeOfDay.Afternoon}}
       </button>
-      <button mat-menu-item (click)="updateTimeOfDay(habit,TimeOfDay.Evening)">
+      <button (click)="updateTimeOfDay(habit,TimeOfDay.Evening)" mat-menu-item>
         <img alt="tick" class="edit-habit-icon small-icon"
              src="assets/svg/evening.svg"/>
-        Evening
+        {{TimeOfDay.Evening}}
       </button>
-
     </mat-menu>
   </div>
 </div>

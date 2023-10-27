@@ -30,5 +30,4 @@ export class AllHabitsComponent implements OnInit, OnDestroy {
       this.habitsSubscription.unsubscribe();
     }
   }
-
 }

@@ -13,7 +13,6 @@ export class CalenderDisplayService {
     if (!date) {
       return ''; // Handle the case when no date is selected
     }
-
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -39,8 +38,6 @@ export class CalenderDisplayService {
     // Convert string representations to Date instances
     const date1 = typeof firstDate === 'string' ? new Date(firstDate) : firstDate;
     const date2 = typeof secondDate === 'string' ? new Date(secondDate) : secondDate;
-
-
     // Check if they represent the same day
     return (
       date1.getDate() === date2.getDate() &&

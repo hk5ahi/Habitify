@@ -13,9 +13,9 @@ export class RunningFrequencyMenuComponent {
   getMenu(): MatMenu {
     return this.menu;
   }
+
   updateRunningGoalFrequency(times: string) {
     this.runningGoal.emit(times);
   }
-
 
 }

@@ -31,6 +31,7 @@ export class NavigationService {
   setHabitSearchValue(value: string) {
     this.habitSearchValue.next(value);
   }
+
   setSortText(value: string) {
     this.sortText.next(value);
   }

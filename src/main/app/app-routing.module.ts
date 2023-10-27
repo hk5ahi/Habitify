@@ -7,7 +7,7 @@ import { ManageHabitsSidebarComponent } from "../manage-habits-sidebar/manage-ha
 const routes: Routes = [
   {path: 'all-habits', component: AllHabitsComponent},
   {path: 'time-of-day', component: TimeHabitsComponent},
-  {path: 'manage-habits-sidebar',  component: ManageHabitsSidebarComponent},
+  {path: 'manage-habits-sidebar', component: ManageHabitsSidebarComponent},
   {path: '', redirectTo: '/all-habits', pathMatch: 'full'}, // Default route
 ];
 

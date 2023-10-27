@@ -7,11 +7,11 @@ import { MatMenu } from "@angular/material/menu";
 import { OverlayPanelService } from "../Service/overlay-panel.service";
 
 @Component({
-  selector: 'app-failed-habit-menu',
-  templateUrl: './failed-habit-menu.component.html',
-  styleUrls: ['./failed-habit-menu.component.scss']
+  selector: 'app-complete-habit-menu',
+  templateUrl: './complete-habit-menu.component.html',
+  styleUrls: ['./complete-habit-menu.component.scss']
 })
-export class FailedHabitMenuComponent {
+export class CompleteHabitMenuComponent {
 
   @ViewChild(MatMenu) menu!: MatMenu;
   @Input() habit!: Habit;
@@ -23,12 +23,6 @@ export class FailedHabitMenuComponent {
     return this.menu;
   }
 
-  showOverlayPanel(event: Event, habit: Habit) {
-    this.overlayPanelService.setShowPanelOverlay(true);
-    this.overlayPanelService.sendEvent(event);
-    habit.showOverLayPanel = true;
-  }
-
   openEditModal(habit: Habit) {
     this.dialogService.open(HabitModalDialogueComponent, {
       data: {
@@ -38,7 +32,14 @@ export class FailedHabitMenuComponent {
     });
   }
 
-  undoFailHabit(habit: Habit) {
-    this.habitService.toggleFailHabit(habit, false);
+  undoComplete(habit: Habit) {
+    this.habitService.toggleCompleteHabit(habit, false);
   }
+
+  showOverlayPanel(event: Event, habit: Habit) {
+    this.overlayPanelService.setShowPanelOverlay(true);
+    this.overlayPanelService.sendEvent(event);
+    habit.showOverLayPanel = true;
+  }
+
 }

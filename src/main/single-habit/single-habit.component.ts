@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -13,11 +12,8 @@ import {
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
 import { AppConstants, iconMap } from "../Constants/app-constant";
-import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
-import { DialogService } from "primeng/dynamicdialog";
 import { MatMenuTrigger } from "@angular/material/menu";
 import { OverlayPanel } from "primeng/overlaypanel";
-import { CalenderDisplayService } from "../Service/calender-display.service";
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 
@@ -38,7 +34,7 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   sortText!: string;
   private sortSubscription!: Subscription;
 
-  constructor(private habitService: HabitService, private dialogService: DialogService, private displayService: CalenderDisplayService, private navService: NavigationService) {
+  constructor(private habitService: HabitService, private navService: NavigationService) {
   }
 
   ngOnInit(): void {
@@ -102,25 +98,8 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     this.editHabitTrigger.openMenu();
   }
 
-  openEditModal(habit: Habit) {
-    this.dialogService.open(HabitModalDialogueComponent, {
-      data: {
-        habit: habit,
-        editModal: true
-      }
-    });
-  }
-
   completeHabit(habit: Habit) {
     this.habitService.toggleCompleteHabit(habit, true);
-  }
-
-  undoComplete(habit: Habit) {
-    this.habitService.toggleCompleteHabit(habit, false);
-  }
-
-  undoSkip(habit: Habit) {
-    this.habitService.toggleSkipHabit(habit, false);
   }
 
   getSingleNumber(habit: Habit): number {

@@ -31,7 +31,6 @@ export class ManageHabitsSidebarComponent implements OnInit, OnDestroy {
       // Filter habits with isArchived === false
       this.habits = habits;
     });
-
     this.selectedItem = AppConstants.active;
   }
 
@@ -51,7 +50,6 @@ export class ManageHabitsSidebarComponent implements OnInit, OnDestroy {
 
   getLengthOfAnyTimeHabits(): number {
     const requiredTimeOfDayValues = [TimeOfDay.Morning, TimeOfDay.Afternoon, TimeOfDay.Evening];
-
     const habitsWithRequiredTimeOfDay = this.habits.filter(habit => {
       return requiredTimeOfDayValues.every(time => habit.timeOfDay.includes(<TimeOfDay>time) && !habit.isArchived);
     });
@@ -96,10 +94,10 @@ export class ManageHabitsSidebarComponent implements OnInit, OnDestroy {
         return this.habits.filter(habit => !habit.isArchived);
     }
   }
+
   ngOnDestroy(): void {
     if (this.showManageHabitsSubscription) {
       this.showManageHabitsSubscription.unsubscribe();
     }
   }
-
 }

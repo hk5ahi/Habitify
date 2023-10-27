@@ -28,7 +28,6 @@ export class TimeHabitsComponent implements OnInit, OnDestroy {
       this.habits = habits.filter(habit =>
         habit.timeOfDay.some(time => time === this.currentTimeOfDay) && !habit.isArchived
       );
-
     });
   }
 

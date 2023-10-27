@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TimeDayService } from './time-day.service';
+import { TimeAndDayService } from './time-day.service';
 
 describe('TimeDayService', () => {
-  let service: TimeDayService;
+  let service: TimeAndDayService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TimeDayService);
+    service = TestBed.inject(TimeAndDayService);
   });
 
   it('should be created', () => {

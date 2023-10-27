@@ -45,7 +45,8 @@
   width: 12px; /* Adjust the width as needed */
   height: 12px; /* Adjust the height as needed */
 }
-.search-input{
+
+.search-input {
   width: 100%;
   min-width: 0;
   outline: transparent solid 2px;
@@ -57,20 +58,22 @@
   border-radius: 3px;
   border: 1px solid rgb(229, 228, 229);
   background: inherit;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   line-height: 14.4px;
   padding: 7.5px 17px 7.5px 28px;
   cursor: default;
   text-overflow: ellipsis;
-  margin-left:2px;
+  margin-left: 2px;
 }
+
 .search-input::placeholder {
   color: rgb(199, 199, 199);
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   line-height: 14.4px;
 }
-.search-input:hover{
-  border:1px solid #2A67F4;
+
+.search-input:hover {
+  border: 1px solid #2A67F4;
 }

@@ -41,7 +41,6 @@ export class DaysMenuComponent implements OnInit, OnDestroy {
     if (this.editModal) {
       const repeat = (this.receivedHabit?.repeat as string).toLowerCase();
       const dayToCheck = day.toLowerCase();
-
       // Check if the repeat string contains either the abbreviated or full name of the day
       return repeat === 'daily' || repeat.includes(dayToCheck) || repeat.includes(dayToCheck.substring(0, 3));
 

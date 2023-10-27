@@ -11,7 +11,8 @@
   </div>
   <div #Search *ngIf="showSearch" class="input-container">
     <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
-    <input [(ngModel)]="searchValue" (ngModelChange)="updateSearchValue()" name="searchInput" placeholder="Search" type="text"/>
+    <input (ngModelChange)="updateSearchValue()" [(ngModel)]="searchValue" name="searchInput" placeholder="Search"
+           type="text"/>
   </div>
 
   <div *ngIf="!showSearch">
@@ -89,7 +90,7 @@
 
 <div class="app-habits-container">
   <router-outlet></router-outlet>
-  <app-all-habits ></app-all-habits >
+  <app-all-habits></app-all-habits>
 </div>
 
 

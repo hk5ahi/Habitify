@@ -27,13 +27,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   selectedDate: Date = new Date();
   minDate!: Date;
   maxDate!: Date;
-  sortText:string=AppConstants.habits_Order;
+  sortText: string = AppConstants.habits_Order;
   menuText: string = AppConstants.habits_Order;
   showSearch: boolean = false;
   isPrevious: boolean = false;
   isCurrent: boolean = true;
   private timeOfDaySubscription!: Subscription;
-
 
   constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: CalenderDisplayService, private sidebarService: SidebarService) {
   }
@@ -43,7 +42,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.timeOfDaySubscription = this.navService.timeOfDay$.subscribe((timeOfDay) => {
       this.currentTimeOfDay = timeOfDay;
     });
-
     this.calculateMinMaxDates();
   }
 
@@ -64,7 +62,6 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     const currentDate = new Date();
     const selectedMonth = event.month;
     const selectedYear = event.year;
-
     // Check if the selected month is the previous month
     return (
       currentDate.getFullYear() === selectedYear &&
@@ -128,13 +125,14 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       return this.navService.getTimeOfDayValue();
     }
   }
+
   updateSearchValue() {
     this.navService.setHabitSearchValue(this.searchValue);
   }
+
   ngOnDestroy(): void {
     if (this.timeOfDaySubscription) {
       this.timeOfDaySubscription.unsubscribe();
     }
   }
-
 }

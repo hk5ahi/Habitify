@@ -1,17 +1,17 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Habit } from "../Data Types/habit";
-import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
+import { OverlayPanelService } from "../Service/overlay-panel.service";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitService } from "../Service/habit.service";
+import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { MatMenu } from "@angular/material/menu";
-import { OverlayPanelService } from "../Service/overlay-panel.service";
 
 @Component({
-  selector: 'app-failed-habit-menu',
-  templateUrl: './failed-habit-menu.component.html',
-  styleUrls: ['./failed-habit-menu.component.scss']
+  selector: 'app-skip-habit-menu',
+  templateUrl: './skip-habit-menu.component.html',
+  styleUrls: ['./skip-habit-menu.component.scss']
 })
-export class FailedHabitMenuComponent {
+export class SkipHabitMenuComponent {
 
   @ViewChild(MatMenu) menu!: MatMenu;
   @Input() habit!: Habit;
@@ -19,14 +19,8 @@ export class FailedHabitMenuComponent {
   constructor(private habitService: HabitService, private dialogService: DialogService, private overlayPanelService: OverlayPanelService) {
   }
 
-  getMenu(): MatMenu {
-    return this.menu;
-  }
-
-  showOverlayPanel(event: Event, habit: Habit) {
-    this.overlayPanelService.setShowPanelOverlay(true);
-    this.overlayPanelService.sendEvent(event);
-    habit.showOverLayPanel = true;
+  undoSkip(habit: Habit) {
+    this.habitService.toggleSkipHabit(habit, false);
   }
 
   openEditModal(habit: Habit) {
@@ -38,7 +32,14 @@ export class FailedHabitMenuComponent {
     });
   }
 
-  undoFailHabit(habit: Habit) {
-    this.habitService.toggleFailHabit(habit, false);
+  showOverlayPanel(event: Event, habit: Habit) {
+    this.overlayPanelService.setShowPanelOverlay(true);
+    this.overlayPanelService.sendEvent(event);
+    habit.showOverLayPanel = true;
   }
+
+  getMenu(): MatMenu {
+    return this.menu;
+  }
+
 }

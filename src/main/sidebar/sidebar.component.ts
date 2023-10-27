@@ -74,8 +74,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/manage-habits-sidebar']);
 
   }
-  getManageHabitsValue(): boolean {
 
+  getManageHabitsValue(): boolean {
     return this.sidebarService.getShowManageHabitsValue();
   }
 

@@ -36,63 +36,22 @@
             [matMenuTriggerFor]="editHabit.getMenu()" class="more-button" pButton type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
-    <button *ngIf="habit.isCompleted" [matMenuTriggerFor]="compHabit" class="more-button" pButton type="button">
+    <button *ngIf="habit.isCompleted" [matMenuTriggerFor]="compHabit.getMenu()" class="more-button" pButton
+            type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
-    <button *ngIf="habit.isSkipped" [matMenuTriggerFor]="skippedHabit" class="more-button" pButton type="button">
+    <button *ngIf="habit.isSkipped" [matMenuTriggerFor]="skippedHabit.getMenu()" class="more-button" pButton
+            type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
-    <button *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit.getMenu()" class="more-button" pButton type="button">
+    <button *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit.getMenu()" class="more-button" pButton
+            type="button">
       <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
     </button>
   </div>
   <app-edit-habit-menu #editHabit [habit]="habit"></app-edit-habit-menu>
-  <mat-menu #compHabit="matMenu" [hasBackdrop]="false" class="complete-habit-menu" overlapTrigger="false">
-    <button (click)="undoComplete(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/undo.svg"/>
-      Undo Complete
-    </button>
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/log.svg"/>
-      Log Progress
-    </button>
-    <button (click)="openEditModal(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/edit.svg"/>
-      Edit
-    </button>
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/view-progress.svg"/>
-      View Progress
-    </button>
+  <app-complete-habit-menu #compHabit [habit]="habit"></app-complete-habit-menu>
+  <app-skip-habit-menu #skippedHabit [habit]="habit"></app-skip-habit-menu>
+  <app-failed-habit-menu #failedHabit [habit]="habit"></app-failed-habit-menu>
 
-  </mat-menu>
-  <mat-menu #skippedHabit="matMenu" [hasBackdrop]="false" class="skip-habit-menu" overlapTrigger="false">
-
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/log.svg"/>
-      Log Progress
-    </button>
-    <button (click)="undoSkip(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/undo.svg"/>
-      Undo Skip
-    </button>
-    <button (click)="openEditModal(habit)" mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/edit.svg"/>
-      Edit
-    </button>
-    <button mat-menu-item>
-      <img alt="tick" class="edit-habit-icon"
-           src="assets/svg/view-progress.svg"/>
-      View Progress
-    </button>
-
-  </mat-menu>
- <app-failed-habit-menu #failedHabit [habit]="habit"></app-failed-habit-menu>
 </div>

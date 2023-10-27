@@ -12,37 +12,41 @@
     </div>
   </div>
   <div class="side-bar-items">
-    <div class="item habit-time" [routerLink]="['/all-habits']" (click)="updateIsAllHabits()" [ngClass]="{'background-color':isAllHabits}">
+    <div (click)="updateIsAllHabits()" [ngClass]="{'background-color':isAllHabits}" [routerLink]="['/all-habits']"
+         class="item habit-time">
       <div class="item-container">
-        <img alt="Habit" class="item-icon" src="assets/svg/habit.svg" [ngClass]="{'white-icon':isAllHabits}">
-        <span class="text-container" [ngClass]="{'white-text':isAllHabits}">All Habits</span>
+        <img [ngClass]="{'white-icon':isAllHabits}" alt="Habit" class="item-icon" src="assets/svg/habit.svg">
+        <span [ngClass]="{'white-text':isAllHabits}" class="text-container">All Habits</span>
       </div>
 
     </div>
     <ng-container *ngIf="calculateTimeOfDay()=='Afternoon'">
-      <div [routerLink]="['/time-of-day']" class="item habit-time" (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}">
+      <div (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}" [routerLink]="['/time-of-day']"
+           class="item habit-time">
         <div class="item-container">
-          <img alt="Afternoon" class="item-icon" src="assets/svg/afternoon.svg" [ngClass]="{'white-icon':isTimeHabits}">
-          <span class="text-container" [ngClass]="{'white-text':isTimeHabits}">Afternoon</span>
+          <img [ngClass]="{'white-icon':isTimeHabits}" alt="Afternoon" class="item-icon" src="assets/svg/afternoon.svg">
+          <span [ngClass]="{'white-text':isTimeHabits}" class="text-container">Afternoon</span>
         </div>
       </div>
     </ng-container>
 
     <ng-container *ngIf="calculateTimeOfDay()=='Morning'">
-      <div [routerLink]="['/time-of-day']" class="item habit-time" (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}">
+      <div (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}" [routerLink]="['/time-of-day']"
+           class="item habit-time">
         <div class="item-container">
-          <img alt="Morning" class="item-icon" src="assets/svg/afternoon.svg" [ngClass]="{'white-icon':isTimeHabits}">
-          <span class="text-container"  [ngClass]="{'white-text':isTimeHabits}">Morning</span>
+          <img [ngClass]="{'white-icon':isTimeHabits}" alt="Morning" class="item-icon" src="assets/svg/afternoon.svg">
+          <span [ngClass]="{'white-text':isTimeHabits}" class="text-container">Morning</span>
 
         </div>
       </div>
     </ng-container>
 
     <ng-container *ngIf="calculateTimeOfDay()=='Evening'">
-      <div [routerLink]="['/time-of-day']" class="item habit-time" [ngClass]="{'background-color':isTimeHabits}" (click)="updateIsTimeHabits()">
+      <div (click)="updateIsTimeHabits()" [ngClass]="{'background-color':isTimeHabits}" [routerLink]="['/time-of-day']"
+           class="item habit-time">
         <div class="item-container">
-          <img alt="Evening" class="item-icon" src="assets/svg/evening.svg" [ngClass]="{'white-icon':isTimeHabits}">
-          <span class="text-container"  [ngClass]="{'white-text':isTimeHabits}">Evening</span>
+          <img [ngClass]="{'white-icon':isTimeHabits}" alt="Evening" class="item-icon" src="assets/svg/evening.svg">
+          <span [ngClass]="{'white-text':isTimeHabits}" class="text-container">Evening</span>
         </div>
       </div>
     </ng-container>
@@ -58,7 +62,7 @@
     <div class="preferences-area">
       <p class="pre-text">Preferences</p>
       <div class="end-area">
-        <div class="item" (click)="routeToManageHabits()">
+        <div (click)="routeToManageHabits()" class="item">
           <div class="item-container">
             <img alt="Manage Habits" class="item-icon" src="assets/svg/manage.svg">
             <span class="text-container">Manage Habits</span>

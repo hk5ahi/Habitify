@@ -30,7 +30,6 @@ export class HabitService {
       isFailed: false,
       showLogValueBar: false,
       showOverLayPanel: false
-
     };
 
     this.habits.push(newHabit);
@@ -91,6 +90,7 @@ export class HabitService {
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
   }
+
   updateTimeOfDay(habit: Habit, timeOfDay: TimeOfDay) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
     this.habits[index].timeOfDay = [];

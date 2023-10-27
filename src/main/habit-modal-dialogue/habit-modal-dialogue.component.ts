@@ -18,8 +18,8 @@ import { IntervalService } from "../Service/interval.service";
 })
 export class HabitModalDialogueComponent implements OnInit, OnDestroy {
 
-  editModal: boolean = false;
   @ViewChild('calender') calenderDialogue!: ElementRef;
+  editModal: boolean = false;
   receivedHabit!: Habit;
   habitName!: string;
   goal!: number;

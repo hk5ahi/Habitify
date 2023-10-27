@@ -1,14 +1,13 @@
-<mat-menu #failedHabit="matMenu" [hasBackdrop]="false" class="skip-habit-menu" overlapTrigger="false">
-
+<mat-menu #compHabit="matMenu" [hasBackdrop]="false" class="complete-habit-menu" overlapTrigger="false">
+  <button (click)="undoComplete(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/undo.svg"/>
+    Undo Complete
+  </button>
   <button (click)="showOverlayPanel($event,habit)" mat-menu-item>
     <img alt="tick" class="edit-habit-icon"
          src="assets/svg/log.svg"/>
     Log Progress
-  </button>
-  <button (click)="undoFailHabit(habit)" mat-menu-item>
-    <img alt="tick" class="edit-habit-icon"
-         src="assets/svg/undo.svg"/>
-    Undo Fail
   </button>
   <button (click)="openEditModal(habit)" mat-menu-item>
     <img alt="tick" class="edit-habit-icon"

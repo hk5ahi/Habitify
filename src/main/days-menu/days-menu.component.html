@@ -2,36 +2,36 @@
   <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Monday
+    {{daysOfWeek.Monday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Tuesday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Tuesday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Tuesday
+    {{daysOfWeek.Tuesday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Wednesday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Wednesday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Wednesday
+    {{daysOfWeek.Wednesday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Thursday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Thursday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Thursday
+    {{daysOfWeek.Thursday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Friday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Friday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Friday
+    {{daysOfWeek.Friday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Saturday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Saturday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Saturday
+    {{daysOfWeek.Saturday}}
   </button>
   <button (click)="toggleDay(daysOfWeek.Sunday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Sunday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
-    Sunday
+    {{daysOfWeek.Sunday}}
   </button>
 </mat-menu>

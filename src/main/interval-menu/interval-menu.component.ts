@@ -29,7 +29,6 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
     this.receivedHabitSubscription = this.intervalService.receivedHabit$.subscribe(habit => {
       this.receivedHabit = habit!;
     });
-
   }
 
   getMenu(): MatMenu {
@@ -42,7 +41,6 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
 
   checkIntervalPerDays(interval: string) {
     if (this.editModal) {
-
       if (this.receivedHabit.repeat === interval) {
         return true;
       }

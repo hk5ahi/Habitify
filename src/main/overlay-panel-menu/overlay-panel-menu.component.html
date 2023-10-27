@@ -11,7 +11,7 @@
     <img (click)="closeOverLay()" alt="log"
          class="log-cross-icon" src="assets/svg/cross.svg"/>
   </button>
-  <p-calendar #calendar (onSelect)="onDateClick($event)" *ngIf="showCalendar" [(ngModel)]="selectedDate"
+  <p-calendar (onSelect)="onDateClick($event)" *ngIf="showCalendar" [(ngModel)]="selectedDate"
               [disabledDates]="disabledDates" [inline]="true"
               class="log-calender disable-next disable-prev"></p-calendar>
 </p-overlayPanel>

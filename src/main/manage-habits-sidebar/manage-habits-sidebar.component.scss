@@ -157,16 +157,19 @@
 .move-right {
   position: relative;
   right: -30px;
-  top:1px;
+  top: 1px;
 }
+
 .background-color {
   background-color: #2A67F4;
   border-radius: 5px;
   cursor: default;
 }
+
 .white-icon {
   filter: brightness(0) invert(1);
 }
+
 .white-text {
   color: #fff !important; /* Set the text color to white */
 }
