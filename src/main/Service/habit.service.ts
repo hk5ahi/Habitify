@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { AppConstants, TimeOfDay } from "../Constants/app-constant";
 import { BehaviorSubject } from "rxjs";
+import { NavigationService } from "./navigation.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class HabitService {
   public habitSubject: BehaviorSubject<Habit[]> = new BehaviorSubject<Habit[]>([]);
   private habits: Habit[] = [];
 
-  constructor() {
+  constructor(private navService: NavigationService) {
     this.loadHabitsFromLocalStorage();
   }
 
@@ -105,6 +106,137 @@ export class HabitService {
     });
   }
 
+  filterHabitsByStartDate(habits: Habit[]): Habit[] {
+    let selectedDate = this.navService.getSelectedDateValue();
+
+    // Check if the selected date is after the habit start date
+    const isAfterStartDate = (habit: Habit) => {
+      const habitStartDate = new Date(habit.startDate);
+      return selectedDate >= habitStartDate;
+    };
+
+    // Check if the selected date matches the repeat day of the habit
+    const doesRepeatMatch = (habit: Habit) => {
+      const repeatDay = habit.repeat.toLowerCase();
+      return repeatDay && selectedDate.toLocaleString('en-us', { weekday: 'long' }).toLowerCase() === repeatDay;
+    };
+
+    return habits.filter(habit => {
+      // Assuming habit.startDate is a Date object
+
+      // Check if the habit is visible based on repeat and start date
+      return (habit.repeat.toLowerCase() === 'daily' && isAfterStartDate(habit)) ||
+        (doesRepeatMatch(habit) && isAfterStartDate(habit));
+    });
+  }
+
+
+  filterHabitsBySearch(habits: Habit[], searchValue: string): Habit[] {
+    let filteredHabits: Habit[] = [];
+
+    if (searchValue) {
+      const lowerCaseSearch = searchValue.toLowerCase();
+      filteredHabits = habits.filter(habit =>
+        habit.name.toLowerCase().includes(lowerCaseSearch)
+      );
+    } else {
+      // console.log(habits);
+      return habits;
+    }
+    // console.log(filteredHabits);
+    return filteredHabits;
+  }
+
+
+  isHabitsCompleted(habits: Habit[]): boolean {
+
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.some(habit => habit.isCompleted);
+  }
+
+  getCompletedHabitsCount(habits: Habit[]): number {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isCompleted).length;
+  }
+
+  isHabitsSkipped(habits: Habit[]): boolean {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.some(habit => habit.isSkipped);
+  }
+
+  getSkippedHabitsCount(habits: Habit[]): number {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isSkipped).length;
+  }
+
+  isHabitsFailed(habits: Habit[]): boolean {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.some(habit => habit.isFailed);
+  }
+
+  getFailedHabitsCount(habits: Habit[]): number {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isFailed).length;
+  }
+
+  sortHabits(habits: Habit[], text: string, unsorted: Habit[]): Habit[] {
+
+    if (text == 'A-Z') {
+      return [...habits].sort((a, b) => (a.name > b.name) ? 1 : -1);
+    } else if (text == 'Z-A') {
+      return [...habits].sort((a, b) => (a.name < b.name) ? 1 : -1);
+    } else {
+      return unsorted;
+    }
+  }
+
+  sendHabits(habits: Habit[]): Habit[] {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => !habit.isCompleted && !habit.isSkipped && !habit.isFailed);
+  }
+
+  sendCompletedHabits(habits: Habit[]): Habit[] {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isCompleted);
+  }
+
+  sendSkippedHabits(habits: Habit[]): Habit[] {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isSkipped);
+  }
+
+  sendFailedHabits(habits: Habit[]): Habit[] {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.filter(habit => habit.isFailed);
+  }
+
+  hasHabits(habits: Habit[]): boolean {
+    let filteredHabits = this.filterHabitsByStartDate(habits);
+    let searchValue = this.navService.getHabitSearchValue();
+    let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
+    return searchHabits.length > 0;
+  }
+
   private loadHabitsFromLocalStorage(): void {
     const storedHabits = localStorage.getItem(AppConstants.habitsKey);
     if (storedHabits) {
@@ -116,4 +248,5 @@ export class HabitService {
   private saveHabitsToLocalStorage(): void {
     localStorage.setItem(AppConstants.habitsKey, JSON.stringify(this.habits));
   }
+
 }

@@ -1,14 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
 import { AppConstants, iconMap } from "../Constants/app-constant";
@@ -17,22 +7,24 @@ import { OverlayPanel } from "primeng/overlaypanel";
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 
+
 @Component({
   selector: 'app-single-habit',
   templateUrl: './single-habit.component.html',
   styleUrls: ['./single-habit.component.scss'],
   providers: [OverlayPanel]
 })
-export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
+export class SingleHabitComponent implements OnInit, OnDestroy {
   @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
   @Input() habits: Habit[] = [];
-  @Output() showEmpty: EventEmitter<boolean> = new EventEmitter<boolean>();
   searchValue!: string;
   filteredHabits: Habit[] = [];
   unSortedHabits: Habit[] = [];
-  searchValueSubscription!: Subscription;
+  selectedDate!: Date;
   sortText!: string;
-  private sortSubscription!: Subscription;
+  searchValueSubscription!: Subscription;
+  sortSubscription!: Subscription;
+  selectedDateSubscription!: Subscription;
 
   constructor(private habitService: HabitService, private navService: NavigationService) {
   }
@@ -41,52 +33,24 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     this.filteredHabits = this.habits;
     this.searchValueSubscription = this.navService.habitSearchValue$.subscribe((value) => {
       this.searchValue = value;
-      this.filterHabits();
+      this.filteredHabits = this.habitService.filterHabitsBySearch(this.filteredHabits, this.searchValue);
       this.unSortedHabits = this.filteredHabits;
     });
+
     this.sortSubscription = this.navService.sortText.subscribe((value) => {
       this.sortText = value;
-      this.sortHabits();
+      this.filteredHabits = this.habitService.sortHabits(this.filteredHabits, this.sortText, this.habits);
+
+    });
+    this.selectedDateSubscription = this.navService.selectedDate$.subscribe((value) => {
+      this.selectedDate = value;
+      this.filteredHabits = this.habitService.filterHabitsByStartDate(this.habits);
+
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['habits'] && !changes['habits'].firstChange) {
-      const prevHabitsLength = changes['habits'].previousValue.length;
-      const currentHabitsLength = changes['habits'].currentValue.length;
-      // Check if the length of habits array has not changed
-      if (prevHabitsLength != currentHabitsLength) {
-        // habits array has not changed in length, update filteredHabits
-        this.filteredHabits = changes['habits'].currentValue;
-      }
-    }
-  }
-
-  sortHabits() {
-
-    if (this.sortText == 'A-Z') {
-      this.filteredHabits = [...this.filteredHabits].sort((a, b) => (a.name > b.name) ? 1 : -1);
-    } else if (this.sortText == 'Z-A') {
-      this.filteredHabits = [...this.filteredHabits].sort((a, b) => (a.name < b.name) ? 1 : -1);
-    } else {
-      this.filteredHabits = this.unSortedHabits;
-    }
-  }
-
-  filterHabits(): void {
-    if (this.searchValue) {
-      const lowerCaseSearch = this.searchValue.toLowerCase();
-      this.filteredHabits = this.habits.filter(habit =>
-        habit.name.toLowerCase().includes(lowerCaseSearch)
-      );
-    } else {
-      this.filteredHabits = this.habits;
-    }
-    if (this.filteredHabits.length == 0) {
-      this.showEmpty.emit(true);
-    } else {
-      this.showEmpty.emit(false);
-    }
+  getFilteredHabits(): Habit[] {
+    return this.filteredHabits;
   }
 
   getHabitIcon(habit: Habit): string {
@@ -135,4 +99,5 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
       this.sortSubscription.unsubscribe();
     }
   }
+
 }

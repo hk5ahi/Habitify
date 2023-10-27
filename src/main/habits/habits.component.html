@@ -1,13 +1,13 @@
 <div *ngIf="hasHabits()" class="habits">
 
-  <app-single-habit (showEmpty)="showEmptyHabit($event)" [habits]="sendHabits()"></app-single-habit>
+  <app-single-habit [habits]="sendHabits()"></app-single-habit>
   <div>
     <p-accordion [activeIndex]=activeTabIndices [multiple]="true">
       <p-accordionTab *ngIf="isHabitCompleted()" [header]="getSuccessHeader()" class="accord">
         <app-single-habit [habits]="sendCompletedHabits()"></app-single-habit>
       </p-accordionTab>
       <p-accordionTab *ngIf="isHabitSkipped()" [header]="getSkipHeader()" class="accord">
-        <app-single-habit [habits]="sendSkippedHabits()"></app-single-habit>
+        <app-single-habit  [habits]="sendSkippedHabits()"></app-single-habit>
       </p-accordionTab>
       <p-accordionTab *ngIf="isHabitFailed()" [header]="getFailHeader()" class="accord">
         <app-single-habit [habits]="sendFailedHabits()"></app-single-habit>
@@ -17,7 +17,7 @@
   </div>
 
 </div>
-<div *ngIf="!hasHabits() || showEmpty" [ngClass]="{'move-empty-habit':showEmpty}" class="none-habits">
+<div *ngIf="!hasHabits()" [ngClass]="{'move-empty-habit':showEmpty}" class="none-habits">
   <div class="empty-template">
     <div class="images-container">
       <img alt="image1" class="image" src="assets/svg/image1.svg">

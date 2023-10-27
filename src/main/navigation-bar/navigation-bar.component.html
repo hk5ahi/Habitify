@@ -11,7 +11,7 @@
   </div>
   <div #Search *ngIf="showSearch" class="input-container">
     <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
-    <input (ngModelChange)="updateSearchValue()" [(ngModel)]="searchValue" name="searchInput" placeholder="Search"
+    <input (input)="updateSearchValue()" [(ngModel)]="searchValue" name="searchInput" placeholder="Search"
            type="text"/>
   </div>
 
@@ -75,7 +75,7 @@
 
 <div class="calendar-container">
   <p-calendar
-    (ngModelChange)="onDateSelect()"
+    (onSelect)="onDateSelect()"
     (onMonthChange)="onMonthChange($event)"
     *ngIf="showCalendar"
     [(ngModel)]="selectedDate"

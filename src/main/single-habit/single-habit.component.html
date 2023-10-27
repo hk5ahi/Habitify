@@ -1,4 +1,4 @@
-<div #habit (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of filteredHabits"
+<div #habit (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of getFilteredHabits()"
      class="habit">
   <div class="habit-identification">
     <img [src]="getHabitIcon(habit)" alt="habit" class="icon">

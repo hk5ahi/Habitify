@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
 import { Subscription } from "rxjs";

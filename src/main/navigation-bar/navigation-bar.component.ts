@@ -43,9 +43,11 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this.currentTimeOfDay = timeOfDay;
     });
     this.calculateMinMaxDates();
+
   }
 
   onDateSelect() {
+    this.navService.setSelectedDate(this.selectedDate);
     this.showCalendar = false;
   }
 

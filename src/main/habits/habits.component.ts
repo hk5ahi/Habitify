@@ -1,25 +1,26 @@
-import { Component, Input } from '@angular/core';
-import { Habit } from "../Data Types/habit";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { activeTabIndices } from "../Constants/app-constant";
+import { HabitService } from "../Service/habit.service";
+import { Habit } from "../Data Types/habit";
 
 @Component({
   selector: 'app-habits',
   templateUrl: './habits.component.html',
   styleUrls: ['./habits.component.scss']
 })
-export class HabitsComponent {
+export class HabitsComponent implements OnChanges{
 
   @Input() habits: Habit[] = [];
   showEmpty = false;
   protected readonly activeTabIndices = activeTabIndices;
 
-  constructor(private dialogService: DialogService) {
+  constructor(private dialogService: DialogService, private habitService: HabitService) {
   }
 
   hasHabits(): boolean {
-    return this.habits.length > 0;
+    return this.habitService.hasHabits(this.habits);
   }
 
   openDialog(): void {
@@ -28,21 +29,21 @@ export class HabitsComponent {
 
   isHabitCompleted(): boolean {
     // Assuming habits is an array of Habit objects
-    return this.habits.some(habit => habit.isCompleted);
+    return this.habitService.isHabitsCompleted(this.habits);
   }
 
   getCompletedHabitsCount(): number {
-    return this.habits.filter(habit => habit.isCompleted).length;
+    return this.habitService.getCompletedHabitsCount(this.habits);
   }
 
   getSkippedHabitsCount(): number {
-
-    return this.habits.filter(habit => habit.isSkipped).length;
+    // Assuming habits is an array of Habit objects
+    return this.habitService.getSkippedHabitsCount(this.habits);
   }
 
   getFailedHabitsCount(): number {
     // Assuming habits is an array of Habit objects
-    return this.habits.filter(habit => habit.isFailed).length;
+    return this.habitService.getFailedHabitsCount(this.habits);
   }
 
   getSuccessHeader(): string {
@@ -54,7 +55,7 @@ export class HabitsComponent {
   }
 
   isHabitSkipped() {
-    return this.habits.some(habit => habit.isSkipped);
+    return this.habitService.isHabitsSkipped(this.habits);
   }
 
   getFailHeader() {
@@ -62,29 +63,33 @@ export class HabitsComponent {
   }
 
   isHabitFailed() {
-    return this.habits.some(habit => habit.isFailed);
+    return this.habitService.isHabitsFailed(this.habits);
   }
 
   sendCompletedHabits() {
-    return this.habits.filter(habit => habit.isCompleted);
+    return this.habitService.sendCompletedHabits(this.habits);
   }
 
   sendSkippedHabits() {
-    return this.habits.filter(habit => habit.isSkipped);
+    return this.habitService.sendSkippedHabits(this.habits);
   }
 
   sendFailedHabits() {
-    return this.habits.filter(habit => habit.isFailed);
+    return this.habitService.sendFailedHabits(this.habits);
   }
 
   sendHabits(): Habit[] {
-    return this.habits.filter(habit => !habit.isCompleted && !habit.isSkipped && !habit.isFailed);
+    return this.habitService.sendHabits(this.habits);
   }
 
-  // display empty habit when search does not match any habit
-  showEmptyHabit(value: boolean) {
-    this.showEmpty = value;
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['habits']){
+      this.habits = changes['habits'].currentValue;
+      console.log(this.habits);
+    }
+
   }
+
 
 
 }
