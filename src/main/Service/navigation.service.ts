@@ -13,10 +13,12 @@ export class NavigationService {
   habitSearchValue$ = this.habitSearchValue.asObservable();
   sortText = new BehaviorSubject<string>(AppConstants.habits_Order);
   sortText$ = this.sortText.asObservable();
-  private timeOfDay = new BehaviorSubject<string>(''); // Initial value can be set here
-  timeOfDay$ = this.timeOfDay.asObservable();
   selectedDate = new BehaviorSubject<Date>(new Date());
   selectedDate$ = this.selectedDate.asObservable();
+  resizeNavigation = new BehaviorSubject<boolean>(false);
+  resizeNavigation$ = this.resizeNavigation.asObservable();
+  private timeOfDay = new BehaviorSubject<string>(''); // Initial value can be set here
+  timeOfDay$ = this.timeOfDay.asObservable();
 
   setTimeOfDay(value: string) {
     this.timeOfDay.next(value);
@@ -37,14 +39,25 @@ export class NavigationService {
   setSortText(value: string) {
     this.sortText.next(value);
   }
+
   setSelectedDate(value: Date) {
     this.selectedDate.next(value);
   }
+
   getSelectedDateValue(): Date {
     return this.selectedDate.getValue();
   }
+
   getHabitSearchValue(): string {
     return this.habitSearchValue.getValue();
+  }
+
+  setResizeNavigation(value: boolean) {
+    this.resizeNavigation.next(value);
+  }
+
+  getResizeNavigationValue(): boolean {
+    return this.resizeNavigation.getValue();
   }
 
 }

@@ -24,7 +24,7 @@
          src="assets/svg/edit.svg"/>
     Edit
   </button>
-  <button mat-menu-item>
+  <button (click)="emitHabit(habit)" mat-menu-item>
     <img alt="tick" class="edit-habit-icon"
          src="assets/svg/view-progress.svg"/>
     View Progress

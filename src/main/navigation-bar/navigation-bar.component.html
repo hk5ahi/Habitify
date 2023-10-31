@@ -1,4 +1,4 @@
-<div class="navigation">
+<div *ngIf="!isResize" class="navigation">
   <p [ngClass]="{'top':showSearch}" class="time">{{getData()}}</p>
   <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
     <img alt="Search" class="search-icon" src="assets/svg/search.svg"/>
@@ -75,8 +75,8 @@
 
 <div class="calendar-container">
   <p-calendar
-    (onSelect)="onDateSelect()"
     (onMonthChange)="onMonthChange($event)"
+    (onSelect)="onDateSelect()"
     *ngIf="showCalendar"
     [(ngModel)]="selectedDate"
     [inline]="true"

@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { OverlayPanelService } from "../Service/overlay-panel.service";
 import { DialogService } from "primeng/dynamicdialog";
@@ -15,6 +15,7 @@ export class SkipHabitMenuComponent {
 
   @ViewChild(MatMenu) menu!: MatMenu;
   @Input() habit!: Habit;
+  @Output() habitProgress = new EventEmitter<Habit>();
 
   constructor(private habitService: HabitService, private dialogService: DialogService, private overlayPanelService: OverlayPanelService) {
   }
@@ -42,4 +43,7 @@ export class SkipHabitMenuComponent {
     return this.menu;
   }
 
+  emitHabit(habit: Habit) {
+    this.habitProgress.emit(habit);
+  }
 }

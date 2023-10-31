@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
@@ -15,6 +15,7 @@ export class CompleteHabitMenuComponent {
 
   @ViewChild(MatMenu) menu!: MatMenu;
   @Input() habit!: Habit;
+  @Output() habitProgress = new EventEmitter<Habit>();
 
   constructor(private habitService: HabitService, private dialogService: DialogService, private overlayPanelService: OverlayPanelService) {
   }
@@ -40,6 +41,10 @@ export class CompleteHabitMenuComponent {
     this.overlayPanelService.setShowPanelOverlay(true);
     this.overlayPanelService.sendEvent(event);
     habit.showOverLayPanel = true;
+  }
+
+  emitHabit(habit: Habit) {
+    this.habitProgress.emit(habit);
   }
 
 }

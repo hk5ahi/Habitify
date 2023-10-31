@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { HabitService } from "../Service/habit.service";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
@@ -18,6 +18,7 @@ export class EditHabitMenuComponent {
   @Input() habit!: Habit;
   @ViewChild(MatMenu) menu!: MatMenu;
   @ViewChild('overlayPanel') overlayPanel!: OverlayPanel;
+  @Output() habitProgress = new EventEmitter<Habit>();
 
   constructor(private habitService: HabitService, private dialogService: DialogService, private overlayPanelService: OverlayPanelService) {
   }
@@ -51,5 +52,9 @@ export class EditHabitMenuComponent {
     this.overlayPanelService.setShowPanelOverlay(true);
     this.overlayPanelService.sendEvent(event);
     habit.showOverLayPanel = true;
+  }
+
+  emitHabit(habit: Habit) {
+    this.habitProgress.emit(habit);
   }
 }

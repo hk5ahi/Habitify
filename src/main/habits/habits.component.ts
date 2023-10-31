@@ -1,22 +1,35 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { activeTabIndices } from "../Constants/app-constant";
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
-
+import { NavigationService } from "../Service/navigation.service";
+import { Subscription } from "rxjs";
 @Component({
   selector: 'app-habits',
   templateUrl: './habits.component.html',
   styleUrls: ['./habits.component.scss']
 })
-export class HabitsComponent implements OnChanges{
+export class HabitsComponent implements OnInit, OnDestroy {
 
   @Input() habits: Habit[] = [];
   showEmpty = false;
+  isResize!: boolean;
+  selectDateSubscription!: Subscription;
+  resizeNavigationSubscription!: Subscription;
   protected readonly activeTabIndices = activeTabIndices;
 
-  constructor(private dialogService: DialogService, private habitService: HabitService) {
+  constructor(private dialogService: DialogService, private habitService: HabitService, private navService: NavigationService) {
+  }
+
+  ngOnInit(): void {
+    this.selectDateSubscription = this.navService.selectedDate$.subscribe((date: Date) => {
+      this.sendHabits();
+    });
+    this.resizeNavigationSubscription = this.navService.resizeNavigation$.subscribe((isResize: boolean) => {
+      this.isResize = isResize;
+    });
   }
 
   hasHabits(): boolean {
@@ -82,14 +95,13 @@ export class HabitsComponent implements OnChanges{
     return this.habitService.sendHabits(this.habits);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['habits']){
-      this.habits = changes['habits'].currentValue;
-      console.log(this.habits);
+  ngOnDestroy(): void {
+    if (this.selectDateSubscription) {
+      this.selectDateSubscription.unsubscribe();
     }
-
+    if (this.resizeNavigationSubscription) {
+      this.resizeNavigationSubscription.unsubscribe();
+    }
   }
-
-
 
 }

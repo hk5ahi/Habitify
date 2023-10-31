@@ -15,4 +15,5 @@ export interface Habit {
   isFailed: boolean;
   showLogValueBar: boolean;
   showOverLayPanel: boolean;
+  showProgressView: boolean;
 }

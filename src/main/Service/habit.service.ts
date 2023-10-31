@@ -30,7 +30,8 @@ export class HabitService {
       isSkipped: false,
       isFailed: false,
       showLogValueBar: false,
-      showOverLayPanel: false
+      showOverLayPanel: false,
+      showProgressView: false
     };
 
     this.habits.push(newHabit);
@@ -50,6 +51,7 @@ export class HabitService {
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
   }
+
 
   updateHabit(receivedHabit: Habit) {
     const index = this.habits.findIndex((h: Habit) => h.id === receivedHabit.id);
@@ -107,29 +109,14 @@ export class HabitService {
   }
 
   filterHabitsByStartDate(habits: Habit[]): Habit[] {
-    let selectedDate = this.navService.getSelectedDateValue();
-
-    // Check if the selected date is after the habit start date
-    const isAfterStartDate = (habit: Habit) => {
-      const habitStartDate = new Date(habit.startDate);
-      return selectedDate >= habitStartDate;
-    };
-
-    // Check if the selected date matches the repeat day of the habit
-    const doesRepeatMatch = (habit: Habit) => {
-      const repeatDay = habit.repeat.toLowerCase();
-      return repeatDay && selectedDate.toLocaleString('en-us', { weekday: 'long' }).toLowerCase() === repeatDay;
-    };
-
     return habits.filter(habit => {
-      // Assuming habit.startDate is a Date object
-
-      // Check if the habit is visible based on repeat and start date
-      return (habit.repeat.toLowerCase() === 'daily' && isAfterStartDate(habit)) ||
-        (doesRepeatMatch(habit) && isAfterStartDate(habit));
+      return (
+        (habit.repeat.toLowerCase() === 'daily' && this.isAfterStartDate(habit)) ||
+        this.doesRepeatMatchEvery(habit) ||
+        this.doesRepeatMatchSpecific(habit)
+      );
     });
   }
-
 
   filterHabitsBySearch(habits: Habit[], searchValue: string): Habit[] {
     let filteredHabits: Habit[] = [];
@@ -140,13 +127,10 @@ export class HabitService {
         habit.name.toLowerCase().includes(lowerCaseSearch)
       );
     } else {
-      // console.log(habits);
       return habits;
     }
-    // console.log(filteredHabits);
     return filteredHabits;
   }
-
 
   isHabitsCompleted(habits: Habit[]): boolean {
 
@@ -237,6 +221,65 @@ export class HabitService {
     return searchHabits.length > 0;
   }
 
+  updateShowProgress(habit: Habit) {
+    this.habits.forEach((h: Habit) => {
+      h.showProgressView = false;
+    });
+    const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+    this.habits[index].showProgressView = !this.habits[index].showProgressView;
+    this.habitSubject.next(this.habits);
+    this.saveHabitsToLocalStorage();
+
+    return this.habits[index];
+  }
+
+  // Check if the selected date is after the habit start date
+  private isAfterStartDate(habit: Habit): boolean {
+    let selectedDate = this.navService.getSelectedDateValue();
+    const habitStartDate = new Date(habit.startDate);
+    const habitStartDateUTC = new Date(habitStartDate.toISOString());
+    const selectedDateUTC = new Date(selectedDate.toISOString());
+    return selectedDateUTC >= habitStartDateUTC;
+  }
+
+  private doesRepeatMatchEvery(habit: Habit): boolean {
+    const repeatFrequency = habit.repeat.toLowerCase();
+    let selectedDate = this.navService.getSelectedDateValue();
+    if (repeatFrequency.includes('every')) {
+      const everyIndex = repeatFrequency.indexOf('every');
+      const repeatInterval = parseInt(repeatFrequency.slice(everyIndex + 5).trim(), 10);
+      // Calculate the expected repeat date based on the repeat interval
+      const startDate = new Date(habit.startDate);
+      const daysDifference = Math.floor((selectedDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+      // Check if the difference in days is a multiple of the repeat interval or it's the start date
+      return (daysDifference >= 0) && (daysDifference % repeatInterval === 0);
+    }
+    return false;
+  }
+
+  private doesRepeatMatchSpecific(habit: Habit): boolean {
+    const repeatFrequency = habit.repeat.toLowerCase();
+    let selectedDate = this.navService.getSelectedDateValue();
+    const repeatDates = repeatFrequency.split(',');
+    const repeatDateObjects = repeatDates.map(dateStr => new Date(dateStr.trim()));
+
+    return repeatDateObjects.some(repeatDate => {
+      if (isNaN(repeatDate.getTime()) || isNaN(selectedDate.getTime())) {
+        // Invalid date, handle error
+        return false;
+      }
+
+      const repeatDateUTC = new Date(repeatDate.toISOString());
+      const selectedDateUTC = new Date(selectedDate.toISOString());
+
+      return (
+        selectedDateUTC.getUTCFullYear() === repeatDateUTC.getUTCFullYear() &&
+        selectedDateUTC.getUTCMonth() === repeatDateUTC.getUTCMonth() &&
+        selectedDateUTC.getUTCDate() === repeatDateUTC.getUTCDate()
+      );
+    });
+  }
+
   private loadHabitsFromLocalStorage(): void {
     const storedHabits = localStorage.getItem(AppConstants.habitsKey);
     if (storedHabits) {
@@ -248,5 +291,4 @@ export class HabitService {
   private saveHabitsToLocalStorage(): void {
     localStorage.setItem(AppConstants.habitsKey, JSON.stringify(this.habits));
   }
-
 }

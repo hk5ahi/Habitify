@@ -32,7 +32,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   showSearch: boolean = false;
   isPrevious: boolean = false;
   isCurrent: boolean = true;
+  isResize: boolean = false;
   private timeOfDaySubscription!: Subscription;
+  private resizeNavigationSubscription!: Subscription;
 
   constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: CalenderDisplayService, private sidebarService: SidebarService) {
   }
@@ -41,6 +43,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     // Subscribe to the observable to get updates
     this.timeOfDaySubscription = this.navService.timeOfDay$.subscribe((timeOfDay) => {
       this.currentTimeOfDay = timeOfDay;
+    });
+    this.resizeNavigationSubscription = this.navService.resizeNavigation$.subscribe((data) => {
+      this.isResize = data;
     });
     this.calculateMinMaxDates();
 
@@ -135,6 +140,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.timeOfDaySubscription) {
       this.timeOfDaySubscription.unsubscribe();
+    }
+    if (this.resizeNavigationSubscription) {
+      this.resizeNavigationSubscription.unsubscribe();
     }
   }
 }

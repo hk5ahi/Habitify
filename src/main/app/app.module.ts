@@ -49,6 +49,7 @@ import { OverlayPanelService } from "../Service/overlay-panel.service";
 import { OverlayPanelMenuComponent } from "../overlay-panel-menu/overlay-panel-menu.component";
 import { SkipHabitMenuComponent } from "../skip-habit-menu/skip-habit-menu.component";
 import { CompleteHabitMenuComponent } from "../complete-habit-menu/complete-habit-menu.component";
+import { ProgressViewComponent } from "../progress-view/progress-view.component";
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { CompleteHabitMenuComponent } from "../complete-habit-menu/complete-habi
     OverlayPanelMenuComponent,
     SkipHabitMenuComponent,
     CompleteHabitMenuComponent,
+    ProgressViewComponent,
   ],
   imports: [
     BrowserModule,

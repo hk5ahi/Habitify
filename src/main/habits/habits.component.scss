@@ -258,5 +258,8 @@
   position: relative;
   top: -59.6em;
   right: -15em;
+}
 
+::ng-deep .hide .p-accordion .p-accordion-header .p-accordion-header-link {
+  display: none;
 }

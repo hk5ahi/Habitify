@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
 import { AppConstants, iconMap } from "../Constants/app-constant";
@@ -16,7 +16,10 @@ import { Subscription } from "rxjs";
 })
 export class SingleHabitComponent implements OnInit, OnDestroy {
   @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
+  @ViewChild('more') moreButton!: ElementRef;
   @Input() habits: Habit[] = [];
+  selectedHabit: Habit | null = null;
+  isResize!: boolean;
   searchValue!: string;
   filteredHabits: Habit[] = [];
   unSortedHabits: Habit[] = [];
@@ -25,6 +28,7 @@ export class SingleHabitComponent implements OnInit, OnDestroy {
   searchValueSubscription!: Subscription;
   sortSubscription!: Subscription;
   selectedDateSubscription!: Subscription;
+  resizeNavigationSubscription!: Subscription;
 
   constructor(private habitService: HabitService, private navService: NavigationService) {
   }
@@ -45,7 +49,9 @@ export class SingleHabitComponent implements OnInit, OnDestroy {
     this.selectedDateSubscription = this.navService.selectedDate$.subscribe((value) => {
       this.selectedDate = value;
       this.filteredHabits = this.habitService.filterHabitsByStartDate(this.habits);
-
+    });
+    this.resizeNavigationSubscription = this.navService.resizeNavigation$.subscribe((data) => {
+      this.isResize = data;
     });
   }
 
@@ -55,6 +61,12 @@ export class SingleHabitComponent implements OnInit, OnDestroy {
 
   getHabitIcon(habit: Habit): string {
     return iconMap[habit.name] || 'assets/svg/mark.svg';
+  }
+
+  updateSelectedHabit(habit: Habit) {
+
+    this.selectedHabit = habit;
+    this.habitService.updateShowProgress(habit);
   }
 
   openEditHabitMenu(event: MouseEvent) {
@@ -67,12 +79,9 @@ export class SingleHabitComponent implements OnInit, OnDestroy {
   }
 
   getSingleNumber(habit: Habit): number {
-    if (habit.isCompleted) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return habit.isCompleted ? 1 : 0;
   }
+
 
   showDoneButton(habit: Habit) {
     return (!habit.isCompleted && !habit.isSkipped && !habit.isFailed) && (habit.name != AppConstants.cycling && habit.name != AppConstants.running);
@@ -91,12 +100,38 @@ export class SingleHabitComponent implements OnInit, OnDestroy {
     habit.showLogValueBar = false;
   }
 
+  updateProgressView(habit: Habit, event: MouseEvent) {
+
+    // Check if the click target is the "More" button
+    const isMoreButtonClick = this.moreButton?.nativeElement?.contains(event.target);
+
+    if (!isMoreButtonClick) {
+
+
+      // Set showProgressView to false for all habits
+      this.habits.forEach((otherHabit) => {
+        if (habit.id !== otherHabit.id && otherHabit.showProgressView) {
+          otherHabit.showProgressView = false;
+        }
+      });
+      // habit.showProgressView = !habit.showProgressView;
+      habit.showProgressView = !habit.showProgressView;
+      this.selectedHabit = this.habitService.updateShowProgress(habit);
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.searchValueSubscription) {
       this.searchValueSubscription.unsubscribe();
     }
     if (this.sortSubscription) {
       this.sortSubscription.unsubscribe();
+    }
+    if (this.selectedDateSubscription) {
+      this.selectedDateSubscription.unsubscribe();
+    }
+    if (this.resizeNavigationSubscription) {
+      this.resizeNavigationSubscription.unsubscribe();
     }
   }
 
