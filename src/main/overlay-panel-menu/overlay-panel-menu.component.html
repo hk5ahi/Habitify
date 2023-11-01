@@ -4,11 +4,12 @@
     <span class="calender-text">{{getDisplayValue(selectedDate)}}</span>
   </button>
   <button class="progress-habit-bar" pButton type="button">
-    <input autofocus class="progress-input log-input" placeholder="Value">
-    <span class="log-text">{{progressData}}</span>
-    <img alt="log" class="log-tick-icon"
+    <input [(ngModel)]="progressData" autofocus class="progress-input log-input" placeholder="Value">
+    <span class="log-text">{{getGoalHabitUnit(habit)}}</span>
+    <img (click)="updateProgressData(habit)" [ngClass]="{'move-icon':getGoalHabitUnit(habit)==='times'}" alt="log"
+         class="log-tick-icon"
          src="assets/svg/small-tick.svg"/>
-    <img (click)="closeOverLay()" alt="log"
+    <img (click)="closeOverLay()" [ngClass]="{'move-icon':getGoalHabitUnit(habit)==='times'}" alt="log"
          class="log-cross-icon" src="assets/svg/cross.svg"/>
   </button>
   <p-calendar (onSelect)="onDateClick($event)" *ngIf="showCalendar" [(ngModel)]="selectedDate"

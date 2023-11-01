@@ -4,6 +4,7 @@ import { OverlayPanel } from "primeng/overlaypanel";
 import { AppConstants, disabledDates } from "../Constants/app-constant";
 import { OverlayPanelService } from "../Service/overlay-panel.service";
 import { Habit } from "../Data Types/habit";
+import { HabitService } from "../Service/habit.service";
 
 
 @Component({
@@ -17,17 +18,17 @@ export class OverlayPanelMenuComponent implements AfterViewInit {
   @Input() habit!: Habit;
   showCalendar = false;
   selectedDate: Date = new Date();
-  progressData!: string;
+  progressData!: number;
   receivedEvent!: Event;
   protected readonly disabledDates = disabledDates;
 
-  constructor(private displayService: CalenderDisplayService, private overlayPanelService: OverlayPanelService) {
+  constructor(private displayService: CalenderDisplayService, private overlayPanelService: OverlayPanelService, private habitService: HabitService) {
   }
 
   ngAfterViewInit(): void {
     this.receivedEvent = this.overlayPanelService.getEvent();
     if (this.overlayPanelService.getShowPanelOverlay()) {
-      this.showOverlayPanel(this.receivedEvent, this.habit);
+      this.showOverlayPanel(this.receivedEvent);
     }
   }
 
@@ -51,14 +52,29 @@ export class OverlayPanelMenuComponent implements AfterViewInit {
     this.showCalendar = !this.showCalendar;
   }
 
-  showOverlayPanel(event: Event, habit: Habit) {
+  showOverlayPanel(event: Event) {
 
     this.overlayPanel.show(event);
-    if (habit.name == AppConstants.cycling || habit.name == AppConstants.running) {
-      this.progressData = AppConstants.runningFrequency;
-    } else {
-      this.progressData = AppConstants.Times;
-    }
     this.overlayPanelService.setShowPanelOverlay(false);
+  }
+
+  updateProgressData(habit: Habit) {
+    habit.goalProgress += parseInt(String(this.progressData), 10);
+
+    if (habit.goalProgress >= habit.goal) {
+      this.habitService.toggleCompleteHabit(habit, true);
+    }
+    this.habitService.updateHabit(habit);
+    this.closeOverLay();
+  }
+
+  getGoalHabitUnit(habit: Habit) {
+    if (habit.name == AppConstants.drinkWater) {
+      return AppConstants.ml;
+    } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
+      return AppConstants.km
+    } else {
+      return AppConstants.times;
+    }
   }
 }

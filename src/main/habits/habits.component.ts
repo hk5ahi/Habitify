@@ -6,6 +6,7 @@ import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
+
 @Component({
   selector: 'app-habits',
   templateUrl: './habits.component.html',
@@ -14,10 +15,12 @@ import { Subscription } from "rxjs";
 export class HabitsComponent implements OnInit, OnDestroy {
 
   @Input() habits: Habit[] = [];
+  @Input() habit!: Habit;
   showEmpty = false;
   isResize!: boolean;
   selectDateSubscription!: Subscription;
   resizeNavigationSubscription!: Subscription;
+  habitsSubscription!: Subscription;
   protected readonly activeTabIndices = activeTabIndices;
 
   constructor(private dialogService: DialogService, private habitService: HabitService, private navService: NavigationService) {

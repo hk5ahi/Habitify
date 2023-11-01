@@ -8,6 +8,7 @@ import { DialogService } from "primeng/dynamicdialog";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { CalenderDisplayService } from "../Service/calender-display.service";
 import { SidebarService } from "../Service/sidebar.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-navigation-bar',
@@ -36,7 +37,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   private timeOfDaySubscription!: Subscription;
   private resizeNavigationSubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: CalenderDisplayService, private sidebarService: SidebarService) {
+  constructor(private navService: NavigationService, private dialogService: DialogService, private displayService: CalenderDisplayService, private sidebarService: SidebarService, private titleService: Title) {
   }
 
   ngOnInit() {
@@ -48,12 +49,16 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this.isResize = data;
     });
     this.calculateMinMaxDates();
-
   }
 
   onDateSelect() {
     this.navService.setSelectedDate(this.selectedDate);
     this.showCalendar = false;
+    if (this.sidebarService.getIsAllHabitsValue()) {
+      this.titleService.setTitle('All Habits, ' + this.getDisplayValue(this.selectedDate) + ' - Habitify');
+    } else {
+      this.titleService.setTitle(this.navService.getTimeOfDayValue() + ' Habits, ' + this.getDisplayValue(this.selectedDate) + ' - Habitify');
+    }
   }
 
   openDialog(): void {

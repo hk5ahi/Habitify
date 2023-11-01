@@ -2,8 +2,15 @@
   <div #habit (click)="updateProgressView(habit,$event)" (contextmenu)="openEditHabitMenu($event)"
        *ngFor="let habit of getFilteredHabits()" class="habit">
     <div class="habit-identification">
-      <img [src]="getHabitIcon(habit)" alt="habit" class="icon">
+      <img [ngClass]="{'grey-background':habit.showProgressView && habit.isCompleted}"
+           [src]="getHabitIcon(habit)"
+           alt="habit"
+           class="icon">
+      <div *ngIf="habit.isCompleted" [style.background]="'white'" class="badge">
+        <p class="badge-text">1</p>
+      </div>
     </div>
+
     <div class="habit-content">
       <div class="minor-details">
         <div [ngClass]="{'canceled-text': habit.isFailed || habit.isSkipped || habit.isCompleted}" class="habit-name">
@@ -11,7 +18,7 @@
         </div>
         <div [ngClass]="{'canceled-text': habit.isFailed || habit.isSkipped || habit.isCompleted}"
              class="habit-frequency">
-          {{getSingleNumber(habit)}} / 1 times
+          {{getGoalData(habit)}}
         </div>
       </div>
       <button (click)="completeHabit(habit)" *ngIf="showDoneButton(habit)" class="done-button" pButton type="button">
@@ -25,9 +32,17 @@
       </button>
 
       <button *ngIf="habit.showLogValueBar" class="log-habit-bar" pButton type="button">
-        <input autofocus class="log-input" placeholder="Value">
-        <span class="log-text">km</span>
-        <img alt="log" class="log-tick-icon"
+        <input (blur)="isInputFocused = false"
+               (focus)="isInputFocused = true"
+               [(ngModel)]="goalProgress"
+               autofocus
+               class="log-input"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               placeholder="{{ isInputFocused ? 'Value' : 'Value' }}">
+
+        <span class="log-text">{{getHabitGoalUnit(habit)}}</span>
+        <img (click)="updateGoalProgress(habit)" alt="log" class="log-tick-icon"
              src="assets/svg/small-tick.svg"/>
         <img (click)="closeLogValueBar(habit)" alt="log"
              class="log-cross-icon" src="assets/svg/cross.svg"/>
@@ -36,19 +51,19 @@
       <button #more
               *ngIf="!habit.isCompleted && !habit.isSkipped && !habit.isFailed"
               [matMenuTriggerFor]="editHabit.getMenu()" class="more-button" pButton type="button">
-        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
       </button>
       <button *ngIf="habit.isCompleted" [matMenuTriggerFor]="compHabit.getMenu()" class="more-button" pButton
               type="button">
-        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
       </button>
       <button *ngIf="habit.isSkipped" [matMenuTriggerFor]="skippedHabit.getMenu()" class="more-button" pButton
               type="button">
-        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
       </button>
       <button *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit.getMenu()" class="more-button" pButton
               type="button">
-        <i class="pi pi-ellipsis-v more-icon" style="font-size: 0.9rem"></i>
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
       </button>
     </div>
     <app-edit-habit-menu #editHabit (habitProgress)="updateSelectedHabit($event)" [habit]="habit"></app-edit-habit-menu>

@@ -3,6 +3,7 @@ import { TimeOfDay } from "../Constants/app-constant";
 export interface Habit {
   id: number;
   name: string;
+  goalProgress: number;
   goal: number;
   Frequency: string;
   frequencyPerPeriod: string;

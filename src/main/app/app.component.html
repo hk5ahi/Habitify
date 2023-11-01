@@ -1,1 +1,4 @@
 <app-sidebar></app-sidebar>
+<app-navigation-bar *ngIf="!getManageHabitsValue()"></app-navigation-bar>
+<router-outlet></router-outlet>
+<app-manage-habits-sidebar *ngIf="getManageHabitsValue()"></app-manage-habits-sidebar>

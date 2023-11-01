@@ -31,7 +31,8 @@ export class HabitService {
       isFailed: false,
       showLogValueBar: false,
       showOverLayPanel: false,
-      showProgressView: false
+      showProgressView: false,
+      goalProgress: 0
     };
 
     this.habits.push(newHabit);
@@ -66,6 +67,7 @@ export class HabitService {
       this.habits[index].repeat = receivedHabit.repeat;
       this.habits[index].startDate = receivedHabit.startDate;
       this.habits[index].isArchived = receivedHabit.isArchived;
+      this.habits[index].goalProgress = receivedHabit.goalProgress;
       // Notify subscribers about the change
       this.habitSubject.next(this.habits);
       // Save updated habits to localStorage
@@ -215,6 +217,7 @@ export class HabitService {
   }
 
   hasHabits(habits: Habit[]): boolean {
+
     let filteredHabits = this.filterHabitsByStartDate(habits);
     let searchValue = this.navService.getHabitSearchValue();
     let searchHabits = this.filterHabitsBySearch(filteredHabits, searchValue);
@@ -236,11 +239,24 @@ export class HabitService {
   // Check if the selected date is after the habit start date
   private isAfterStartDate(habit: Habit): boolean {
     let selectedDate = this.navService.getSelectedDateValue();
+
+    // Extract year, month, and day from habit.startDate and selectedDate
     const habitStartDate = new Date(habit.startDate);
-    const habitStartDateUTC = new Date(habitStartDate.toISOString());
-    const selectedDateUTC = new Date(selectedDate.toISOString());
-    return selectedDateUTC >= habitStartDateUTC;
+    const selectedDateWithoutTime = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate()
+    );
+
+    const habitStartDateWithoutTime = new Date(
+      habitStartDate.getFullYear(),
+      habitStartDate.getMonth(),
+      habitStartDate.getDate()
+    );
+    // Compare the extracted components without considering time
+    return selectedDateWithoutTime >= habitStartDateWithoutTime;
   }
+
 
   private doesRepeatMatchEvery(habit: Habit): boolean {
     const repeatFrequency = habit.repeat.toLowerCase();

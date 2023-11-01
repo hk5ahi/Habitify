@@ -7,6 +7,9 @@ import { MatMenuTrigger } from "@angular/material/menu";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
 import { HabitService } from "../Service/habit.service";
+import { Title } from "@angular/platform-browser";
+import { Router } from "@angular/router";
+import { SidebarService } from "../Service/sidebar.service";
 
 @Component({
   selector: 'app-manage-habits',
@@ -23,13 +26,20 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   protected readonly AppConstants = AppConstants;
   protected readonly TimeOfDay = TimeOfDay;
 
-  constructor(private NavigationService: NavigationService, private dialogService: DialogService, private habitService: HabitService) {
+  constructor(private NavigationService: NavigationService, private dialogService: DialogService, private habitService: HabitService, private titleService: Title, private router: Router, private sidebarService: SidebarService) {
   }
 
   ngOnInit(): void {
     this.searchValueSubscription = this.NavigationService.manageSearchValue.subscribe((value) => {
       this.searchValue = value;
     });
+    this.titleService.setTitle(AppConstants.manageHabitsTitle);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['habits'] && !changes['habits'].isFirstChange()) {
+      this.filterHabits();
+    }
   }
 
   filterHabits(): void {
@@ -59,16 +69,11 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
     this.selectedHabit = habit.id;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['habits'] && !changes['habits'].isFirstChange()) {
-      this.filterHabits();
-    }
-  }
-
   openEditHabitMenu(event: MouseEvent) {
     event.preventDefault();
     this.manageHabitTrigger.openMenu();
   }
+
   archiveHabit(habit: Habit) {
     this.habitService.toggleArchiveHabit(habit, true);
   }
@@ -80,9 +85,25 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   updateTimeOfDay(habit: Habit, timeOfDay: TimeOfDay) {
     this.habitService.updateTimeOfDay(habit, timeOfDay);
   }
+
+  openProgressView(habit: Habit) {
+    habit.showProgressView = true;
+    this.habitService.updateHabit(habit);
+
+    const navigationExtras = {
+      state: {
+        habit: habit,
+      },
+    };
+    this.sidebarService.updateIsAllHabits();
+    this.sidebarService.setShowManageHabits(false);
+    this.router.navigate(['/all-habits'], navigationExtras);
+  }
+
   ngOnDestroy(): void {
     if (this.searchValueSubscription) {
       this.searchValueSubscription.unsubscribe();
     }
   }
+
 }

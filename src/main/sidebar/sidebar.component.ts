@@ -4,6 +4,8 @@ import { Subscription } from "rxjs";
 import { AppConstants } from "../Constants/app-constant";
 import { SidebarService } from "../Service/sidebar.service";
 import { Router } from "@angular/router";
+import { CalenderDisplayService } from "../Service/calender-display.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-sidebar',
@@ -20,7 +22,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private timeOfDaySubscription!: Subscription;
   private showManageHabitsSubscription!: Subscription;
 
-  constructor(private navService: NavigationService, private sidebarService: SidebarService, private router: Router) {
+  constructor(private navService: NavigationService, private sidebarService: SidebarService, private router: Router, private displayService: CalenderDisplayService, private titleService: Title) {
   }
 
   ngOnInit() {
@@ -50,7 +52,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.timeOfDay = AppConstants.Afternoon;
       this.navService.setTimeOfDay(this.timeOfDay);
       return this.timeOfDay;
-
     } else {
       this.timeOfDay = AppConstants.Evening;
       this.navService.setTimeOfDay(this.timeOfDay);
@@ -59,24 +60,33 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   updateIsAllHabits() {
+    const selectedDate = this.navService.getSelectedDateValue();
     this.sidebarService.updateIsAllHabits();
     this.sidebarService.setShowManageHabits(false);
+    const calendarDisplay = this.displayService.getCalenderDisplayValue(selectedDate);
+    const pageTitle = `All Habits, ${calendarDisplay} - Habitify`;
+    this.navService.setResizeNavigation(false);
+    this.titleService.setTitle(pageTitle);
   }
 
   updateIsTimeHabits() {
+    const timeOfDay = this.navService.getTimeOfDayValue();
+    const selectedDate = this.navService.getSelectedDateValue();
+    this.navService.setResizeNavigation(false);
     this.sidebarService.updateIsTimeHabits();
     this.sidebarService.setShowManageHabits(false);
+    const calendarDisplay = this.displayService.getCalenderDisplayValue(selectedDate);
+    const pageTitle = `${timeOfDay}, ${calendarDisplay} - Habitify`;
+
+    this.titleService.setTitle(pageTitle);
   }
+
 
   routeToManageHabits() {
     this.sidebarService.setShowManageHabits(true);
     this.sidebarService.setIsTimeHabitsAndAllHabits(false);
+    this.navService.setResizeNavigation(false);
     this.router.navigate(['/manage-habits-sidebar']);
-
-  }
-
-  getManageHabitsValue(): boolean {
-    return this.sidebarService.getShowManageHabitsValue();
   }
 
   ngOnDestroy(): void {

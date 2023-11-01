@@ -143,7 +143,7 @@
     <div class="buttons">
       <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
                 size="small"></p-button>
-      <p-button (click)="unArchiveHabit()" *ngIf="isEditModalAndIsArchived()" class="archive" label="Unarchive"
+      <p-button (click)="unArchiveHabit()" *ngIf="isEditModalAndIsArchived()" class="unarchive" label="Unarchive"
                 size="small"></p-button>
       <p-button (click)="archiveHabit()" *ngIf="isEditModalAndIsNotArchived()" class="archive" label="Archive"
                 size="small"></p-button>
@@ -151,7 +151,6 @@
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
       <p-toast></p-toast>
       <p-confirmPopup></p-confirmPopup>
-
     </div>
   </div>
 

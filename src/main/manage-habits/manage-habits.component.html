@@ -12,7 +12,7 @@
       </div>
     </div>
     <mat-menu #manageHabit="matMenu" [hasBackdrop]="false" class="manage-menu" overlapTrigger="false">
-      <button class="margin-up" mat-menu-item>
+      <button (click)="openProgressView(habit)" class="margin-up" mat-menu-item>
         <img alt="View Progress" class="edit-habit-icon"
              src="assets/svg/progress.svg"/>
         View Progress

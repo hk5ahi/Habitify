@@ -35,6 +35,8 @@ export class CompleteHabitMenuComponent {
 
   undoComplete(habit: Habit) {
     this.habitService.toggleCompleteHabit(habit, false);
+    habit.goalProgress = 0;
+    this.habitService.updateHabit(habit);
   }
 
   showOverlayPanel(event: Event, habit: Habit) {

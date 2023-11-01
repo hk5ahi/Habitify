@@ -3,6 +3,7 @@ import { Habit } from "../Data Types/habit";
 import { Subscription } from "rxjs";
 import { HabitService } from "../Service/habit.service";
 import { NavigationService } from "../Service/navigation.service";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-time-habits',
@@ -16,7 +17,7 @@ export class TimeHabitsComponent implements OnInit, OnDestroy {
   private habitsSubscription!: Subscription;
   private timeOfDaySubscription!: Subscription;
 
-  constructor(private habitService: HabitService, private navigationService: NavigationService) {
+  constructor(private habitService: HabitService, private navigationService: NavigationService, private titleService: Title) {
   }
 
   ngOnInit(): void {

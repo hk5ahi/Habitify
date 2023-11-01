@@ -4,6 +4,8 @@ import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal
 import { DialogService } from "primeng/dynamicdialog";
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
+import { AppConstants } from "../Constants/app-constant";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-progress-view',
@@ -15,9 +17,10 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
   @Input() habit!: Habit;
   calenderData: string = this.getCurrentMonth();
   isResize!: boolean;
+  previousTitle!: string;
   resizeNavigationSubscription!: Subscription;
 
-  constructor(private dialogService: DialogService, private navigationService: NavigationService) {
+  constructor(private dialogService: DialogService, private navigationService: NavigationService, private titleService: Title) {
   }
 
   ngOnInit() {
@@ -52,8 +55,16 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
 
   updateResizeNavigation() {
     this.isResize = !this.isResize;
+
+    if (this.isResize) {
+      this.previousTitle = this.titleService.getTitle();
+      this.titleService.setTitle(`${this.habit.name} - Habitify`);
+    } else {
+      this.titleService.setTitle(this.previousTitle);
+    }
     this.navigationService.setResizeNavigation(this.isResize);
   }
+
 
   getHabitCompletedStatus(habit: Habit): number {
     return habit.isCompleted ? 1 : 0;
@@ -70,7 +81,17 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
   getCurrentDate(): string {
     const currentDate = new Date();
     const options: Intl.DateTimeFormatOptions = {month: 'short', day: '2-digit', year: 'numeric'};
-    return 'From ' + currentDate.toLocaleDateString('en-US', options);
+    return AppConstants.from + currentDate.toLocaleDateString('en-US', options);
+  }
+
+  getHabitGoalValue(habit: Habit) {
+    if (habit.name == AppConstants.drinkWater) {
+      return habit.goalProgress + " " + AppConstants.ml;
+    } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
+      return habit.goalProgress + " " + AppConstants.kM;
+    } else {
+      return habit.goalProgress + " " + AppConstants.times;
+    }
   }
 
   ngOnDestroy(): void {
@@ -78,4 +99,5 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
       this.resizeNavigationSubscription.unsubscribe();
     }
   }
+
 }
