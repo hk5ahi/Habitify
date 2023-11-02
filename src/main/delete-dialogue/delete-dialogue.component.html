@@ -1,0 +1,18 @@
+<div #deleteDialog class="delete-dialog">
+
+  <div class="content">
+    <div class="icon">
+      <img alt="warning" class="warning" src="assets/svg/warning.svg">
+    </div>
+    <div class="text-content">
+      <p class="confirm">Confirmation</p>
+      <p class="text">Are you sure you want to delete habit?</p>
+    </div>
+  </div>
+  <div class="footer">
+    <p-button (click)="closeDialog()" class="cancelDialog" label="Cancel"
+              size="small"></p-button>
+    <p-button (click)="deleteHabit()" class="OK" label="OK"
+              size="small"></p-button>
+  </div>
+</div>

@@ -19,6 +19,7 @@ export class EditHabitMenuComponent {
   @ViewChild(MatMenu) menu!: MatMenu;
   @ViewChild('overlayPanel') overlayPanel!: OverlayPanel;
   @Output() habitProgress = new EventEmitter<Habit>();
+  @Output() isOverlay = new EventEmitter<boolean>();
 
   constructor(private habitService: HabitService, private dialogService: DialogService, private overlayPanelService: OverlayPanelService) {
   }
@@ -56,5 +57,9 @@ export class EditHabitMenuComponent {
 
   emitHabit(habit: Habit) {
     this.habitProgress.emit(habit);
+  }
+
+  emitIsOverlay(isOverlay: boolean) {
+    this.isOverlay.emit(isOverlay);
   }
 }

@@ -6,6 +6,7 @@ import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 import { AppConstants } from "../Constants/app-constant";
 import { Title } from "@angular/platform-browser";
+import { HabitService } from "../Service/habit.service";
 
 @Component({
   selector: 'app-progress-view',
@@ -20,13 +21,14 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
   previousTitle!: string;
   resizeNavigationSubscription!: Subscription;
 
-  constructor(private dialogService: DialogService, private navigationService: NavigationService, private titleService: Title) {
+  constructor(private dialogService: DialogService, private navigationService: NavigationService, private titleService: Title, private habitService: HabitService) {
   }
 
   ngOnInit() {
     this.resizeNavigationSubscription = this.navigationService.resizeNavigation$.subscribe((data) => {
       this.isResize = data;
     });
+    this.habitService.closeProgressView(this.habit);
   }
 
   getCurrentMonth(): string {
@@ -86,7 +88,7 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
 
   getHabitGoalValue(habit: Habit) {
     if (habit.name == AppConstants.drinkWater) {
-      return habit.goalProgress + " " + AppConstants.ml;
+      return habit.goalProgress + " " + AppConstants.mL;
     } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
       return habit.goalProgress + " " + AppConstants.kM;
     } else {

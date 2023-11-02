@@ -31,5 +31,6 @@
   </button>
 
 </mat-menu>
-<app-overlay-panel-menu *ngIf="habit.showOverLayPanel" [habit]="habit"></app-overlay-panel-menu>
+<app-overlay-panel-menu (isOverlay)="emitIsOverlay($event)" *ngIf="habit.showOverLayPanel" [habit]="habit"
+                        [targetElement]="editHabit"></app-overlay-panel-menu>
 

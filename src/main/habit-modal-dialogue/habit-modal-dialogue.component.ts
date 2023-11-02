@@ -1,5 +1,5 @@
-import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { AppConstants, daysMapping, daysOfWeek, iconMap, TimeOfDay } from "../Constants/app-constant";
 import { CalenderDisplayService } from "../Service/calender-display.service";
 import { HabitService } from "../Service/habit.service";
@@ -9,6 +9,8 @@ import { Habit } from "../Data Types/habit";
 import { TimeAndDayService } from "../Service/time-day.service";
 import { Subscription } from "rxjs";
 import { IntervalService } from "../Service/interval.service";
+import { DeleteDialogueComponent } from "../delete-dialogue/delete-dialogue.component";
+import { NavigationService } from "../Service/navigation.service";
 
 
 @Component({
@@ -19,6 +21,7 @@ import { IntervalService } from "../Service/interval.service";
 export class HabitModalDialogueComponent implements OnInit, OnDestroy {
 
   @ViewChild('calender') calenderDialogue!: ElementRef;
+  @ViewChild('habitDialog') habitDialog!: ElementRef;
   editModal: boolean = false;
   receivedHabit!: Habit;
   habitName!: string;
@@ -37,6 +40,7 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   startSelectedDate: Date = new Date();
   selectedDates: Date[] = [];
   days: string[] = [];
+  isHabitDialogOpen = false;
   intervalPerDays!: string;
   months: string = AppConstants.months;
   checkRepeat: string = AppConstants.days;
@@ -50,12 +54,14 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   constructor(
     private ref: DynamicDialogRef,
     private displayService: CalenderDisplayService,
+    private navigationService: NavigationService,
     private habitService: HabitService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private config: DynamicDialogConfig,
     private timeOfDayService: TimeAndDayService,
     private intervalService: IntervalService,
+    private dialogService: DialogService,
     @Inject(MAT_DIALOG_DATA) public data: { habit: Habit, editModal: boolean }
   ) {
     this.receivedHabit = this.config.data?.habit;
@@ -63,6 +69,10 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.navigationService.addDialog(this.ref);
+    setTimeout(() => {
+      this.isHabitDialogOpen = true;
+    }, 100);
     const today = new Date();
     const firstDateOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.selectedDates.push(firstDateOfMonth);
@@ -97,10 +107,18 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    if (this.habitName) {
+    if (this.habitName != this.receivedHabit.name) {
       this.confirmDialogue();
     } else {
       this.ref.close();
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const isHabitDialogClick = this.habitDialog?.nativeElement.contains(event.target);
+    if (!isHabitDialogClick && this.isHabitDialogOpen) {
+      this.close();
     }
   }
 
@@ -111,12 +129,11 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       icon: 'pi pi-check',
       accept: () => {
         // Confirmation accepted
-        this.messageService.add({severity: 'success', summary: 'Confirmed', detail: 'You have accepted'});
         this.ref.close();
       },
       reject: () => {
         // Confirmation rejected
-        this.messageService.add({severity: 'info', summary: 'Rejected', detail: 'You have rejected'});
+
       }
     });
   }
@@ -444,6 +461,7 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     }
   }
 
+
   saveHabit() {
 
     if (this.editModal) {
@@ -498,9 +516,15 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   deleteHabit(habit: Habit) {
+    this.dialogService.open(DeleteDialogueComponent,
+      {
+        width: '450px',
+        height: '128px',
+        data: {
+          habit: habit,
+        }
+      });
 
-    this.habitService.deleteHabit(habit);
-    this.ref.close();
   }
 
   archiveHabit() {
@@ -537,12 +561,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    if (this.timeDaySubscription) {
-      this.timeDaySubscription.unsubscribe();
-    }
-  }
-
   private getHabitGoalValue(): number {
     switch (this.habitName) {
       case AppConstants.drinkWater:
@@ -567,6 +585,10 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
         return this.goalFrequency;
     }
   }
-
+  ngOnDestroy() {
+    if (this.timeDaySubscription) {
+      this.timeDaySubscription.unsubscribe();
+    }
+  }
 
 }

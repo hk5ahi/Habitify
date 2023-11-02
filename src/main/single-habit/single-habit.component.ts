@@ -2,12 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  QueryList,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
 import { HabitService } from "../Service/habit.service";
 import { Habit } from "../Data Types/habit";
@@ -21,22 +24,26 @@ import { Subscription } from "rxjs";
   selector: 'app-single-habit',
   templateUrl: './single-habit.component.html',
   styleUrls: ['./single-habit.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default
 
 })
 export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild(MatMenuTrigger) editHabitTrigger!: MatMenuTrigger;
-  @ViewChild('more') moreButton!: ElementRef;
+  @ViewChild('logHabit') logHabit!: ElementRef;
+  @ViewChild('logHabitData') logHabitData!: ElementRef;
+  @ViewChildren('more') moreButtons!: QueryList<ElementRef>;
   @Input() habits: Habit[] = [];
   @Input() habit!: Habit;
   selectedHabit: Habit | null = null;
-  goalProgress!: number;
+  goalProgress?: number;
   isResize!: boolean;
   searchValue!: string;
   filteredHabits: Habit[] = [];
-  unSortedHabits: Habit[] = [];
+  sortedHabits: Habit[] = [];
+  searchedHabits: Habit[] = [];
   selectedDate!: Date;
   sortText!: string;
+  isOverlayPanelOpen = false;
   isInputFocused = false;
   searchValueSubscription!: Subscription;
   sortSubscription!: Subscription;
@@ -47,20 +54,54 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.filteredHabits = this.habits;
-    this.subscribeToSearchValue();
-    this.subscribeToSortText();
-    this.subscribeToSelectedDate();
-    this.subscribeToResizeNavigation();
-    this.setSelectedHabit();
+    this.searchValueSubscription = this.navService.habitSearchValue$.subscribe(value => {
+      this.searchValue = value;
+      this.searchedHabits = this.habitService.filterHabitsBySearch(this.filteredHabits, this.searchValue);
+    });
+    this.sortSubscription = this.navService.sortText.subscribe(value => {
+      this.sortText = value;
+      this.sortedHabits = this.habitService.sortHabits([...this.filteredHabits], this.sortText, this.habits);
+    });
+    this.selectedDateSubscription = this.navService.selectedDate$.subscribe(value => {
+      this.selectedDate = value;
+      this.filteredHabits = this.habitService.filterHabitsByStartDate(this.habits);
+    });
+    this.resizeNavigationSubscription = this.navService.resizeNavigation$.subscribe(data => {
+      this.isResize = data;
+    });
+    if (this.habit) {
+      this.selectedHabit = this.habit;
+    }
+
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['habits'] && !changes['habits'].firstChange) {
-      this.filteredHabits = this.habits;
+      this.filteredHabits = [...this.habits];
+      this.sortedHabits = this.habitService.sortHabits([...this.habits], this.sortText, this.habits);
+    }
+    if ((this.sortText == 'A-Z' || this.sortText == 'Z-A') && this.searchValue == '') {
+      this.filteredHabits = this.sortedHabits;
+    }
+    if (this.searchValue != '') {
+      this.filteredHabits = this.habitService.filterHabitsBySearch(this.sortedHabits, this.searchValue);
     }
   }
-  getFilteredHabits(): Habit[] {
-    return this.filteredHabits;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const isDeleteDialogClick = this.logHabitData?.nativeElement.contains(event.target);
+    if (!isDeleteDialogClick) {
+      this.closeLogValueBarsWithDelay();
+    }
+  }
+
+  closeLogValueBarsWithDelay() {
+    this.habits.forEach((habit) => {
+      if (habit.showLogValueBar) {
+        habit.showLogValueBar = false;
+      }
+    });
   }
 
   getHabitIcon(habit: Habit): string {
@@ -68,9 +109,12 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateSelectedHabit(habit: Habit) {
-
     this.selectedHabit = habit;
     this.habitService.updateShowProgress(habit);
+  }
+
+  updateIsOverlayPanelOpen(isOverlayPanelOpen: boolean) {
+    this.isOverlayPanelOpen = isOverlayPanelOpen;
   }
 
   openEditHabitMenu(event: MouseEvent) {
@@ -80,6 +124,7 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
 
   completeHabit(habit: Habit) {
     this.habitService.toggleCompleteHabit(habit, true);
+    habit.goalProgress = habit.goal;
   }
 
   showDoneButton(habit: Habit) {
@@ -88,32 +133,42 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
 
   toggleLogValueBar(habit: Habit) {
     this.habitService.toggleLogValueBar();
-    habit.showLogValueBar = true;
+    setTimeout(() => {
+      habit.showLogValueBar = true;
+    }, 100);
   }
 
   showLogButton(habit: Habit) {
     return !habit.showLogValueBar && (habit.name == AppConstants.cycling || habit.name == AppConstants.running || habit.name == 'Go for a walk' || habit.name == AppConstants.drinkWater);
   }
 
-  closeLogValueBar(habit: Habit) {
+  closeLogValueBar(habit: Habit, event: MouseEvent) {
     habit.showLogValueBar = false;
+    event.stopPropagation();
   }
 
   updateProgressView(habit: Habit, event: MouseEvent) {
+    // Check if the click target is one of the "More" buttons
+    const isMoreButtonClick = this.moreButtons?.toArray().some(button => button.nativeElement.contains(event.target));
+    const isLogHabitClick = this.logHabit?.nativeElement.contains(event.target);
 
-    // Check if the click target is the "More" button
-    const isMoreButtonClick = this.moreButton?.nativeElement?.contains(event.target);
-    if (!isMoreButtonClick) {
+    if (!isMoreButtonClick && !this.isOverlayPanelOpen && !isLogHabitClick) {
+      // Toggle showProgressView for the clicked habit
+      const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
+      this.habits[index].showProgressView = !this.habits[index].showProgressView;
 
-      // Set showProgressView to false for all habits
-      this.habits.forEach((otherHabit) => {
-        if (habit.id !== otherHabit.id && otherHabit.showProgressView) {
-          otherHabit.showProgressView = false;
-        }
-      });
-      // habit.showProgressView = !habit.showProgressView;
-      habit.showProgressView = !habit.showProgressView;
-      this.selectedHabit = this.habitService.updateShowProgress(habit);
+      if (this.selectedHabit && this.selectedHabit.id === habit.id) {
+        // If the clicked habit is already selected, reset selectedHabit
+        this.selectedHabit = null;
+      } else {
+        // If a different habit is clicked, set showProgressView to false for all other habits
+        this.habits.forEach((otherHabit) => {
+          if (habit.id !== otherHabit.id && otherHabit.showProgressView) {
+            otherHabit.showProgressView = false;
+          }
+        });
+        this.selectedHabit = this.habitService.updateShowProgress(this.habits[index]);
+      }
     }
   }
 
@@ -137,47 +192,25 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  updateGoalProgress(habit: Habit) {
+  updateGoalProgress(habit: Habit, event: MouseEvent) {
 
-    habit.goalProgress += parseInt(String(this.goalProgress), 10);
-    if (habit.goalProgress >= habit.goal) {
-      this.habitService.toggleCompleteHabit(habit, true);
+    if (this.goalProgress) {
+      habit.goalProgress += parseInt(String(this.goalProgress), 10);
+      if (habit.goalProgress >= habit.goal) {
+        this.habitService.toggleCompleteHabit(habit, true);
+      }
+      this.habitService.updateHabit(habit);
+      habit.showLogValueBar = false;
+      this.goalProgress = undefined;
     }
-    this.habitService.updateHabit(habit);
-    habit.showLogValueBar = false;
+    this.closeLogValueBar(habit, event);
+    event.stopPropagation();
   }
 
-  private subscribeToSearchValue(): void {
-    this.searchValueSubscription = this.navService.habitSearchValue$.subscribe(value => {
-      this.searchValue = value;
-      this.filteredHabits = this.habitService.filterHabitsBySearch(this.filteredHabits, this.searchValue);
-      this.unSortedHabits = this.filteredHabits;
-    });
-  }
-  private subscribeToSortText(): void {
-    this.sortSubscription = this.navService.sortText.subscribe(value => {
-      this.sortText = value;
-      this.filteredHabits = this.habitService.sortHabits(this.filteredHabits, this.sortText, this.habits);
-    });
-  }
-  private subscribeToSelectedDate(): void {
-    this.selectedDateSubscription = this.navService.selectedDate$.subscribe(value => {
-      this.selectedDate = value;
-      this.filteredHabits = this.habitService.filterHabitsByStartDate(this.habits);
-    });
+  stopEvent(event: MouseEvent) {
+    event.stopPropagation();
   }
 
-  private subscribeToResizeNavigation(): void {
-    this.resizeNavigationSubscription = this.navService.resizeNavigation$.subscribe(data => {
-      this.isResize = data;
-    });
-  }
-
-  private setSelectedHabit(): void {
-    if (this.habit) {
-      this.selectedHabit = this.habit;
-    }
-  }
   ngOnDestroy(): void {
     if (this.searchValueSubscription) {
       this.searchValueSubscription.unsubscribe();

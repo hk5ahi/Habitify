@@ -27,9 +27,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 0;
-  position: relative;
-  top: 0.5em;
-  right: -0.5em;
+  position: fixed;
+  top: 0.85em;
+  right: 92.5em;
 }
 
 .area-container {
@@ -203,7 +203,7 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 12.3em;
-  top: 0.75em;
+  top: 1em;
 }
 
 .container {
@@ -234,7 +234,7 @@ input::placeholder {
   border-color: rgb(229, 228, 229);
   border-image: initial;
   right: 16.3em;
-  top: 0.75em;
+  top: 1em;
 }
 
 .right {

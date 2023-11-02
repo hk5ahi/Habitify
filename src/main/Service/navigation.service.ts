@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from "rxjs";
 import { AppConstants } from "../Constants/app-constant";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class NavigationService {
   resizeNavigation$ = this.resizeNavigation.asObservable();
   private timeOfDay = new BehaviorSubject<string>(''); // Initial value can be set here
   timeOfDay$ = this.timeOfDay.asObservable();
+  private openDialogs: DynamicDialogRef[] = [];
 
   setTimeOfDay(value: string) {
     this.timeOfDay.next(value);
@@ -59,5 +61,17 @@ export class NavigationService {
   getResizeNavigationValue(): boolean {
     return this.resizeNavigation.getValue();
   }
+
+  addDialog(dialog: DynamicDialogRef) {
+    this.openDialogs.push(dialog);
+  }
+
+  closeAllDialogs() {
+    this.openDialogs.forEach((dialog) => {
+      dialog.close();
+    });
+    this.openDialogs = [];
+  }
+
 
 }

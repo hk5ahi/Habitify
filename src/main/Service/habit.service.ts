@@ -216,6 +216,14 @@ export class HabitService {
     return searchHabits.filter(habit => habit.isFailed);
   }
 
+  closeProgressView(habit: Habit) {
+    this.habits.forEach((otherHabit) => {
+      if (habit.id !== otherHabit.id && otherHabit.showProgressView) {
+        otherHabit.showProgressView = false;
+      }
+    });
+  }
+
   hasHabits(habits: Habit[]): boolean {
 
     let filteredHabits = this.filterHabitsByStartDate(habits);
@@ -225,6 +233,7 @@ export class HabitService {
   }
 
   updateShowProgress(habit: Habit) {
+
     this.habits.forEach((h: Habit) => {
       h.showProgressView = false;
     });
@@ -232,7 +241,6 @@ export class HabitService {
     this.habits[index].showProgressView = !this.habits[index].showProgressView;
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
-
     return this.habits[index];
   }
 
@@ -256,7 +264,6 @@ export class HabitService {
     // Compare the extracted components without considering time
     return selectedDateWithoutTime >= habitStartDateWithoutTime;
   }
-
 
   private doesRepeatMatchEvery(habit: Habit): boolean {
     const repeatFrequency = habit.repeat.toLowerCase();

@@ -146,3 +146,14 @@
   top: -1.2em;
   left: -0.7em;
 }
+
+::ng-deep .p-overlaypanel {
+  position: relative;
+  width: 279px;
+  margin-top: 10px;
+  top: -18px;
+  left: 74.9em;
+  z-index: 10000;
+  --overlayArrowLeft: -5px;
+}
+
