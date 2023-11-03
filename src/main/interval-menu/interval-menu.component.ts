@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { MatMenu } from "@angular/material/menu";
 import { IntervalService } from "../Service/interval.service";
 import { Subscription } from "rxjs";
@@ -14,6 +24,8 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
   @Output() interval: EventEmitter<string> = new EventEmitter<string>();
   @Input() editModal: boolean = false;
   @ViewChild(MatMenu) menu!: MatMenu;
+  @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('Interval') editHabit!: ElementRef;
   intervalPerDays!: string;
   intervalSubscription!: Subscription;
   receivedHabitSubscription!: Subscription;
@@ -50,6 +62,17 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
       }
     }
     return false;
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const isHabitDialogClick = this.editHabit?.nativeElement?.contains(event.target);
+
+    if (isHabitDialogClick) {
+      this.habitItemSelected.emit(true);
+    }
+    else {
+      this.habitItemSelected.emit(false);
+    }
   }
 
   ngOnDestroy(): void {

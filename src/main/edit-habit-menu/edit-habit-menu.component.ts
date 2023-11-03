@@ -1,10 +1,10 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { Habit } from "../Data Types/habit";
 import { HabitService } from "../Service/habit.service";
 import { HabitModalDialogueComponent } from "../habit-modal-dialogue/habit-modal-dialogue.component";
 import { DialogService } from "primeng/dynamicdialog";
 import { OverlayPanel } from "primeng/overlaypanel";
-import { MatMenu } from "@angular/material/menu";
+import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { OverlayPanelService } from "../Service/overlay-panel.service";
 
 @Component({
@@ -15,6 +15,7 @@ import { OverlayPanelService } from "../Service/overlay-panel.service";
 export class EditHabitMenuComponent {
 
   @ViewChild('calendar') calender!: ElementRef;
+  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
   @Input() habit!: Habit;
   @ViewChild(MatMenu) menu!: MatMenu;
   @ViewChild('overlayPanel') overlayPanel!: OverlayPanel;
@@ -62,4 +63,5 @@ export class EditHabitMenuComponent {
   emitIsOverlay(isOverlay: boolean) {
     this.isOverlay.emit(isOverlay);
   }
+
 }

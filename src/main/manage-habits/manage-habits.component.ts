@@ -19,6 +19,7 @@ import { SidebarService } from "../Service/sidebar.service";
 export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() habits: Habit[] = [];
+  filteredHabits: Habit[] = [];
   @ViewChild(MatMenuTrigger) manageHabitTrigger!: MatMenuTrigger;
   selectedHabit!: number;
   searchValue!: string;
@@ -30,25 +31,31 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+    this.filteredHabits = this.habits;
     this.searchValueSubscription = this.NavigationService.manageSearchValue.subscribe((value) => {
       this.searchValue = value;
+      this.filterHabits();
     });
     this.titleService.setTitle(AppConstants.manageHabitsTitle);
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['habits'] && !changes['habits'].isFirstChange()) {
       this.filterHabits();
     }
+
   }
 
   filterHabits(): void {
 
     if (this.searchValue) {
       const lowerCaseSearch = this.searchValue.toLowerCase();
-      this.habits = this.habits.filter(habit =>
+      this.filteredHabits = this.habits.filter(habit =>
         habit.name.toLowerCase().includes(lowerCaseSearch)
       );
+    } else {
+      this.filteredHabits = this.habits;
     }
   }
 

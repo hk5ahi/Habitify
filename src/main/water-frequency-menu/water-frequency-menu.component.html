@@ -1,14 +1,16 @@
 <mat-menu #Waterfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
-  <button (click)="updateWaterGoalFrequency('L')" mat-menu-item>
-    L
-  </button>
-  <button (click)="updateWaterGoalFrequency('MI')" mat-menu-item>
-    MI
-  </button>
-  <button (click)="updateWaterGoalFrequency('US FI Oz')" mat-menu-item>
-    US FI Oz
-  </button>
-  <button (click)="updateWaterGoalFrequency('Cup')" mat-menu-item>
-    Cup
-  </button>
+  <div #water>
+    <button (click)="updateWaterGoalFrequency('L')" mat-menu-item>
+      L
+    </button>
+    <button (click)="updateWaterGoalFrequency('MI')" mat-menu-item>
+      MI
+    </button>
+    <button (click)="updateWaterGoalFrequency('US FI Oz')" mat-menu-item>
+      US FI Oz
+    </button>
+    <button (click)="updateWaterGoalFrequency('Cup')" mat-menu-item>
+      Cup
+    </button>
+  </div>
 </mat-menu>

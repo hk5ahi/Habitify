@@ -1,4 +1,5 @@
 <mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
+  <div #Interval>
   <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 2')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
@@ -29,4 +30,5 @@
          src="assets/svg/tick.svg"/>
     Repeat Every 7
   </button>
+  </div>
 </mat-menu>

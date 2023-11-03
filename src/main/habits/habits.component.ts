@@ -41,6 +41,7 @@ export class HabitsComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     this.dialogService.open(HabitModalDialogueComponent, {});
+
   }
 
   isHabitCompleted(): boolean {

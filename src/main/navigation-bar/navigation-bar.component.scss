@@ -113,6 +113,15 @@ input::placeholder {
   cursor: default !important;
 }
 
+.down-sort {
+  width: 1.2em;
+  height: 1.2em;
+  position: relative;
+  right: -6px;
+  top: 3px;
+  cursor: default !important;
+}
+
 ::ng-deep .p-datepicker {
   width: 14.4375em !important;
   height: 13.6875em !important;
@@ -122,8 +131,7 @@ input::placeholder {
 }
 
 ::ng-deep .p-datepicker table td.p-datepicker-today > span {
-  color: #ffffff;
-  background: #2A67F4;
+  background: none;
 }
 
 ::ng-deep .p-datepicker table td.today span,
@@ -396,7 +404,7 @@ input::placeholder {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  right: 10px;
+  right: 5px;
 }
 
 .custom-calendar-input .calendar-icon {
@@ -426,7 +434,7 @@ input::placeholder {
 }
 
 .sort-button {
-  border: 1px solid #ccc;
+  border: 1px solid #ccc !important;
   background-color: white;
   position: absolute;
   right: 11em;
@@ -436,16 +444,20 @@ input::placeholder {
   width: 147px !important;
 }
 
+.sort-button:focus {
+  border: 1px solid #ccc !important;
+}
+
 .sort-icon {
   position: relative;
-  top: 1px;
-  right: -1px;
+  top: 2px;
+  right: 3px;
 }
 
 .sort-text {
   position: relative;
   top: -1px;
-  right: -7px;
+  right: -4px;
   font-family: "Inter", sans-serif;
   line-height: 30px;
   font-weight: 500;
@@ -459,7 +471,7 @@ input::placeholder {
 
 .sort-menu ::ng-deep .mat-mdc-menu-item-text {
   position: relative;
-  top: -2.5px;
+  top: -0.5px;
   font-family: Inter, sans-serif !important;
   font-size: 12px !important;
   font-weight: 400 !important;
@@ -483,6 +495,22 @@ input::placeholder {
   overflow: hidden !important;
 }
 
+::ng-deep .alpha-menu .mat-mdc-menu-content {
+  width: 64.64px;
+  height: 62px;
+}
+
+::ng-deep .alpha-menu .mat-mdc-menu-item {
+  width: 64.64px !important;
+  height: 31px !important;
+
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 64.64px !important;
+
+}
+
 .tick-icon {
   position: relative;
   top: 2px;
@@ -495,7 +523,7 @@ input::placeholder {
   position: absolute;
   top: 3.125em; /* Adjust as needed */
   left: -1px; /* Adjust as needed */
-  z-index: 2; /* Ensure it has a higher z-index than other components */
+  z-index: 2;
 }
 
 ::ng-deep .disable-next .p-ripple.p-element.p-datepicker-next.p-link {

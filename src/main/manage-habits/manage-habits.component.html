@@ -1,5 +1,5 @@
 <div class="manage-habits">
-  <div (click)="updateSelectedHabit(habit)" (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of habits"
+  <div (click)="updateSelectedHabit(habit)" (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of filteredHabits"
        [matMenuTriggerFor]="manageHabit" [ngClass]="{'background-color':selectedHabit==habit.id}"
        class="manage-habit">
     <div class="habit-content">

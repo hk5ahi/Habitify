@@ -53,14 +53,14 @@
         <input (ngModelChange)="updateFrequency(goalFrequency)" [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div *ngIf="!isWaterOrRunningOrCycling() && isEditModal()"
            class="input-wrapper">
         <input [(ngModel)]="goalFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div *ngIf="habitName==AppConstants.drinkWater && !isEditModal()"
            [matMenuTriggerFor]="Waterfrequency.getMenu()"
@@ -68,13 +68,13 @@
         <input (ngModelChange)="updateFrequency(waterFrequency)" [(ngModel)]="waterFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div *ngIf="habitName==AppConstants.drinkWater && isEditModal()" class="input-wrapper">
         <input [(ngModel)]="waterFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && !isEditModal()"
            [matMenuTriggerFor]="Runningfrequency.getMenu()"
@@ -82,19 +82,19 @@
         <input (ngModelChange)="updateFrequency(runningFrequency)" [(ngModel)]="runningFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div *ngIf="(habitName==AppConstants.running|| habitName==AppConstants.cycling) && isEditModal()"
            class="input-wrapper">
         <input [(ngModel)]="runningFrequency" class="goal-frequency"
                readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
       <div [matMenuTriggerFor]="frequencyPeriod.getMenu()" class="input-wrapper">
         <input [(ngModel)]="frequencyPerPeriod" class="goal-frequency" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
     </div>
   </div>
@@ -105,7 +105,7 @@
       <div [matMenuTriggerFor]="repeatMenu" class="input-wrapper">
         <input [value]="getDayValue()" class="repeat-frequency" readonly/>
         <img alt="Up" class="up-repeat" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down-repeat" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
     </div>
   </div>
@@ -116,7 +116,7 @@
       <div [matMenuTriggerFor]="timeDay.getMenu()" class="input-wrapper">
         <input [value]="getTimeOfDayDisplayValue(timeOfDay)" class="tod-input" readonly/>
         <img alt="Up" class="up" src="assets/svg/up.svg"/>
-        <img alt="Down" class="down" src="assets/svg/down.svg"/>
+        <img alt="Down" class="down" src="assets/svg/black-down.svg"/>
       </div>
     </div>
   </div>
@@ -130,15 +130,20 @@
       </div>
     </div>
   </div>
-  <app-water-frequency-menu #Waterfrequency (waterGoal)="updateWaterGoalFrequency($event)"></app-water-frequency-menu>
+  <app-water-frequency-menu #Waterfrequency (habitItemSelected)="updateHabitDrinkSelect($event)"
+                            (waterGoal)="updateWaterGoalFrequency($event)"></app-water-frequency-menu>
   <app-running-frequency-menu #Runningfrequency
+                              (habitItemSelected)="updateHabitRunSelect($event)"
                               (runningGoal)="updateRunningGoalFrequency($event)"></app-running-frequency-menu>
-  <app-frequency-menu #frequency (frequency)="updateGoalFrequency($event)"></app-frequency-menu>
+  <app-frequency-menu #frequency (frequency)="updateGoalFrequency($event)"
+                      (habitItemSelected)="updateHabitDaysSelect($event)"></app-frequency-menu>
 
   <app-frequency-period-menu #frequencyPeriod
-                             (frequencyPeriod)="updateFrequencyPeriod($event)"></app-frequency-period-menu>
+                             (frequencyPeriod)="updateFrequencyPeriod($event)"
+                             (habitItemSelected)="updateHabitPeriodSelect($event)"></app-frequency-period-menu>
 
-  <app-time-day-menu #timeDay (timeDay)="updateTimeOfDay($event)"></app-time-day-menu>
+  <app-time-day-menu #timeDay (habitItemSelected)="updateHabitTimeDaySelect($event)"
+                     (timeDay)="updateTimeOfDay($event)"></app-time-day-menu>
   <div class="modal-footer">
     <div class="buttons">
       <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
@@ -151,6 +156,7 @@
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
       <p-toast></p-toast>
       <p-confirmPopup></p-confirmPopup>
+
     </div>
   </div>
 
@@ -189,9 +195,11 @@
       Interval
     </button>
   </mat-menu>
-  <app-days-menu #days (timeDay)="toggleDay($event)" [editModal]="editModal"
-                 [receivedHabit]="receivedHabit"></app-days-menu>
-  <app-interval-menu #interval (interval)="updateIntervalPerDays($event)"></app-interval-menu>
-  <app-habit-menu #habit (habit)="updateHabitName($event)"></app-habit-menu>
+  <app-days-menu #days (habitItemSelected)="updateHabitWeekSelect($event)" (timeDay)="toggleDay($event)"
+                 [editModal]="editModal" [receivedHabit]="receivedHabit"></app-days-menu>
+  <app-interval-menu #interval (habitItemSelected)="updateHabitIntervalSelect($event)"
+                     (interval)="updateIntervalPerDays($event)"></app-interval-menu>
+  <app-habit-menu #habit (habit)="updateHabitName($event)"
+                  (habitItemSelected)="updateHabitNameSelect($event)"></app-habit-menu>
 </div>
 

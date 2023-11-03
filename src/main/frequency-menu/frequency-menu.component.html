@@ -1,8 +1,10 @@
 <mat-menu #frequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
+  <div #days>
   <button (click)="updateGoalFrequency('Times')" mat-menu-item>
     Times
   </button>
   <button (click)="updateGoalFrequency('Mins')" mat-menu-item>
     Mins
   </button>
+  </div>
 </mat-menu>

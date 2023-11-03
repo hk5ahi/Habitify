@@ -1,11 +1,13 @@
 <mat-menu #habit="matMenu" [hasBackdrop]="false" class="habit-menu" overlapTrigger="false">
-  <section class="section-one">
+  <div #section>
+  <section class="section-one" >
     <p class="section-text">Most Popular Habits</p>
-    <button (click)="updateHabitName('Meditate')" mat-menu-item>
+    <button (click)="updateHabitName('Meditate')" mat-menu-item >
       <img alt="meditate" class="habit-icons"
            src="assets/svg/meditate.svg"/>
       Meditate
     </button>
+
     <button (click)="updateHabitName('Set A To-Do List')" mat-menu-item>
       <img alt="to-do" class="habit-icons"
            src="assets/svg/to-do.svg"/>
@@ -98,4 +100,5 @@
       <span class="text">Wear A Mask</span>
     </button>
   </section>
+  </div>
 </mat-menu>

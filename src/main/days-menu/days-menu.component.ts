@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { daysOfWeek } from "../Constants/app-constant";
 import { MatMenu } from "@angular/material/menu";
 import { Habit } from "../Data Types/habit";
@@ -13,6 +23,8 @@ import { Subscription } from "rxjs";
 export class DaysMenuComponent implements OnInit, OnDestroy {
 
   @Output() timeDay: EventEmitter<string> = new EventEmitter<string>();
+  @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('Days') editHabit!: ElementRef;
   @Input() editModal: boolean = false;
   @Input() receivedHabit!: Habit;
   @ViewChild(MatMenu) menu!: MatMenu;
@@ -46,6 +58,17 @@ export class DaysMenuComponent implements OnInit, OnDestroy {
 
     } else {
       return this.days.includes(day);
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const isHabitDialogClick = this.editHabit?.nativeElement?.contains(event.target);
+
+    if (isHabitDialogClick) {
+      this.habitItemSelected.emit(true);
+    } else {
+      this.habitItemSelected.emit(false);
     }
   }
 

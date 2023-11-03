@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 import { MatMenu } from "@angular/material/menu";
 
 @Component({
@@ -8,6 +8,8 @@ import { MatMenu } from "@angular/material/menu";
 })
 export class FrequencyMenuComponent {
   @Output() frequency: EventEmitter<string> = new EventEmitter<string>();
+  @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @ViewChild('days') editHabit!: ElementRef;
   @ViewChild(MatMenu) menu!: MatMenu;
 
   getMenu(): MatMenu {
@@ -15,5 +17,15 @@ export class FrequencyMenuComponent {
   }
   updateGoalFrequency(times: string) {
     this.frequency.emit(times);
+  }
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const isHabitDialogClick = this.editHabit?.nativeElement?.contains(event.target);
+
+    if (isHabitDialogClick) {
+      this.habitItemSelected.emit(true);
+    }
+    else {
+    this.habitItemSelected.emit(false);}
   }
 }

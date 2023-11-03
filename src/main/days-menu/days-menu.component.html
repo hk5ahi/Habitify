@@ -1,4 +1,5 @@
 <mat-menu #days="matMenu" [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
+  <div #Days>
   <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
     <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
          src="assets/svg/tick.svg"/>
@@ -34,4 +35,5 @@
          src="assets/svg/tick.svg"/>
     {{daysOfWeek.Sunday}}
   </button>
+  </div>
 </mat-menu>

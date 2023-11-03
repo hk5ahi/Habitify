@@ -1,4 +1,5 @@
 <mat-menu #Runningfrequency="matMenu" [hasBackdrop]="false" class="frequency-menu" overlapTrigger="false">
+  <div #run>
   <button (click)="updateRunningGoalFrequency('Km')" mat-menu-item>
     Km
   </button>
@@ -14,5 +15,5 @@
   <button (click)="updateRunningGoalFrequency('Mi')" mat-menu-item>
     Mi
   </button>
-
+  </div>
 </mat-menu>

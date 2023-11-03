@@ -1,4 +1,5 @@
 <mat-menu #frequencyPeriod="matMenu" [hasBackdrop]="false" class="frequency-period-menu" overlapTrigger="false">
+  <div #period>
   <button (click)="updateFrequencyPeriod('Per Day')" mat-menu-item>
     Per Day
   </button>
@@ -8,4 +9,5 @@
   <button (click)="updateFrequencyPeriod('Per Month')" mat-menu-item>
     Per Month
   </button>
+  </div>
 </mat-menu>

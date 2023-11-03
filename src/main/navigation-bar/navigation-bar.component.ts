@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationService } from "../Service/navigation.service";
 import { Subscription } from "rxjs";
 import { DatePipe } from '@angular/common';
@@ -19,7 +19,10 @@ import { Title } from "@angular/platform-browser";
 export class NavigationBarComponent implements OnInit, OnDestroy {
 
   @ViewChild('Calender') calendar!: ElementRef;
+  @ViewChild('inputCalender') inputCalender!: ElementRef;
+  @ViewChild('SimpleCalender') simpleCalender!: ElementRef;
   @ViewChild('Search') search!: ElementRef;
+  @ViewChild('sortButton') sortButton!: ElementRef;
   @ViewChild('SearchIcon') searchIcon!: ElementRef;
   @ViewChild('alphamenu') alphaMenu!: MatMenuTrigger;
   currentTimeOfDay!: string;
@@ -98,11 +101,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     if (item === 'A-Z' || item === 'Z-A') {
       this.sortText = 'Alphabetical';
       this.navService.setSortText(item);
+      this.menuText = item;
     } else if (item !== AppConstants.Alphabetical) {
       this.sortText = item;
       this.navService.setSortText(item);
+      this.menuText = item;
     }
-    this.menuText = item;
   }
 
   toggleCalendar(): void {
@@ -123,11 +127,16 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   showCalenderIcon() {
     this.showSearch = false;
-    this.showCalendar = true;
+    setTimeout(() => {
+      this.showCalendar = !this.showCalendar;
+    }, 10);
   }
 
   showSortIcon() {
     this.showSearch = false;
+    setTimeout(() => {
+      this.sortButton.nativeElement.click();
+    }, 1); // 1 millisecond delay to avoid the click event on the search icon
   }
 
   getData() {
@@ -140,6 +149,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   updateSearchValue() {
     this.navService.setHabitSearchValue(this.searchValue);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const isCalendarClicked = this.calendar?.nativeElement?.contains(event.target);
+    const isInputCalenderClicked = this.inputCalender?.nativeElement?.contains(event.target);
+    const isSimpleCalenderClicked = this.simpleCalender?.nativeElement?.contains(event.target);
+    if (!isCalendarClicked && !isInputCalenderClicked && !isSimpleCalenderClicked) {
+      // Clicked outside the menu, close the menu or perform other actions
+      this.showCalendar = false;
+    }
   }
 
   ngOnDestroy(): void {

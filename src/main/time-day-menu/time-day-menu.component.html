@@ -1,4 +1,5 @@
 <mat-menu #timeDay="matMenu" [hasBackdrop]="false" class="time-day-menu" overlapTrigger="false">
+  <div #Timeday>
   <button (click)="updateTimeOfDay(TimeOfDay.Morning)" mat-menu-item>
     <img [ngClass]="{'hide-icon': isTimeOfDaySelected(TimeOfDay.Morning)}" alt="tick" class="time-tick-icon"
          src="assets/svg/tick.svg"/>
@@ -14,5 +15,5 @@
          src="assets/svg/tick.svg"/>
     <span class="menu-text">Afternoon</span>
   </button>
-
+  </div>
 </mat-menu>
