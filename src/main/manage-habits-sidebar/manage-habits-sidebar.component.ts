@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SidebarService } from "../Service/sidebar.service";
 import { Subscription } from "rxjs";
 import { AppConstants, TimeOfDay } from "../Constants/app-constant";
@@ -21,25 +21,24 @@ export class ManageHabitsSidebarComponent implements OnInit, OnDestroy {
   protected readonly AppConstants = AppConstants;
   protected readonly TimeOfDay = TimeOfDay;
 
-  constructor(private sidebarService: SidebarService, private habitService: HabitService,private ngZone: NgZone) {
+  constructor(private sidebarService: SidebarService, private habitService: HabitService) {
   }
 
   ngOnInit(): void {
+    this.selectedItem = AppConstants.active;
     this.showManageHabitsSubscription = this.sidebarService.showManageHabits$.subscribe(value => {
       this.showManageHabits = value;
     });
     this.habitsSubscription = this.habitService.habitSubject.subscribe((habits: Habit[]) => {
       // Filter habits with isArchived === false
       this.habits = habits;
+      this.sendHabits();
     });
-    this.selectedItem = AppConstants.active;
-
   }
 
   updateSelectedItem(item: string) {
     this.selectedItem = item;
     this.sendHabits();
-
   }
 
   getLengthOfActiveHabits(): number {
@@ -79,34 +78,30 @@ export class ManageHabitsSidebarComponent implements OnInit, OnDestroy {
   sendHabits(): void {
     const requiredTimeOfDayValues = [TimeOfDay.Morning, TimeOfDay.Afternoon, TimeOfDay.Evening];
 
-    this.ngZone.run(() => {
-      switch (this.selectedItem) {
-        case AppConstants.active:
-          this.filterHabits = this.habits.filter(habit => !habit.isArchived);
-          break;
+    switch (this.selectedItem) {
+      case AppConstants.active:
+        this.filterHabits = this.habits.filter(habit => !habit.isArchived);
+        break;
 
-        case AppConstants.archived:
-          this.filterHabits = this.habits.filter(habit => habit.isArchived);
-          break;
+      case AppConstants.archived:
+        this.filterHabits = this.habits.filter(habit => habit.isArchived);
+        break;
 
-        case TimeOfDay.Anytime:
-          this.filterHabits = this.habits.filter(habit => requiredTimeOfDayValues.every(time => habit.timeOfDay.includes(time) && !habit.isArchived));
-          break;
+      case TimeOfDay.Anytime:
+        this.filterHabits = this.habits.filter(habit => requiredTimeOfDayValues.every(time => habit.timeOfDay.includes(time) && !habit.isArchived));
+        break;
 
-        case TimeOfDay.Morning:
-        case TimeOfDay.Afternoon:
-        case TimeOfDay.Evening:
-          this.filterHabits = this.habits.filter(habit => habit.timeOfDay.includes(<TimeOfDay>this.selectedItem) && habit.timeOfDay.length === 1 && !habit.isArchived);
-          break;
+      case TimeOfDay.Morning:
+      case TimeOfDay.Afternoon:
+      case TimeOfDay.Evening:
+        this.filterHabits = this.habits.filter(habit => habit.timeOfDay.includes(<TimeOfDay>this.selectedItem) && habit.timeOfDay.length === 1 && !habit.isArchived);
+        break;
 
-        default:
-          this.filterHabits = this.habits.filter(habit => !habit.isArchived);
-          break;
-      }
-    });
-
+      default:
+        this.filterHabits = this.habits.filter(habit => !habit.isArchived);
+        break;
+    }
   }
-
 
   ngOnDestroy(): void {
     if (this.showManageHabitsSubscription) {

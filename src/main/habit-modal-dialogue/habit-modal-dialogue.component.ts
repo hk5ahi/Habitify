@@ -34,6 +34,7 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   periodSelectCallback: ((value: boolean) => void) | null = null;
   runSelectCallback: ((value: boolean) => void) | null = null;
   drinkSelectCallback: ((value: boolean) => void) | null = null;
+  monthSelectCallback: ((value: boolean) => void) | null = null;
   habitName!: string;
   goal!: number;
   frequency!: string;
@@ -46,16 +47,17 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   frequencyPerPeriod: string = AppConstants.Per_Day;
   timeOfDay: TimeOfDay[] = [];
   showCalendar: boolean = false;
-  selectedDate: Date = new Date();
   startSelectedDate: Date = new Date();
   selectedDates: Date[] = [];
   days: string[] = [];
+  repeatDates!: string;
   isHabitDialogOpen = false;
   intervalPerDays!: string;
   months: string = AppConstants.months;
   checkRepeat: string = AppConstants.days;
   goalWater: number = AppConstants.goalWater;
   habitNameSelect: boolean = false;
+  isClickedOnDeleteDialogue: boolean = false;
   habitDaysSelect: boolean = false;
   habitWeekSelect: boolean = false;
   habitIntervalSelect: boolean = false;
@@ -63,11 +65,13 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   timeDaySelect: boolean = false;
   runningSelect: boolean = false;
   drinkSelect: boolean = false;
+  monthSelect: boolean = false;
   repeatValue!: string;
   protected readonly AppConstants = AppConstants;
   private timeDaySubscription!: Subscription;
   private intervalSubscription!: Subscription;
   private DaySubscription!: Subscription;
+  private isClickedOnDeleteDialogueSubscription!: Subscription;
 
   constructor(
     private ref: DynamicDialogRef,
@@ -121,23 +125,36 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       this.timeOfDay = habit.timeOfDay;
       this.startSelectedDate = habit.startDate;
 
+
     }
     if (this.receivedHabit) {
+      this.repeatDates = this.receivedHabit.repeat;
       this.intervalService.setReceivedHabit(this.receivedHabit);
     }
+    this.isClickedOnDeleteDialogueSubscription = this.navigationService.isClickedOnDeleteDialogue$.subscribe((data) => {
+      this.isClickedOnDeleteDialogue = data;
+    });
   }
 
   close() {
-    if (this.checkTwoHabitsDiffer()) {
+    if (this.checkTwoHabitsDiffer() && this.editModal) {
       this.confirmDialogue();
     } else {
       this.ref.close();
     }
   }
 
-  checkTwoHabitsDiffer() {
+  sendSelectedDates(): Date[] {
+    if (this.checkRepeat === AppConstants.Month) {
+      const dateStrings = this.repeatDates.split(',');
+      return dateStrings?.map(dateString => new Date(dateString));
+    } else {
+      return this.selectedDates;
+    }
+  }
 
-    return this.receivedHabit.name != this.habitName || this.receivedHabit.goal != this.goal || this.receivedHabit.Frequency != this.frequency || this.receivedHabit.frequencyPerPeriod != this.frequencyPerPeriod || this.receivedHabit.timeOfDay != this.timeOfDay || this.receivedHabit.startDate != this.startSelectedDate;
+  checkTwoHabitsDiffer() {
+    return this.receivedHabit?.name != this.habitName || this.receivedHabit?.goal != this.goal || this.receivedHabit?.Frequency != this.frequency || this.receivedHabit?.frequencyPerPeriod != this.frequencyPerPeriod || this.receivedHabit?.timeOfDay != this.timeOfDay || this.receivedHabit?.startDate != this.startSelectedDate;
   }
 
   getHabitNameSelect(): Promise<boolean> {
@@ -146,6 +163,11 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     });
   }
 
+  getHabitMonthSelect(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.monthSelectCallback = resolve;
+    });
+  }
   getHabitDrinkSelect(): Promise<boolean> {
     return new Promise((resolve) => {
       this.drinkSelectCallback = resolve;
@@ -193,6 +215,11 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     this.invokeHabitNameSelectCallback(value);
   }
 
+  updateHabitMonthSelect(value: boolean) {
+    this.monthSelect = value;
+    this.invokeHabitMonthSelectCallback(value);
+  }
+
   updateHabitDrinkSelect(value: boolean) {
     this.drinkSelect = value;
     this.invokeHabitDrinkSelectCallback(value);
@@ -226,7 +253,8 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     const isHabitDialogClick = this.habitDialog?.nativeElement.contains(event.target);
-    if (!isHabitDialogClick && this.isHabitDialogOpen) {
+
+    if (!isHabitDialogClick && this.isHabitDialogOpen && !this.isClickedOnDeleteDialogue) {
       const promises = [
         this.getHabitNameSelect(),
         this.getHabitDaysSelect(),
@@ -235,9 +263,9 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
         this.getHabitTimeDaySelect(),
         this.getHabitPeriodSelect(),
         this.getHabitRunSelect(),
-        this.getHabitDrinkSelect()
+        this.getHabitDrinkSelect(),
+        this.getHabitMonthSelect()
       ];
-
       Promise.all(promises).then(
         ([
            habitItemSelect,
@@ -247,7 +275,8 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
            habitTimeDaySelect,
            habitPeriodSelect,
            habitRunSelect,
-           habitDrinkSelect
+           habitDrinkSelect,
+           habitMonthSelect
          ]) => {
           if (
             !habitItemSelect &&
@@ -257,8 +286,10 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
             !habitTimeDaySelect &&
             !habitPeriodSelect &&
             !habitRunSelect &&
-            !habitDrinkSelect
+            !habitDrinkSelect &&
+            !habitMonthSelect
           ) {
+            console.log(habitMonthSelect);
             this.close();
           }
         }
@@ -276,11 +307,8 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
           this.ref.close();
         },
         reject: () => {
-
-          // Confirmation rejected
           this.messageService.clear();
           this.confirmationService.close();
-          // Close the confirmPopup
         },
       }
     );
@@ -306,7 +334,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       this.repeatValue = selectedInterval;
       this.checkRepeat = AppConstants.interval;
     }
-
   }
 
   toggleDay(day: string): void {
@@ -328,7 +355,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
           daysArray = this.receivedHabit.repeat.split(',').map(day => daysMapping[day.trim()]);
         }
       }
-
       daysArray = this.updateDaysArray(day, daysArray);
       this.checkRepeat = AppConstants.days;
       this.repeatValue = this.getRepeatValueForDays(allDays, daysArray);
@@ -348,7 +374,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     const updatedDaysArray = [...daysArray]; // Create a copy of the array
 
     const index = updatedDaysArray.indexOf(day);
-
     if (index !== -1 && updatedDaysArray.length > 1) {
       // If the day is present and there is more than one day, remove it
       updatedDaysArray.splice(index, 1);
@@ -357,7 +382,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       // If the day is not present, add it
       updatedDaysArray.push(day);
     }
-
     return updatedDaysArray; // Return the modified array
   }
 
@@ -380,7 +404,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       // If repeatValue is undefined or null, assume it's an interval
       return AppConstants.interval;
     }
-
     if (repeatValue === AppConstants.Daily) {
       return AppConstants.days;
     } else if (this.containsDaysOfWeek(repeatValue)) {
@@ -459,7 +482,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   getRepeatValueForDays(allDays: string[], days: string[]): string {
 
     if (this.areArraysEqual(days, allDays)) {
-
       this.repeatValue = AppConstants.Daily;
       return this.repeatValue as string;
     } else {
@@ -488,15 +510,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   updateFrequencyPeriod(selectedFrequency: string) {
-    // if (this.editModal) {
-    //   this.receivedHabit.frequencyPerPeriod = selectedFrequency;
-    //   if (this.receivedHabit) {
-    //     this.intervalService.setReceivedHabit(this.receivedHabit);
-    //   }
-    //   this.frequencyPerPeriod = selectedFrequency;
-    // } else {
-    //   this.frequencyPerPeriod = selectedFrequency;
-    // }
     this.frequencyPerPeriod = selectedFrequency;
   }
 
@@ -545,7 +558,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   onDateSelect(selectedDate: Date) {
-
     // Check if the date is already present in the array
     const isDateSelected = this.selectedDates.some(date => date.getDate() === selectedDate.getDate() && date.getMonth() === selectedDate.getMonth());
 
@@ -560,19 +572,17 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     }
     this.checkRepeat = AppConstants.Month;
     if (this.editModal) {
-      this.receivedHabit.repeat = this.selectedDates.map(date => date.toLocaleDateString('en-US')).join(',');
-      if (this.receivedHabit) {
-        this.intervalService.setReceivedHabit(this.receivedHabit);
+      const dateFormatRegex = /\b\d{1,2}\/\d{1,2}\/\d{4}\b/g;
+      const matches = this.repeatDates.match(dateFormatRegex);
+      if (!!matches && matches.length > 0) {
+        const dateString = selectedDate.toLocaleDateString('en-US');
+        this.receivedHabit.repeat = this.repeatDates + ',' + dateString;
+        this.repeatDates = this.receivedHabit.repeat;
       }
     }
   }
 
-  isSelected(selectedDate: any): boolean {
-    return this.selectedDates.some(date => date.getDate() === selectedDate.day && date.getMonth() === selectedDate.month);
-  }
-
   updateHabitName(value: string) {
-
     this.habitDialog.nativeElement.click();
     if (this.editModal) {
       this.receivedHabit.name = value;
@@ -611,13 +621,15 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   saveHabit() {
-
     if (this.editModal) {
       this.receivedHabit.name = this.habitName;
       this.receivedHabit.goal = this.goal;
       this.receivedHabit.startDate = this.startSelectedDate;
       this.receivedHabit.Frequency = this.frequency;
       this.receivedHabit.frequencyPerPeriod = this.frequencyPerPeriod;
+      if (this.checkRepeat === AppConstants.Month) {
+        this.receivedHabit.repeat = this.repeatDates;
+      }
       if (this.receivedHabit) {
         this.intervalService.setReceivedHabit(this.receivedHabit);
       }
@@ -648,12 +660,12 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   }
 
   updateFrequency(value: string) {
-      this.frequency = value;
-
+    this.frequency = value;
   }
 
   deleteHabit(habit: Habit) {
-    this.dialogService.open(DeleteDialogueComponent,
+    this.navigationService.setIsClickedOnDeleteDialogue(true);
+    const ref = this.dialogService.open(DeleteDialogueComponent,
       {
         width: '450px',
         height: '128px',
@@ -661,6 +673,11 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
           habit: habit,
         }
       });
+    ref.onClose.subscribe(() => {
+      setTimeout(() => {
+        this.navigationService.setIsClickedOnDeleteDialogue(false);
+      }, 100);
+    });
   }
 
   archiveHabit() {
@@ -693,12 +710,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
   updateHabitDaysSelect(value: boolean) {
     this.habitDaysSelect = value;
     this.invokeHabitDaysSelectCallback(value);
-  }
-
-  ngOnDestroy() {
-    if (this.timeDaySubscription) {
-      this.timeDaySubscription.unsubscribe();
-    }
   }
 
   private invokeHabitNameSelectCallback(value: boolean) {
@@ -811,6 +822,31 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         callback(value);
       });
+    }
+  }
+
+  private invokeHabitMonthSelectCallback(value: boolean) {
+    if (this.monthSelectCallback) {
+      const callback = this.monthSelectCallback;
+      this.monthSelectCallback = null;
+
+      setTimeout(() => {
+        callback(value);
+      });
+    }
+  }
+  ngOnDestroy() {
+    if (this.timeDaySubscription) {
+      this.timeDaySubscription.unsubscribe();
+    }
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+    }
+    if (this.DaySubscription) {
+      this.DaySubscription.unsubscribe();
+    }
+    if (this.isClickedOnDeleteDialogueSubscription) {
+      this.isClickedOnDeleteDialogueSubscription.unsubscribe();
     }
   }
 }

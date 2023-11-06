@@ -535,3 +535,7 @@ input::placeholder {
   pointer-events: none;
   opacity: 0.5;
 }
+
+::ng-deep .Calender-div .p-datepicker-year, ::ng-deep .Calender-div .p-datepicker-month {
+  pointer-events: none;
+}

@@ -68,29 +68,20 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
-  isCurrentMonth(): boolean {
+  isCurrentMonth(date: Date): boolean {
     const currentDate = new Date();
-    return currentDate.getMonth() === this.selectedDate.getMonth() && currentDate.getFullYear() === this.selectedDate.getFullYear();
+    return currentDate.getMonth() === date.getMonth() && currentDate.getFullYear() === date.getFullYear();
   }
 
-  isPreviousMonth(event: any): boolean {
+  isPreviousMonth(date: Date): boolean {
     const currentDate = new Date();
-    const selectedMonth = event.month;
-    const selectedYear = event.year;
-    // Check if the selected month is the previous month
-    return (
-      currentDate.getFullYear() === selectedYear &&
-      currentDate.getMonth() === selectedMonth
-    );
+    return currentDate.getFullYear() === date.getFullYear() && currentDate.getMonth() - 1 === date.getMonth();
   }
 
   onMonthChange(event: any) {
-    // Update isCurrentMonth based on the current month and the newly selected month
-    this.isPrevious = this.isPreviousMonth(event);
-    this.isCurrent = this.isCurrentMonth();
-    if (this.isPrevious) {
-      this.isCurrent = false;
-    }
+    const selectedDate = new Date(event.year, event.month - 1);
+    this.isPrevious = this.isPreviousMonth(selectedDate);
+    this.isCurrent = this.isCurrentMonth(selectedDate);
   }
 
   getDisplayValue(date: Date | undefined): string {
@@ -116,7 +107,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   calculateMinMaxDates() {
     const today = new Date();
     // Set minDate to the first date of the next month
-    this.minDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate() + 1);
+    this.minDate = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate() + 2);
     // Set maxDate to the last date of the current month
     this.maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
   }
@@ -156,10 +147,19 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     const isCalendarClicked = this.calendar?.nativeElement?.contains(event.target);
     const isInputCalenderClicked = this.inputCalender?.nativeElement?.contains(event.target);
     const isSimpleCalenderClicked = this.simpleCalender?.nativeElement?.contains(event.target);
-    if (!isCalendarClicked && !isInputCalenderClicked && !isSimpleCalenderClicked) {
-      // Clicked outside the menu, close the menu or perform other actions
+    // Check if the clicked element or any of its ancestors contains the .p-datepicker-header class
+    const isClickInsideHeader = this.hasClass(event.target, 'p-datepicker-header');
+    const isClickInsideMonth = this.hasClass(event.target, 'p-datepicker-month');
+    const isClickInsideYear = this.hasClass(event.target, 'p-datepicker-year');
+
+    if (!isCalendarClicked && !isClickInsideHeader && !isInputCalenderClicked && !isSimpleCalenderClicked && !isClickInsideMonth && !isClickInsideYear) {
+      // Clicked outside the calendar or header, close the calendar or perform other actions
       this.showCalendar = false;
     }
+  }
+
+  hasClass(element: any, className: string): boolean {
+    return element.classList.contains(className) || element.closest(`.${className}`) !== null;
   }
 
   ngOnDestroy(): void {

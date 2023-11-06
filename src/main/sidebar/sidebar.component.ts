@@ -13,8 +13,8 @@ import { Title } from "@angular/platform-browser";
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  isAllHabits: boolean = true;
-  isTimeHabits: boolean = false;
+  isAllHabits: boolean = false;
+  isTimeHabits: boolean = true;
   timeOfDay!: string;
   showManageHabits!: boolean;
   private isAllHabitsSubscription!: Subscription;
@@ -77,10 +77,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.sidebarService.setShowManageHabits(false);
     const calendarDisplay = this.displayService.getCalenderDisplayValue(selectedDate);
     const pageTitle = `${timeOfDay}, ${calendarDisplay} - Habitify`;
-
     this.titleService.setTitle(pageTitle);
   }
-
 
   routeToManageHabits() {
     this.sidebarService.setShowManageHabits(true);

@@ -11,13 +11,21 @@
   padding: 20px 20px 20px 23px;
 }
 
+.delete-dialog {
+  width: 448px;
+  height: 128px;
+  top: -1em;
+  right: 1em;
+  position: relative;
+}
+
 .content {
   display: flex;
   width: 415px;
   height: 58px;
   position: relative;
-  top: 5px;
-  right: -8px;
+  top: 24px;
+  right: -22px;
 }
 
 .warning {
@@ -62,7 +70,8 @@
 .footer {
   width: 415px;
   position: relative;
-  top: 9px;
+  top: 23px;
+  right: -15px;
   height: 30px;
   display: flex;
   -webkit-box-pack: end;

@@ -6,9 +6,9 @@ import { BehaviorSubject } from "rxjs";
 })
 export class SidebarService {
 
-  private isAllHabitsSubject = new BehaviorSubject<boolean>(true);
+  private isAllHabitsSubject = new BehaviorSubject<boolean>(false);
   isAllHabits$ = this.isAllHabitsSubject.asObservable();
-  private isTimeHabitsSubject = new BehaviorSubject<boolean>(false);
+  private isTimeHabitsSubject = new BehaviorSubject<boolean>(true);
   isTimeHabits$ = this.isTimeHabitsSubject.asObservable();
   private showManageHabitsSubject = new BehaviorSubject<boolean>(false);
   showManageHabits$ = this.showManageHabitsSubject.asObservable();

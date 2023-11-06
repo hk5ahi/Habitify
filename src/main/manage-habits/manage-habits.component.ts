@@ -19,8 +19,8 @@ import { SidebarService } from "../Service/sidebar.service";
 export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() habits: Habit[] = [];
-  filteredHabits: Habit[] = [];
   @ViewChild(MatMenuTrigger) manageHabitTrigger!: MatMenuTrigger;
+  filteredHabits: Habit[] = [];
   selectedHabit!: number;
   searchValue!: string;
   searchValueSubscription!: Subscription;
@@ -31,20 +31,18 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    this.filteredHabits = this.habits;
+    this.filteredHabits = this.habits.filter(habit => !habit.isArchived);
     this.searchValueSubscription = this.NavigationService.manageSearchValue.subscribe((value) => {
       this.searchValue = value;
       this.filterHabits();
     });
     this.titleService.setTitle(AppConstants.manageHabitsTitle);
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['habits'] && !changes['habits'].isFirstChange()) {
       this.filterHabits();
     }
-
   }
 
   filterHabits(): void {
@@ -55,7 +53,7 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
         habit.name.toLowerCase().includes(lowerCaseSearch)
       );
     } else {
-      this.filteredHabits = this.habits;
+      this.filteredHabits = [...this.habits];
     }
   }
 
@@ -72,13 +70,18 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
     return iconMap[habit.name] || 'assets/svg/mark.svg';
   }
 
-  updateSelectedHabit(habit: Habit) {
-    this.selectedHabit = habit.id;
+  updateSelectedHabit(habit: Habit, event: MouseEvent) {
+    if (event.button !== 2) {
+      this.selectedHabit = habit.id;
+    }
+    event.preventDefault();
   }
 
   openEditHabitMenu(event: MouseEvent) {
-    event.preventDefault();
-    this.manageHabitTrigger.openMenu();
+    if (event.button == 2) {
+      event.preventDefault();
+      this.manageHabitTrigger.openMenu();
+    }
   }
 
   archiveHabit(habit: Habit) {
@@ -96,7 +99,6 @@ export class ManageHabitsComponent implements OnInit, OnDestroy, OnChanges {
   openProgressView(habit: Habit) {
     habit.showProgressView = true;
     this.habitService.updateHabit(habit);
-
     const navigationExtras = {
       state: {
         habit: habit,

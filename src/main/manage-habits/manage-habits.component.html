@@ -1,5 +1,6 @@
 <div class="manage-habits">
-  <div (click)="updateSelectedHabit(habit)" (contextmenu)="openEditHabitMenu($event)" *ngFor="let habit of filteredHabits"
+  <div (click)="updateSelectedHabit(habit,$event)" (contextmenu)="openEditHabitMenu($event)"
+       *ngFor="let habit of filteredHabits"
        [matMenuTriggerFor]="manageHabit" [ngClass]="{'background-color':selectedHabit==habit.id}"
        class="manage-habit">
     <div class="habit-content">
@@ -11,7 +12,7 @@
         {{habit.name}}
       </div>
     </div>
-    <mat-menu #manageHabit="matMenu" [hasBackdrop]="false" class="manage-menu" overlapTrigger="false">
+    <mat-menu #manageHabit="matMenu" [hasBackdrop]="true" class="manage-menu" overlapTrigger="false">
       <button (click)="openProgressView(habit)" class="margin-up" mat-menu-item>
         <img alt="View Progress" class="edit-habit-icon"
              src="assets/svg/progress.svg"/>
@@ -36,7 +37,7 @@
         <span class="move-to">Move to...</span>
       </button>
     </mat-menu>
-    <mat-menu #moveHabit="matMenu" [hasBackdrop]="false" class="edit-habit-menu" overlapTrigger="false">
+    <mat-menu #moveHabit="matMenu" [hasBackdrop]="true" class="edit-habit-menu" overlapTrigger="false">
       <button (click)="updateTimeOfDay(habit,TimeOfDay.Morning)" mat-menu-item>
         <img alt="tick" class="edit-habit-icon small-icon"
              src="assets/svg/afternoon.svg"/>

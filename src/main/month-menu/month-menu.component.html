@@ -1,0 +1,9 @@
+<mat-menu #numberMenu="matMenu" class="days-menu" hasBackdrop="false">
+  <div #days class="days">
+    <div *ngFor="let row of numberRows" class="row">
+      <div (click)="addSelectedDate(number,$event)" *ngFor="let number of row"
+           [ngClass]="{'customize':isDateIncluded(number)}"
+           mat-menu-item>{{ number }}</div>
+    </div>
+  </div>
+</mat-menu>

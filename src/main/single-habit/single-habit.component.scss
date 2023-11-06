@@ -281,3 +281,7 @@
 .grey-background {
   background-color: #c3c2c2;
 }
+
+::ng-deep .more-button:active {
+  background-color: #d2d0d0 !important;
+}

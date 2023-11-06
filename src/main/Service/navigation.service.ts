@@ -18,9 +18,11 @@ export class NavigationService {
   selectedDate$ = this.selectedDate.asObservable();
   resizeNavigation = new BehaviorSubject<boolean>(false);
   resizeNavigation$ = this.resizeNavigation.asObservable();
+  isClickedOnDeleteDialogue = new BehaviorSubject<boolean>(false);
+  isClickedOnDeleteDialogue$ = this.isClickedOnDeleteDialogue.asObservable();
   private timeOfDay = new BehaviorSubject<string>(''); // Initial value can be set here
   timeOfDay$ = this.timeOfDay.asObservable();
-  private openDialogs: DynamicDialogRef[] = [];
+  private openDialogs = new Array<DynamicDialogRef>();
 
   setTimeOfDay(value: string) {
     this.timeOfDay.next(value);
@@ -54,6 +56,10 @@ export class NavigationService {
     return this.habitSearchValue.getValue();
   }
 
+  addDialog(dialog: DynamicDialogRef) {
+    this.openDialogs.push(dialog);
+  }
+
   setResizeNavigation(value: boolean) {
     this.resizeNavigation.next(value);
   }
@@ -62,15 +68,19 @@ export class NavigationService {
     return this.resizeNavigation.getValue();
   }
 
-  addDialog(dialog: DynamicDialogRef) {
-    this.openDialogs.push(dialog);
-  }
-
   closeAllDialogs() {
-    this.openDialogs.forEach((dialog) => {
+    this.openDialogs.forEach(dialog => {
       dialog.close();
     });
     this.openDialogs = [];
+  }
+
+  setIsClickedOnDeleteDialogue(value: boolean) {
+    this.isClickedOnDeleteDialogue.next(value);
+  }
+
+  getIsClickedOnDeleteDialogueValue(): boolean {
+    return this.isClickedOnDeleteDialogue.getValue();
   }
 
 

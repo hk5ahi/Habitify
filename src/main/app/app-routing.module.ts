@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'all-habits', component: AllHabitsComponent},
   {path: 'time-of-day', component: TimeHabitsComponent},
   {path: 'manage-habits-sidebar', component: ManageHabitsSidebarComponent},
-  {path: '', redirectTo: '/all-habits', pathMatch: 'full'}, // Default route
+  {path: '', redirectTo: '/time-of-day', pathMatch: 'full'}, // Default route
 ];
 
 @NgModule({

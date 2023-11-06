@@ -1,5 +1,4 @@
 export const AppConstants = {
-  introTitle: 'All Habits, Today - Habitify',
   manageHabitsTitle: 'Manage Habits - Habitify',
   Morning: 'Morning',
   Afternoon: 'Afternoon',

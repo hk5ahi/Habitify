@@ -72,7 +72,6 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     if (this.habit) {
       this.selectedHabit = this.habit;
     }
-
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -173,6 +172,7 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getGoalData(habit: Habit) {
+
     if (habit.name == AppConstants.drinkWater) {
       return habit.goalProgress + " / " + habit.goal + " " + AppConstants.ml;
     } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
@@ -225,5 +225,4 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
       this.resizeNavigationSubscription.unsubscribe();
     }
   }
-
 }

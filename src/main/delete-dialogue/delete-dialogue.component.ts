@@ -12,7 +12,7 @@ import { NavigationService } from "../Service/navigation.service";
 })
 export class DeleteDialogueComponent implements OnInit {
 
-  @ViewChild('deleteDialogue') deleteDialogue!: ElementRef;
+  @ViewChild('deleteDialog') deleteDialogue!: ElementRef;
   habit!: Habit;
   isDeleteDialogueOpen = false;
 
@@ -32,12 +32,16 @@ export class DeleteDialogueComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const isLogHabitClick = this.deleteDialogue?.nativeElement.contains(event.target);
+    if (isLogHabitClick && this.isDeleteDialogueOpen) {
+      this.navigationService.setIsClickedOnDeleteDialogue(true);
+    }
     if (!isLogHabitClick && this.isDeleteDialogueOpen) {
       this.closeDialog();
     }
   }
 
-  closeDialog() {
+  closeDialog(): void {
+    this.navigationService.setIsClickedOnDeleteDialogue(true);
     this.ref.close();
   }
 

@@ -50,10 +50,9 @@
 
 .modal-footer {
   width: 28em;
-  height: 3.125em !important;
+  height: 4.125em !important;
   background-color: #f5f5f5;
-  margin: 1.25em 0 0;
-  padding: 0.625em 0.75em;
+  padding: 1.625em 0.75em;
   position: relative;
   top: -10.125em;
 }
@@ -296,6 +295,7 @@
 
 .input-wrapper {
   position: relative;
+  height: 30px;
 }
 
 .goal-frequency {
@@ -522,12 +522,6 @@
   overflow: hidden;
 }
 
-::ng-deep .selected {
-
-  background: #2A67F4 !important;
-  color: #ffffff !important;
-  padding: 0.625em;
-}
 
 ::ng-deep .month-container .p-datepicker table td.p-datepicker-today > span {
   background: white !important;
