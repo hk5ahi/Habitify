@@ -9,11 +9,9 @@ import { DynamicDialogRef } from "primeng/dynamicdialog";
 export class NavigationService {
 
   manageSearchValue = new BehaviorSubject<string>('');
-  searchValue$ = this.manageSearchValue.asObservable();
   habitSearchValue = new BehaviorSubject<string>('');
   habitSearchValue$ = this.habitSearchValue.asObservable();
   sortText = new BehaviorSubject<string>(AppConstants.habits_Order);
-  sortText$ = this.sortText.asObservable();
   selectedDate = new BehaviorSubject<Date>(new Date());
   selectedDate$ = this.selectedDate.asObservable();
   resizeNavigation = new BehaviorSubject<boolean>(false);
@@ -64,10 +62,6 @@ export class NavigationService {
     this.resizeNavigation.next(value);
   }
 
-  getResizeNavigationValue(): boolean {
-    return this.resizeNavigation.getValue();
-  }
-
   closeAllDialogs() {
     this.openDialogs.forEach(dialog => {
       dialog.close();
@@ -78,10 +72,5 @@ export class NavigationService {
   setIsClickedOnDeleteDialogue(value: boolean) {
     this.isClickedOnDeleteDialogue.next(value);
   }
-
-  getIsClickedOnDeleteDialogueValue(): boolean {
-    return this.isClickedOnDeleteDialogue.getValue();
-  }
-
 
 }

@@ -4,6 +4,7 @@ import { Title } from "@angular/platform-browser";
 import { AppConstants } from "../Constants/app-constant";
 import { NavigationService } from "../Service/navigation.service";
 import { CalenderDisplayService } from "../Service/calender-display.service";
+import { Router } from "@angular/router";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
 
   timeOfDay!: string;
 
-  constructor(private sidebarService: SidebarService, private titleService: Title, private navService: NavigationService, private displayService: CalenderDisplayService) {
+  constructor(private sidebarService: SidebarService, private titleService: Title, private navService: NavigationService, private displayService: CalenderDisplayService,private router: Router) {
   }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
     const timeOfDay = this.calculateTimeOfDay();
     const pageTitle = `${timeOfDay}, ${calendarDisplay} - Habitify`;
     this.titleService.setTitle(pageTitle);
+    this.router.navigate(['/time-of-day']);
   }
 
   getManageHabitsValue(): boolean {

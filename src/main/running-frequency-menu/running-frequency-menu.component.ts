@@ -11,6 +11,7 @@ export class RunningFrequencyMenuComponent {
   @ViewChild(MatMenu) menu!: MatMenu;
   @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('run') editHabit!: ElementRef;
+
   getMenu(): MatMenu {
     return this.menu;
   }
@@ -18,15 +19,13 @@ export class RunningFrequencyMenuComponent {
   updateRunningGoalFrequency(times: string) {
     this.runningGoal.emit(times);
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     const isHabitDialogClick = this.editHabit?.nativeElement?.contains(event.target);
-
     if (isHabitDialogClick) {
-
       this.habitItemSelected.emit(true);
-    }
-    else {
+    } else {
       this.habitItemSelected.emit(false);
     }
   }

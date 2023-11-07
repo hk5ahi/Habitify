@@ -9,6 +9,7 @@ export interface Habit {
   frequencyPerPeriod: string;
   timeOfDay: TimeOfDay[];
   repeat: string;
+  repeatDates: Date[];
   startDate: Date;
   isArchived: boolean;
   isCompleted: boolean;

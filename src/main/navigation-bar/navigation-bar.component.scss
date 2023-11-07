@@ -250,7 +250,6 @@ input::placeholder {
 }
 
 ::ng-deep .add-button {
-
   display: inline-flex;
   appearance: none;
   white-space: nowrap;
@@ -404,7 +403,7 @@ input::placeholder {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  right: 5px;
+  right: 7px;
 }
 
 .custom-calendar-input .calendar-icon {
@@ -428,8 +427,7 @@ input::placeholder {
 }
 
 .custom-calendar-input input.input-calender {
-
-  padding-left: 2.5em;
+  padding-left: 2.25em;
   padding-bottom: 1px;
 }
 
@@ -503,12 +501,10 @@ input::placeholder {
 ::ng-deep .alpha-menu .mat-mdc-menu-item {
   width: 64.64px !important;
   height: 31px !important;
-
 }
 
 ::ng-deep .mat-mdc-menu-panel {
   min-width: 64.64px !important;
-
 }
 
 .tick-icon {

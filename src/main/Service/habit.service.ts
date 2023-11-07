@@ -15,7 +15,8 @@ export class HabitService {
     this.loadHabitsFromLocalStorage();
   }
 
-  addHabit(habit: string, goal: number, frequency: string, frequencyPerPeriod: string, repeat: string, timeOfDay: TimeOfDay[], startDate: Date) {
+  addHabit(habit: string, goal: number, frequency: string, frequencyPerPeriod: string, repeat: string, timeOfDay: TimeOfDay[], startDate: Date, repeatDates: Date[]) {
+
     const newHabit: Habit = {
       id: this.habits.length + 1,
       name: habit,
@@ -32,7 +33,8 @@ export class HabitService {
       showLogValueBar: false,
       showOverLayPanel: false,
       showProgressView: false,
-      goalProgress: 0
+      goalProgress: 0,
+      repeatDates: repeatDates,
     };
 
     this.habits.push(newHabit);
@@ -52,7 +54,6 @@ export class HabitService {
     this.habitSubject.next(this.habits);
     this.saveHabitsToLocalStorage();
   }
-
 
   updateHabit(receivedHabit: Habit) {
     const index = this.habits.findIndex((h: Habit) => h.id === receivedHabit.id);
@@ -81,7 +82,6 @@ export class HabitService {
       this.habits[index].isCompleted = status;
       this.habitSubject.next(this.habits);
       this.saveHabitsToLocalStorage();
-
     }
   }
 
@@ -297,28 +297,32 @@ export class HabitService {
     return false;
   }
 
-  private doesRepeatMatchSpecific(habit: Habit): boolean {
-    const repeatFrequency = habit.repeat.toLowerCase();
-    let selectedDate = this.navService.getSelectedDateValue();
-    const repeatDates = repeatFrequency.split(',');
-    const repeatDateObjects = repeatDates.map(dateStr => new Date(dateStr.trim()));
+  private doesRepeatMatchSpecific(habit: Habit) {
+    const datePattern = /\d{1,2}\/\d{1,2}\/\d{4}/;
+    const selectedDate = this.navService.getSelectedDateValue();
 
-    return repeatDateObjects.some(repeatDate => {
-      if (isNaN(repeatDate.getTime()) || isNaN(selectedDate.getTime())) {
-        // Invalid date, handle error
-        return false;
+    // Check if habit.repeat is defined and is a string
+    if (habit.repeat) {
+      // Split the string into an array of date strings
+      const repeatDates = habit.repeat.split(',');
+
+      // Check if at least one date in the array matches the pattern
+      if (repeatDates.some(date => datePattern.test(date))) {
+        // Convert each date string to a Date object and check for a match
+        return repeatDates.some(dateStr => {
+          const date = new Date(dateStr);
+          return (
+            date.getFullYear() === selectedDate.getFullYear() &&
+            date.getMonth() === selectedDate.getMonth() &&
+            date.getDate() === selectedDate.getDate()
+          );
+        });
       }
+    }
 
-      const repeatDateUTC = new Date(repeatDate.toISOString());
-      const selectedDateUTC = new Date(selectedDate.toISOString());
-
-      return (
-        selectedDateUTC.getUTCFullYear() === repeatDateUTC.getUTCFullYear() &&
-        selectedDateUTC.getUTCMonth() === repeatDateUTC.getUTCMonth() &&
-        selectedDateUTC.getUTCDate() === repeatDateUTC.getUTCDate()
-      );
-    });
+    return false;
   }
+
 
   private loadHabitsFromLocalStorage(): void {
     const storedHabits = localStorage.getItem(AppConstants.habitsKey);

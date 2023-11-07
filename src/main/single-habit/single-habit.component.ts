@@ -186,7 +186,6 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
         return habit.goalProgress + " / " + habit.goal + " " + AppConstants.times;
       } else {
         return habit.goalProgress + " / " + habit.goal + " min";
-
       }
     }
   }
@@ -220,7 +219,6 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
         // Handle the case where goalProgress is not a valid number (NaN)
         console.error('Invalid goalProgress value. Please enter a valid number.');
       }
-
       // Reset goalProgress in any case
       this.goalProgress = undefined;
     }
@@ -228,8 +226,6 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     this.closeLogValueBar(habit, event);
     event.stopPropagation();
   }
-
-
   stopEvent(event: MouseEvent) {
     event.stopPropagation();
   }

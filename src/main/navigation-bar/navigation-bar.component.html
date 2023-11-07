@@ -12,7 +12,7 @@
   <div #Search *ngIf="showSearch" class="input-container">
     <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
     <input (input)="updateSearchValue()" [(ngModel)]="searchValue" name="searchInput" placeholder="Search"
-           type="text"/>
+           type="text" autocomplete="off"/>
   </div>
 
   <div *ngIf="!showSearch">

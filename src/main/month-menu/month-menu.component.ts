@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { MatMenu } from "@angular/material/menu";
 
 @Component({
@@ -22,7 +31,7 @@ export class MonthMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedNumbers = this.selectedDates.map(date => date.getDate());
+    this.selectedNumbers = this.selectedDates?.map(date => date.getDate());
   }
 
   getMenu(): MatMenu {
@@ -34,16 +43,20 @@ export class MonthMenuComponent implements OnInit {
     const index = this.selectedNumbers.indexOf(number);
 
     if (index !== -1) {
-      // Number is already present, remove it
-      this.selectedNumbers.splice(index, 1);
+      // Number is already present, remove it only if there's more than one number
+      if (this.selectedNumbers.length > 1) {
+        this.selectedNumbers.splice(index, 1);
+      }
     } else {
       // Number is not present, add it
       this.selectedNumbers.push(number);
     }
+
     const currentDate = new Date();
     currentDate.setDate(number);
     this.onSelect.emit(currentDate);
   }
+
 
   isDateIncluded(number: number) {
     return this.selectedNumbers.includes(number)
@@ -66,7 +79,6 @@ export class MonthMenuComponent implements OnInit {
 
     for (let i = 1; i <= totalNumbers; i += numbersPerRow) {
       const row: number[] = [];
-
       for (let j = 0; j < numbersPerRow && i + j <= totalNumbers; j++) {
         row.push(i + j);
       }
