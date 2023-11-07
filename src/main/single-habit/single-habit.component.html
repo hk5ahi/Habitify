@@ -6,7 +6,7 @@
            [src]="getHabitIcon(habit)"
            alt="habit"
            class="icon">
-      <div *ngIf="habit.isCompleted" [style.background]="'white'" class="badge">
+      <div *ngIf="habit.isCompleted && !habit.showProgressView" [style.background]="'white'" class="badge">
         <p class="badge-text">1</p>
       </div>
     </div>

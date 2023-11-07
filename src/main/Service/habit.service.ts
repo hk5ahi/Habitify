@@ -77,23 +77,40 @@ export class HabitService {
 
   toggleCompleteHabit(habit: Habit, status: boolean) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
-    this.habits[index].isCompleted = status;
-    this.habitSubject.next(this.habits);
-    this.saveHabitsToLocalStorage();
+    if (!this.habits[index].isSkipped && !this.habits[index].isFailed) {
+      this.habits[index].isCompleted = status;
+      this.habitSubject.next(this.habits);
+      this.saveHabitsToLocalStorage();
+
+    }
   }
 
   toggleSkipHabit(habit: Habit, status: boolean) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
-    this.habits[index].isSkipped = status;
-    this.habitSubject.next(this.habits);
-    this.saveHabitsToLocalStorage();
+    if (!this.habits[index].isCompleted && !this.habits[index].isFailed) {
+      this.habits[index].isSkipped = status;
+      this.habitSubject.next(this.habits);
+      this.saveHabitsToLocalStorage();
+    }
+    if (this.habits[index].goalProgress >= this.habits[index].goal && !this.habits[index].isSkipped) {
+      this.habits[index].isCompleted = true;
+      this.habitSubject.next(this.habits);
+      this.saveHabitsToLocalStorage();
+    }
   }
 
   toggleFailHabit(habit: Habit, status: boolean) {
     const index = this.habits.findIndex((h: Habit) => h.id === habit.id);
-    this.habits[index].isFailed = status;
-    this.habitSubject.next(this.habits);
-    this.saveHabitsToLocalStorage();
+    if (!this.habits[index].isSkipped && !this.habits[index].isCompleted) {
+      this.habits[index].isFailed = status;
+      this.habitSubject.next(this.habits);
+      this.saveHabitsToLocalStorage();
+    }
+    if (this.habits[index].goalProgress >= this.habits[index].goal && !this.habits[index].isFailed) {
+      this.habits[index].isCompleted = true;
+      this.habitSubject.next(this.habits);
+      this.saveHabitsToLocalStorage();
+    }
   }
 
   updateTimeOfDay(habit: Habit, timeOfDay: TimeOfDay) {

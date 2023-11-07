@@ -80,8 +80,8 @@
         </div>
         <div class="days">{{getHabitGoalValue(habit)}}</div>
 
-        <div *ngIf="!habit.isCompleted" class="slash">- - -</div>
-        <div *ngIf="habit.isCompleted && !habit.isSkipped && !habit.isFailed" class="status">
+        <div *ngIf="habit.goalProgress==0" class="slash">- - -</div>
+        <div *ngIf="habit.goalProgress!=0" class="status">
           <img alt="increment" class="increment" src="assets/svg/increment.svg">
           <p class="text-increment">{{getHabitGoalValue(habit)}}</p>
         </div>

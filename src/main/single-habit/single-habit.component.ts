@@ -99,6 +99,7 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     this.habits.forEach((habit) => {
       if (habit.showLogValueBar) {
         habit.showLogValueBar = false;
+        this.goalProgress = undefined;
       }
     });
   }
@@ -113,7 +114,9 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateIsOverlayPanelOpen(isOverlayPanelOpen: boolean) {
-    this.isOverlayPanelOpen = isOverlayPanelOpen;
+    setTimeout(() => {
+      this.isOverlayPanelOpen = isOverlayPanelOpen;
+    }, 100);
   }
 
   openEditHabitMenu(event: MouseEvent) {
@@ -138,11 +141,12 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showLogButton(habit: Habit) {
-    return !habit.showLogValueBar && (habit.name == AppConstants.cycling || habit.name == AppConstants.running || habit.name == 'Go for a walk' || habit.name == AppConstants.drinkWater);
+    return !habit.showLogValueBar && !habit.isCompleted && (habit.name == AppConstants.cycling || habit.name == AppConstants.running || habit.name == AppConstants.walk || habit.name == AppConstants.drinkWater);
   }
 
   closeLogValueBar(habit: Habit, event: MouseEvent) {
     habit.showLogValueBar = false;
+    this.goalProgress = undefined;
     event.stopPropagation();
   }
 
@@ -178,7 +182,12 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
     } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
       return habit.goalProgress + " / " + habit.goal + " " + AppConstants.km;
     } else {
-      return habit.goalProgress + " / " + habit.goal + " " + AppConstants.times;
+      if (habit.Frequency == "Times") {
+        return habit.goalProgress + " / " + habit.goal + " " + AppConstants.times;
+      } else {
+        return habit.goalProgress + " / " + habit.goal + " min";
+
+      }
     }
   }
 
@@ -193,19 +202,33 @@ export class SingleHabitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateGoalProgress(habit: Habit, event: MouseEvent) {
-
     if (this.goalProgress) {
-      habit.goalProgress += parseInt(String(this.goalProgress), 10);
-      if (habit.goalProgress >= habit.goal) {
-        this.habitService.toggleCompleteHabit(habit, true);
+      // Attempt to convert the goalProgress to a number
+      const progressToAdd = parseInt(String(this.goalProgress), 10);
+
+      // Check if the conversion resulted in a valid number
+      if (!isNaN(progressToAdd)) {
+        habit.goalProgress += progressToAdd;
+
+        if (habit.goalProgress >= habit.goal) {
+          this.habitService.toggleCompleteHabit(habit, true);
+        }
+
+        this.habitService.updateHabit(habit);
+        habit.showLogValueBar = false;
+      } else {
+        // Handle the case where goalProgress is not a valid number (NaN)
+        console.error('Invalid goalProgress value. Please enter a valid number.');
       }
-      this.habitService.updateHabit(habit);
-      habit.showLogValueBar = false;
+
+      // Reset goalProgress in any case
       this.goalProgress = undefined;
     }
+
     this.closeLogValueBar(habit, event);
     event.stopPropagation();
   }
+
 
   stopEvent(event: MouseEvent) {
     event.stopPropagation();

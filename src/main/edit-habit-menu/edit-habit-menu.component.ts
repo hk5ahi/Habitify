@@ -30,6 +30,7 @@ export class EditHabitMenuComponent {
   }
 
   completeHabit(habit: Habit) {
+    this.habit.goalProgress = this.habit.goal;
     this.habitService.toggleCompleteHabit(habit, true);
   }
 

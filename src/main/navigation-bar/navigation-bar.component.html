@@ -3,11 +3,11 @@
   <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
     <img alt="Search" class="search-icon" src="assets/svg/search.svg"/>
   </div>
-  <div (click)="showCalenderIcon()" *ngIf="showSearch" class="container" #SimpleCalender>
+  <div #SimpleCalender (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
     <img alt="Calender" class="calendar-icon-increase" src="assets/svg/calender.svg"/>
   </div>
-  <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container" >
-    <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg" />
+  <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container">
+    <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg"/>
   </div>
   <div #Search *ngIf="showSearch" class="input-container">
     <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
@@ -16,14 +16,14 @@
   </div>
 
   <div *ngIf="!showSearch">
-    <button [matMenuTriggerFor]="sortmenu" class="sort-button" #sortButton>
+    <button #sortButton [matMenuTriggerFor]="sortmenu" class="sort-button">
       <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg"/>
       <span class="sort-text">{{sortText}}</span>
       <img alt="down-arrow" class="down-sort" src="assets/svg/down.svg"/>
     </button>
   </div>
 
-  <div (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input" #inputCalender>
+  <div #inputCalender (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input">
     <img alt="Calender" class="calendar-icon" src="assets/svg/calender.svg"/>
     <input [value]="getDisplayValue(selectedDate)" class="input-calender" readonly type="text">
     <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
@@ -74,17 +74,18 @@
 </div>
 
 <div class="calendar-container">
-  <p-calendar class="Calender-div" #Calender
-    (onMonthChange)="onMonthChange($event)"
-    (onSelect)="onDateSelect()"
-    *ngIf="showCalendar"
-    [(ngModel)]="selectedDate"
-    [inline]="true"
-    [maxDate]="maxDate"
-    [minDate]="minDate"
-    [ngClass]="{'disable-next': isCurrent,'disable-prev': isPrevious}"
-    [showIcon]="false"
-    dateFormat="MM d">
+  <p-calendar #Calender
+              (onMonthChange)="onMonthChange($event)"
+              (onSelect)="onDateSelect()"
+              *ngIf="showCalendar"
+              [(ngModel)]="selectedDate"
+              [inline]="true"
+              [maxDate]="maxDate"
+              [minDate]="minDate"
+              [ngClass]="{'disable-next': isCurrent,'disable-prev': isPrevious}"
+              [showIcon]="false"
+              class="Calender-div"
+              dateFormat="MM d">
   </p-calendar>
 </div>
 

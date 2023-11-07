@@ -616,7 +616,7 @@
   border-image: initial;
 }
 
-::ng-deep .archive .p-button {
+::ng-deep .archive .p-button, ::ng-deep .unarchive .p-button {
   width: 6.2em;
   background: #ffffff !important;
   margin: 0 0.5em 0 0;
@@ -630,4 +630,9 @@
   position: absolute;
   right: 23.2em;
   height: 30px;
+}
+
+::ng-deep .unarchive .p-button .p-button-label {
+  position: relative;
+  right: 4px;
 }

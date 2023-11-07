@@ -19,10 +19,18 @@
     <div class="goal-text">GOAL</div>
     <div class="goal-input-container">
       <p-inputNumber (ngModelChange)="onGoalChange($event)"
-                     *ngIf="!isWaterOrRunningOrCycling()" [(ngModel)]="goalValue"
+                     *ngIf="!isWaterOrRunningOrCycling() && goalFrequency!='Mins'" [(ngModel)]="goalValue"
                      [max]="100"
                      [min]="1"
                      [showButtons]="true" [step]="1"
+                     class="up-down-arrows goal-value"
+                     inputId="minmax-buttons"></p-inputNumber>
+
+      <p-inputNumber (ngModelChange)="onGoalChange($event)"
+                     *ngIf="!isWaterOrRunningOrCycling() && goalFrequency=='Mins'" [(ngModel)]="goalValue"
+                     [max]="1200"
+                     [min]="5"
+                     [showButtons]="true" [step]="5"
                      class="up-down-arrows goal-value"
                      inputId="minmax-buttons"></p-inputNumber>
 
@@ -148,14 +156,14 @@
     <div class="buttons">
       <p-button (click)="deleteHabit(receivedHabit)" *ngIf="isEditModal()" class="delete" label="Delete"
                 size="small"></p-button>
-      <p-button (click)="unArchiveHabit()" *ngIf="isEditModalAndIsArchived()" class="archive" label="Unarchive"
+      <p-button (click)="unArchiveHabit()" *ngIf="isEditModalAndIsArchived()" class="unarchive" label="Unarchive"
                 size="small"></p-button>
       <p-button (click)="archiveHabit()" *ngIf="isEditModalAndIsNotArchived()" class="archive" label="Archive"
                 size="small"></p-button>
       <p-button (click)="close()" class="cancel" label="Cancel" size="small"></p-button>
       <p-button (click)="saveHabit()" [disabled]="!habitName" class="save" label="Save" size="small"></p-button>
-      <p-toast></p-toast>
-      <p-confirmPopup></p-confirmPopup>
+<!--      <p-toast></p-toast>-->
+<!--      <p-confirmPopup></p-confirmPopup>-->
 
     </div>
   </div>

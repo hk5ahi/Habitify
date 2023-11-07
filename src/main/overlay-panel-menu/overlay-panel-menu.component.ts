@@ -97,8 +97,11 @@ export class OverlayPanelMenuComponent implements AfterViewInit {
       return AppConstants.ml;
     } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
       return AppConstants.km
-    } else {
+    } else if(habit.Frequency=='Times') {
       return AppConstants.times;
+    }
+    else {
+      return 'min';
     }
   }
 }

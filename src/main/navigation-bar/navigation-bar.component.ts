@@ -34,8 +34,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   sortText: string = AppConstants.habits_Order;
   menuText: string = AppConstants.habits_Order;
   showSearch: boolean = false;
-  isPrevious: boolean = false;
-  isCurrent: boolean = true;
+  isPrevious!: boolean;
+  isCurrent!: boolean;
   isResize: boolean = false;
   private timeOfDaySubscription!: Subscription;
   private resizeNavigationSubscription!: Subscription;
@@ -52,6 +52,8 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this.isResize = data;
     });
     this.calculateMinMaxDates();
+    this.isPrevious = false;
+    this.isCurrent = true;
   }
 
   onDateSelect() {
@@ -68,21 +70,22 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.dialogService.open(HabitModalDialogueComponent, {});
   }
 
-  isCurrentMonth(date: Date): boolean {
-    const currentDate = new Date();
-    return currentDate.getMonth() === date.getMonth() && currentDate.getFullYear() === date.getFullYear();
-  }
-
-  isPreviousMonth(date: Date): boolean {
-    const currentDate = new Date();
-    return currentDate.getFullYear() === date.getFullYear() && currentDate.getMonth() - 1 === date.getMonth();
-  }
-
   onMonthChange(event: any) {
     const selectedDate = new Date(event.year, event.month - 1);
-    this.isPrevious = this.isPreviousMonth(selectedDate);
-    this.isCurrent = this.isCurrentMonth(selectedDate);
+    const currentDate = new Date();  // Current date
+
+    if (currentDate.getMonth() - 1 === selectedDate.getMonth()) {
+      this.isPrevious = true;
+      this.isCurrent = false;
+    } else if (currentDate.getMonth() === selectedDate.getMonth() && currentDate.getFullYear() === selectedDate.getFullYear()) {
+      this.isPrevious = false;
+      this.isCurrent = true;
+    } else {
+      this.isPrevious = false;
+      this.isCurrent = false;
+    }
   }
+
 
   getDisplayValue(date: Date | undefined): string {
     return this.displayService.getCalenderDisplayValue(date);
@@ -102,6 +105,13 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   toggleCalendar(): void {
     this.showCalendar = !this.showCalendar;
+    if (this.showCalendar && this.selectedDate.getMonth() === new Date().getMonth()) {
+      this.isCurrent = true;
+      this.isPrevious = false;
+    } else if (this.showCalendar && this.selectedDate.getMonth() == new Date().getMonth() - 1) {
+      this.isCurrent = false;
+      this.isPrevious = true;
+    }
   }
 
   calculateMinMaxDates() {
@@ -117,9 +127,17 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   showCalenderIcon() {
+
     this.showSearch = false;
     setTimeout(() => {
       this.showCalendar = !this.showCalendar;
+      if (this.showCalendar && this.selectedDate.getMonth() === new Date().getMonth()) {
+        this.isCurrent = true;
+        this.isPrevious = false;
+      } else if (this.showCalendar && this.selectedDate.getMonth() == new Date().getMonth() - 1) {
+        this.isCurrent = false;
+        this.isPrevious = true;
+      }
     }, 10);
   }
 

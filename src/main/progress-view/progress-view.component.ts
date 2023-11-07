@@ -92,7 +92,12 @@ export class ProgressViewComponent implements OnInit, OnDestroy {
     } else if (habit.name == AppConstants.running || habit.name == AppConstants.cycling || habit.name == AppConstants.walk) {
       return habit.goalProgress + " " + AppConstants.kM;
     } else {
-      return habit.goalProgress + " " + AppConstants.times;
+      if(habit.Frequency=='Times') {
+        return habit.goalProgress + " " + AppConstants.times;
+      }
+      else {
+        return habit.goalProgress + " min";
+      }
     }
   }
 
