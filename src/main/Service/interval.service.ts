@@ -12,6 +12,8 @@ export class IntervalService {
   interval$ = this.intervalPerDays.asObservable();
   private receivedHabitSource = new BehaviorSubject<Habit | null>(null);
   receivedHabit$ = this.receivedHabitSource.asObservable();
+  private isAlertClicked = new BehaviorSubject<boolean>(false);
+    isAlertClicked$ = this.isAlertClicked.asObservable();
 
   setIntervalPerDays(interval: string) {
     this.intervalPerDays.next(interval);
@@ -19,5 +21,11 @@ export class IntervalService {
 
   setReceivedHabit(habit: Habit | null): void {
     this.receivedHabitSource.next(habit);
+  }
+  setIsAlertClicked(value: boolean): void {
+    this.isAlertClicked.next(value);
+  }
+  getIsAlertClicked(): boolean {
+    return this.isAlertClicked.getValue();
   }
 }

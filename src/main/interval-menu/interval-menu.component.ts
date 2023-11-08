@@ -26,22 +26,20 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
   @ViewChild(MatMenu) menu!: MatMenu;
   @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('Interval') editHabit!: ElementRef;
-  intervalPerDays!: string;
-  intervalSubscription!: Subscription;
   receivedHabitSubscription!: Subscription;
   receivedHabit!: Habit;
+  @Input() repeatValue!: string;
 
   constructor(private intervalService: IntervalService) {
   }
 
   ngOnInit(): void {
-    this.intervalSubscription = this.intervalService.interval$.subscribe(interval => {
-      this.intervalPerDays = interval;
-    });
+
     this.receivedHabitSubscription = this.intervalService.receivedHabit$.subscribe(habit => {
       this.receivedHabit = habit!;
     });
   }
+
 
   getMenu(): MatMenu {
     return this.menu;
@@ -52,33 +50,27 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
   }
 
   checkIntervalPerDays(interval: string) {
-    if (this.editModal) {
-      if (this.receivedHabit.repeat === interval) {
-        return true;
-      }
+    if (this.repeatValue && this.repeatValue.includes('Every')) {
+      return this.repeatValue === interval;
     } else {
-      if (this.intervalPerDays === interval) {
-        return true;
-      }
+      return false;
     }
-    return false;
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     const isHabitDialogClick = this.editHabit?.nativeElement?.contains(event.target);
 
     if (isHabitDialogClick) {
       this.habitItemSelected.emit(true);
-    }
-    else {
+    } else {
       this.habitItemSelected.emit(false);
     }
   }
 
-  ngOnDestroy(): void {
-    if (this.intervalSubscription) {
-      this.intervalSubscription.unsubscribe();
-    }
+  ngOnDestroy() {
+    if (this.receivedHabitSubscription)
+      this.receivedHabitSubscription.unsubscribe();
   }
 
 }

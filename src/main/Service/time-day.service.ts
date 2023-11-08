@@ -24,7 +24,4 @@ export class TimeAndDayService {
     this.DaySource.next(day);
   }
 
-  getDay(): string[] {
-    return this.DaySource.getValue();
-  }
 }

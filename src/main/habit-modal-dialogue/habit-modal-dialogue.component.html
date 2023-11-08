@@ -191,9 +191,9 @@
     </button>
   </mat-menu>
   <app-days-menu #days (habitItemSelected)="updateHabitWeekSelect($event)" (timeDay)="toggleDay($event)"
-                 [editModal]="editModal" [receivedHabit]="receivedHabit"></app-days-menu>
+                 [editModal]="editModal" [repeatValue]="repeatValue" ></app-days-menu>
   <app-interval-menu #interval (habitItemSelected)="updateHabitIntervalSelect($event)"
-                     (interval)="updateIntervalPerDays($event)"></app-interval-menu>
+                     (interval)="updateIntervalPerDays($event)" [repeatValue]="repeatValue"></app-interval-menu>
   <app-habit-menu #habit (habit)="updateHabitName($event)"
                   (habitItemSelected)="updateHabitNameSelect($event)"></app-habit-menu>
 </div>

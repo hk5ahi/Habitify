@@ -67,7 +67,9 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   }
 
   openDialog(): void {
-    this.dialogService.open(HabitModalDialogueComponent, {});
+    this.dialogService.open(HabitModalDialogueComponent, {
+    });
+
   }
 
   onMonthChange(event: any) {

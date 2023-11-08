@@ -52,6 +52,7 @@ import { CompleteHabitMenuComponent } from "../complete-habit-menu/complete-habi
 import { ProgressViewComponent } from "../progress-view/progress-view.component";
 import { DeleteDialogueComponent } from "../delete-dialogue/delete-dialogue.component";
 import { MonthMenuComponent } from "../month-menu/month-menu.component";
+import { AlertDialog } from "../alert-dialog/alert-dialog.component";
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { MonthMenuComponent } from "../month-menu/month-menu.component";
     CompleteHabitMenuComponent,
     ProgressViewComponent,
     DeleteDialogueComponent,
-    MonthMenuComponent
+    MonthMenuComponent,
+    AlertDialog
   ],
   imports: [
     BrowserModule,

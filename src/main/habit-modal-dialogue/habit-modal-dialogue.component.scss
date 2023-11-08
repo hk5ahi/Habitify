@@ -636,3 +636,7 @@
   position: relative;
   right: 4px;
 }
+::ng-deep  p-dialog p-dynamic-dialog p-component{
+  position:relative !important;
+  top:-10em !important;
+}

@@ -15,7 +15,7 @@ export class HabitService {
     this.loadHabitsFromLocalStorage();
   }
 
-  addHabit(habit: string, goal: number, frequency: string, frequencyPerPeriod: string, repeat: string, timeOfDay: TimeOfDay[], startDate: Date, repeatDates: Date[]) {
+  addHabit(habit: string, goal: number, frequency: string, frequencyPerPeriod: string, repeat: string, timeOfDay: TimeOfDay[], startDate: Date, repeatDates: string) {
 
     const newHabit: Habit = {
       id: this.habits.length + 1,
@@ -130,12 +130,20 @@ export class HabitService {
   filterHabitsByStartDate(habits: Habit[]): Habit[] {
     return habits.filter(habit => {
       return (
-        (habit.repeat.toLowerCase() === 'daily' && this.isAfterStartDate(habit)) ||
+        (habit.repeat && habit.repeat.toLowerCase() === 'daily' && this.isAfterStartDate(habit)) ||
         this.doesRepeatMatchEvery(habit) ||
-        this.doesRepeatMatchSpecific(habit)
+        this.doesRepeatMatchSpecific(habit) || this.doesRepeatMatchDays(habit)
       );
     });
   }
+
+  doesRepeatMatchDays(habit: Habit): boolean {
+    const selectedDate = this.navService.getSelectedDateValue();
+    const selectedDay = selectedDate.toLocaleDateString('en-US', {weekday: 'short'});
+    const habitDays = habit.repeat.split(',').map(day => day.trim().slice(0, 3)); // Take the first 3 characters
+    return habitDays.includes(selectedDay);
+  }
+
 
   filterHabitsBySearch(habits: Habit[], searchValue: string): Habit[] {
     let filteredHabits: Habit[] = [];
@@ -283,46 +291,54 @@ export class HabitService {
   }
 
   private doesRepeatMatchEvery(habit: Habit): boolean {
-    const repeatFrequency = habit.repeat.toLowerCase();
-    let selectedDate = this.navService.getSelectedDateValue();
-    if (repeatFrequency.includes('every')) {
-      const everyIndex = repeatFrequency.indexOf('every');
-      const repeatInterval = parseInt(repeatFrequency.slice(everyIndex + 5).trim(), 10);
-      // Calculate the expected repeat date based on the repeat interval
-      const startDate = new Date(habit.startDate);
-      const daysDifference = Math.floor((selectedDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
-      // Check if the difference in days is a multiple of the repeat interval or it's the start date
-      return (daysDifference >= 0) && (daysDifference % repeatInterval === 0);
+    if (habit.repeat) {
+
+      const repeatFrequency = habit.repeat.toLowerCase();
+      let selectedDate = this.navService.getSelectedDateValue();
+      if (repeatFrequency.includes('every')) {
+        const everyIndex = repeatFrequency.indexOf('every');
+        const repeatInterval = parseInt(repeatFrequency.slice(everyIndex + 5).trim(), 10);
+
+        // Calculate the expected repeat date based on the repeat interval
+        const startDate = new Date(habit.startDate);
+        const daysDifference = Math.floor((selectedDate.getDate() - startDate.getDate()));
+        // Check if the difference in days is a multiple of the repeat interval or it's the start date
+        return (daysDifference >= 0) && (daysDifference % repeatInterval === 0);
+      }
     }
     return false;
   }
 
-  private doesRepeatMatchSpecific(habit: Habit) {
-    const datePattern = /\d{1,2}\/\d{1,2}\/\d{4}/;
+  private doesRepeatMatchSpecific(habit: Habit): boolean {
+    const datePattern = /[a-zA-Z]{3} [a-zA-Z]{3} \d{1,2} \d{4} \d{2}:\d{2}:\d{2} GMT[+-]\d{4} \(.*\)/;
     const selectedDate = this.navService.getSelectedDateValue();
 
-    // Check if habit.repeat is defined and is a string
     if (habit.repeat) {
-      // Split the string into an array of date strings
-      const repeatDates = habit.repeat.split(',');
+      // Check if habit repeats on the 1st of the month
+      const repeatsOnFirst = habit.repeat.toLowerCase().includes('1st');
 
-      // Check if at least one date in the array matches the pattern
-      if (repeatDates.some(date => datePattern.test(date))) {
-        // Convert each date string to a Date object and check for a match
-        return repeatDates.some(dateStr => {
-          const date = new Date(dateStr);
-          return (
-            date.getFullYear() === selectedDate.getFullYear() &&
-            date.getMonth() === selectedDate.getMonth() &&
-            date.getDate() === selectedDate.getDate()
-          );
-        });
+      // Check if habit.repeat is not equal to "Every month on 1st"
+      if (repeatsOnFirst && habit.repeat.toLowerCase() !== 'every month on 1st') {
+        // Split the string into an array of date strings
+        const repeatDates = habit.repeatDates.split(',');
+
+        // Check if at least one date in the array matches the pattern
+        if (repeatDates.some(date => datePattern.test(date))) {
+          // Convert each date string to a Date object and check for a match
+          return repeatDates.some(dateStr => {
+            const date = new Date(dateStr);
+            return (
+              date.getFullYear() === selectedDate.getFullYear() &&
+              date.getMonth() === selectedDate.getMonth() &&
+              date.getDate() === selectedDate.getDate()
+            );
+          });
+        }
       }
     }
 
     return false;
   }
-
 
   private loadHabitsFromLocalStorage(): void {
     const storedHabits = localStorage.getItem(AppConstants.habitsKey);
