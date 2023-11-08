@@ -154,7 +154,6 @@ export class HabitModalDialogueComponent implements OnInit, OnDestroy {
     checkDifferenceBetweenHabits(): boolean {
         if (this.repeatValue == AppConstants.months) {
             if (this.receivedHabit.repeatDates != this.repeatDates.toString()) {
-                console.log(this.receivedHabit.repeatDates);
                 return true;
             }
         }
