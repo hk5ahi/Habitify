@@ -1,39 +1,39 @@
-<mat-menu #days="matMenu" [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
-  <div #Days>
-  <button (click)="toggleDay(daysOfWeek.Monday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Monday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Tuesday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Tuesday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Tuesday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Wednesday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Wednesday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Wednesday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Thursday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Thursday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Thursday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Friday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Friday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Friday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Saturday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Saturday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Saturday}}
-  </button>
-  <button (click)="toggleDay(daysOfWeek.Sunday)" mat-menu-item>
-    <img [ngClass]="{'show':checkDays(daysOfWeek.Sunday)}" alt="tick" class="daily-tick-icon"
-         src="assets/svg/tick.svg"/>
-    {{daysOfWeek.Sunday}}
-  </button>
+<mat-menu [hasBackdrop]="false" class="day-menu" overlapTrigger="false">
+  <div #Days (mouseleave)="closeMenu()">
+    <button (click)="toggleDay(daysOfWeek.Monday,$event)" (mouseenter)="openMenu()" mat-menu-item>
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Monday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Monday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Tuesday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Tuesday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Tuesday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Wednesday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Wednesday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Wednesday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Thursday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Thursday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Thursday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Friday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Friday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Friday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Saturday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Saturday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Saturday}}
+    </button>
+    <button (click)="toggleDay(daysOfWeek.Sunday,$event)" mat-menu-item (mouseenter)="openMenu()">
+      <img [ngClass]="{'show':checkDays(daysOfWeek.Sunday)}" alt="tick" class="daily-tick-icon"
+           src="assets/svg/tick.svg"/>
+      {{daysOfWeek.Sunday}}
+    </button>
   </div>
 </mat-menu>

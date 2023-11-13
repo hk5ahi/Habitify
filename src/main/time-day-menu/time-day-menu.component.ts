@@ -38,7 +38,6 @@ export class TimeDayMenuComponent implements OnInit, OnDestroy {
 
   // Returns true if the time is present in time of days array to display tick mark
   isTimeOfDaySelected(time: TimeOfDay): boolean {
-    console.log(this.timeOfDay);
     return this.timeOfDay.includes(time);
   }
   @HostListener('document:click', ['$event'])

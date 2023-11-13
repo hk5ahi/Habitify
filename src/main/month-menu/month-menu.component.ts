@@ -21,6 +21,7 @@ export class MonthMenuComponent implements OnInit {
   @ViewChild('days') editHabit!: ElementRef;
   @Output() onSelect = new EventEmitter<Date>();
   @ViewChild(MatMenu) menu!: MatMenu;
+  @Output() openMenuCheck: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
   numberRows: number[][] = [];
   selectedNumbers: number[] = [];
@@ -40,6 +41,7 @@ export class MonthMenuComponent implements OnInit {
 
   addSelectedDate(number: number, event: MouseEvent): void {
     event.preventDefault();
+    event.stopPropagation();
     const index = this.selectedNumbers.indexOf(number);
 
     if (index !== -1) {
@@ -84,5 +86,12 @@ export class MonthMenuComponent implements OnInit {
       }
       this.numberRows.push(row);
     }
+  }
+
+  closeMenu() {
+    this.openMenuCheck.emit(false);
+  }
+  openMenu() {
+    this.openMenuCheck.emit(true);
   }
 }

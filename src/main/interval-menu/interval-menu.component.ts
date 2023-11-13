@@ -23,6 +23,7 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
 
   @Output() interval: EventEmitter<string> = new EventEmitter<string>();
   @Input() editModal: boolean = false;
+  @Output() openMenuCheck: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild(MatMenu) menu!: MatMenu;
   @Output() habitItemSelected: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('Interval') editHabit!: ElementRef;
@@ -45,8 +46,15 @@ export class IntervalMenuComponent implements OnInit, OnDestroy {
     return this.menu;
   }
 
-  updateIntervalPerDays(interval: string) {
+  updateIntervalPerDays(interval: string, event: Event) {
     this.interval.emit(interval);
+    event.stopPropagation();
+  }
+  closeMenu() {
+    this.openMenuCheck.emit(false);
+  }
+  openMenu() {
+    this.openMenuCheck.emit(true);
   }
 
   checkIntervalPerDays(interval: string) {

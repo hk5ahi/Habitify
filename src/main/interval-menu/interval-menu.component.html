@@ -1,31 +1,31 @@
-<mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu" overlapTrigger="false">
-  <div #Interval>
-  <button (click)="updateIntervalPerDays('Repeat Every 2')" mat-menu-item>
+<mat-menu #interval="matMenu" [hasBackdrop]="false" class="interval-menu"  >
+  <div #Interval (mouseleave)="closeMenu()">
+  <button (click)="updateIntervalPerDays('Repeat Every 2',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 2')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 2
   </button>
-  <button (click)="updateIntervalPerDays('Repeat Every 3')" mat-menu-item>
+  <button (click)="updateIntervalPerDays('Repeat Every 3',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 3')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 3
   </button>
-  <button (click)="updateIntervalPerDays('Repeat Every 4')" mat-menu-item>
+  <button (click)="updateIntervalPerDays('Repeat Every 4',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 4')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 4
   </button>
-  <button (click)="updateIntervalPerDays('Repeat Every 5')" mat-menu-item>
+  <button (click)="updateIntervalPerDays('Repeat Every 5',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 5')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 5
   </button>
-  <button (click)="updateIntervalPerDays('Repeat Every 6')" mat-menu-item>
+  <button (click)="updateIntervalPerDays('Repeat Every 6',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 6')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 6
   </button>
-  <button (click)="updateIntervalPerDays('Repeat Every 7')" mat-menu-item>
+  <button (click)="updateIntervalPerDays('Repeat Every 7',$event)" mat-menu-item (mouseenter)="openMenu()">
     <img [ngClass]="{'show': checkIntervalPerDays('Repeat Every 7')}" alt="tick" class="interval-tick-icon"
          src="assets/svg/tick.svg"/>
     Repeat Every 7

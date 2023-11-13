@@ -89,7 +89,7 @@ import { AlertDialog } from "../alert-dialog/alert-dialog.component";
     ProgressViewComponent,
     DeleteDialogueComponent,
     MonthMenuComponent,
-    AlertDialog
+    AlertDialog,
   ],
   imports: [
     BrowserModule,
@@ -115,12 +115,13 @@ import { AlertDialog } from "../alert-dialog/alert-dialog.component";
     ConfirmPopupModule,
     AccordionModule,
     OverlayPanelModule,
+
   ],
   providers: [DialogService, DatePipe, MessageService, ConfirmationService, {
     provide: MAT_DIALOG_DATA,
     useValue: {}
   }, OverlayPanelService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

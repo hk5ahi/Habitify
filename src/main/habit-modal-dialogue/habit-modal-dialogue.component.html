@@ -178,22 +178,22 @@
   </mat-menu>
 
   <app-month-menu #month (habitItemSelected)="updateHabitMonthSelect($event)" (onSelect)="onDateSelect($event)"
-                  [selectedDates]="sendSelectedDates()"></app-month-menu>
+                  [selectedDates]="sendSelectedDates()" (openMenuCheck)="updateOpenMenuCheck($event)"></app-month-menu>
   <mat-menu #repeatMenu="matMenu" [hasBackdrop]="false" class="repeat-menu" overlapTrigger="false">
-    <button [matMenuTriggerFor]="days.getMenu()" mat-menu-item>
+    <button [matMenuTriggerFor]="days.getMenu()" mat-menu-item  #daysMenuTrigger="matMenuTrigger" (mouseenter)="openMenu(daysMenuTrigger)" (mouseleave)="closeMenu(daysMenuTrigger)">
       Daily
     </button>
-    <button [matMenuTriggerFor]="month.getMenu()" mat-menu-item>
+    <button [matMenuTriggerFor]="month.getMenu()" mat-menu-item #monthMenuTrigger="matMenuTrigger" (mouseenter)="openMenu(monthMenuTrigger)" (mouseleave)="closeMenu(monthMenuTrigger)">
       Monthly
     </button>
-    <button [matMenuTriggerFor]="interval.getMenu()" mat-menu-item>
+    <button [matMenuTriggerFor]="interval.getMenu()" mat-menu-item  #intervalMenuTrigger="matMenuTrigger" (mouseenter)="openMenu(intervalMenuTrigger)" (mouseleave)="closeMenu(intervalMenuTrigger)">
       Interval
     </button>
   </mat-menu>
   <app-days-menu #days (habitItemSelected)="updateHabitWeekSelect($event)" (timeDay)="toggleDay($event)"
-                 [editModal]="editModal" [repeatValue]="repeatValue" ></app-days-menu>
+                 [editModal]="editModal" [repeatValue]="repeatValue" (openMenuCheck)="updateOpenMenuCheck($event)" ></app-days-menu>
   <app-interval-menu #interval (habitItemSelected)="updateHabitIntervalSelect($event)"
-                     (interval)="updateIntervalPerDays($event)" [repeatValue]="repeatValue"></app-interval-menu>
+                     (interval)="updateIntervalPerDays($event)" [repeatValue]="repeatValue" (openMenuCheck)="updateOpenMenuCheck($event)"></app-interval-menu>
   <app-habit-menu #habit (habit)="updateHabitName($event)"
                   (habitItemSelected)="updateHabitNameSelect($event)"></app-habit-menu>
 </div>
