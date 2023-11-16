@@ -1,0 +1,386 @@
+.progress-view {
+  width: 437px;
+  height: 400px;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.large-progress {
+  width: 1242px;
+  height: 400px;
+  position: fixed;
+  right: 27.4em;
+
+}
+
+.navigation {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  padding: 0 12px 0 10px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(229, 228, 229);
+  overflow-x: auto;
+}
+
+.nav-button {
+  width: 32px;
+  height: 30px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-right: 12px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  background-color: rgb(255, 255, 255);
+}
+
+.habit-text {
+  color: rgb(0, 0, 0);
+  font-family: Inter, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 20.4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+  right: 17.3em;
+  width: 80px;
+}
+
+.large-habit-text {
+  width: 375px;
+  right: 47.3em;
+}
+
+.custom-calendar-input {
+  position: absolute;
+  display: inline-block; /* Ensure the icons are inside the same container */
+  cursor: default;
+  right: 8em;
+  top: 0.75em;
+  width: 150px;
+  height: 30px;
+}
+
+.custom-calendar-input .calendar-icon {
+  position: absolute;
+  left: 1px; /* Adjust the position of the calendar icon */
+  top: 6px;
+  z-index: 1;
+}
+
+.calendar-icon {
+  width: 0.8125em;
+  height: 0.8125em;
+  cursor: default !important;
+}
+
+.down-icon {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  right: -120px;
+  top: -25px;
+  cursor: default !important;
+}
+
+.input-calender {
+  width: 10em;
+  height: 2em;
+  color: black;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  background-color: white;
+  padding: 0 10px;
+  cursor: default !important;
+}
+
+.custom-calendar-input input.input-calender {
+
+  padding-bottom: 0;
+  border-color: rgb(229, 228, 229);
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  width: 151px;
+  vertical-align: middle;
+  line-height: 30px;
+  font-weight: 500;
+  height: 30px;
+  min-width: var(--chakra-sizes-10);
+  font-size: 12px;
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  padding-left: 2.5em;
+  padding-right: 10px;
+  font-family: Inter, sans-serif;
+  cursor: default;
+  outline: unset;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  top: -2px;
+  right: 8px;
+}
+
+.move-calender {
+  right: -33px !important;
+}
+
+.move-calender-icon {
+  left: 41px !important;
+}
+
+.move-down-icon {
+  right: -159px !important;
+}
+
+::ng-deep .progress-menu .mat-mdc-menu-item-text {
+  top: -0.5px !important;
+}
+
+.edit {
+  position: relative;
+  right: -19.7em;
+  top: -2.5em;
+}
+
+.share {
+  position: relative;
+  right: -22.2em;
+  top: -4.35em;
+}
+
+.extended-share {
+  position: relative;
+  right: -72.4em;
+  top: -2.46em;
+}
+
+.open {
+  position: relative;
+  right: -24.6em;
+  top: -6.25em;
+}
+
+.extended-open {
+  position: relative;
+  right: -75em;
+  top: -4.4em;
+}
+
+.resize {
+  position: relative;
+  right: 1px;
+}
+
+.main-content {
+  padding: 12px;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+
+.streak {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 20px;
+  padding: 18px 12px 18px 20px;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 5px;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 79px;
+  position: absolute;
+  top: 61px;
+  width: 412px;
+}
+
+.extend-streak {
+  width: 1218px !important;
+}
+
+.streak-content {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.streak-icon {
+  width: 23px;
+  height: 31px;
+}
+
+.streak-text {
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: rgb(123, 124, 124);
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 13.2px;
+  width: 100px;
+  height: 13px;
+  position: relative;
+  top: -10px;
+  right: -14px;
+}
+
+.streak-days {
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.6px;
+  width: 99px;
+  height: 22px;
+  position: relative;
+  top: 12px;
+  right: 87px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 6px;
+  padding: 16.5px 16px;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 10px;
+  align-content: center;
+  height: 100px;
+  width: 200px;
+
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.extend-cards {
+  margin-top: 2em !important;
+  display: flex !important;
+  justify-content: space-between !important;
+
+}
+
+.complete-content {
+  display: flex;
+  justify-content: left;
+  position: relative;
+  top: -4px;
+  right: 3px;
+}
+
+.complete-icon {
+  width: 13px;
+  height: 13px;
+  position: relative;
+  top: -1px;
+  margin-right: 6px;
+}
+
+.complete-text {
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(123, 124, 124);
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 13.2px;
+}
+
+.days {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(0, 0, 0);
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  position: relative;
+  top: -4px;
+  right: 2px;
+}
+
+.slash {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 15px;
+  position: relative;
+  right: -3px;
+}
+
+.status {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 15px;
+}
+
+.text-increment {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(15, 175, 9);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15.6px;
+  opacity: 1;
+  visibility: visible;
+  margin-left: 6px;
+}
+
+.text-decrement {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgb(210, 55, 55);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15.6px;
+  opacity: 1;
+  visibility: visible;
+  margin-left: 6px;
+}
+
+.date-streak {
+  background-color: rgb(245, 245, 245);
+  border-radius: 5px;
+  padding: 7px 8.5px;
+  text-transform: uppercase;
+  max-height: 27px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(123, 124, 124);
+  opacity: 1;
+  visibility: visible;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 13.2px;
+}

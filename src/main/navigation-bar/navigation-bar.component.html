@@ -1,43 +1,42 @@
-<div class="navigation">
-  <p class="time">{{currentTimeOfDay}}</p>
+<div *ngIf="!isResize" class="navigation">
+  <p [ngClass]="{'top':showSearch}" class="time">{{getData()}}</p>
   <div (click)="showSearchArea()" *ngIf="!showSearch" class="search-container">
-    <img class="search-icon" src="assets/svg/search.svg"/>
+    <img alt="Search" class="search-icon" src="assets/svg/search.svg"/>
   </div>
-  <div (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
-    <img class="calendar-icon" src="assets/svg/calender.svg"/>
+  <div #SimpleCalender (click)="showCalenderIcon()" *ngIf="showSearch" class="container">
+    <img alt="Calender" class="calendar-icon-increase" src="assets/svg/calender.svg"/>
   </div>
   <div (click)="showSortIcon()" *ngIf="showSearch" class="sort-container">
-    <img class="sort-icon" src="assets/svg/sort.svg"/>
+    <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg"/>
   </div>
   <div #Search *ngIf="showSearch" class="input-container">
-    <img class="search-icon" src="assets/svg/search.svg"/>
-    <input [(ngModel)]="searchValue" placeholder="Search" type="text"/>
+    <img alt="Search-Icon" class="search-icon" src="assets/svg/search.svg"/>
+    <input (input)="updateSearchValue()" [(ngModel)]="searchValue" name="searchInput" placeholder="Search"
+           type="text" autocomplete="off"/>
   </div>
+
   <div *ngIf="!showSearch">
-    <button [matMenuTriggerFor]="sortmenu" class="sort-button">
-      <img class="sort-icon" src="assets/svg/sort.svg"/>
-      <span [(ngModel)]="sortText" class="sort-text">{{sortText}}</span>
-      <mat-icon class="sort-drop-icon">arrow_drop_down</mat-icon>
+    <button #sortButton [matMenuTriggerFor]="sortmenu" class="sort-button">
+      <img alt="Sort" class="sort-icon" src="assets/svg/sort.svg"/>
+      <span class="sort-text">{{sortText}}</span>
+      <img alt="down-arrow" class="down-sort" src="assets/svg/down.svg"/>
     </button>
   </div>
 
-  <div (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input">
-    <img class="calendar-icon" src="assets/svg/calender.svg"/>
+  <div #inputCalender (click)="toggleCalendar()" *ngIf="!showSearch" class="custom-calendar-input">
+    <img alt="Calender" class="calendar-icon" src="assets/svg/calender.svg"/>
     <input [value]="getDisplayValue(selectedDate)" class="input-calender" readonly type="text">
     <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
   </div>
-  <p-calendar (ngModelChange)=" hideCalender()"
-              *ngIf="showCalendar" [(ngModel)]="selectedDate" [inline]="true" [showIcon]="false" dateFormat="MM d">
 
-  </p-calendar>
   <button [matMenuTriggerFor]="addmenu" class="add-button">
     <mat-icon class="add-icon">add</mat-icon>
     <span class="button-text">Add Habits</span>
     <mat-icon class="drop-icon">arrow_drop_down</mat-icon>
   </button>
   <mat-menu #addmenu="matMenu" class="add-menu" overlapTrigger="false">
-    <button (click)="menuItemClicked('Item 1')" mat-menu-item>
-      <img class="infinity" src="assets/svg/infinty.svg"/>
+    <button (click)="openDialog()" mat-menu-item>
+      <img alt="Infinity Icon" class="infinity" src="assets/svg/infinty.svg"/>
       Create Good Habit
     </button>
 
@@ -46,15 +45,15 @@
     <button (click)="menuItemClicked('Reminder Time')" mat-menu-item>
       <img [ngClass]="{'hide-icon': menuText == 'Reminder Time'}" alt="tick" class="tick-icon"
            src="assets/svg/tick.svg"/>
-      <span class="menu-text">Reminder Time</span>
+      Reminder Time
     </button>
     <button (click)="menuItemClicked('My Habits Order')" mat-menu-item>
       <img [ngClass]="{'hide-icon': menuText == 'My Habits Order'}" alt="tick" class="tick-icon"
            src="assets/svg/tick.svg"/>
       My Habits Order
     </button>
-    <button (click)="menuItemClicked('Alphabetical')" (mouseenter)="openAlphaMenu(true)"
-            (mouseleave)="openAlphaMenu(false)" [matMenuTriggerFor]="alphamenu"
+    <button (click)="menuItemClicked('Alphabetical')"
+            [matMenuTriggerFor]="alphamenu"
             mat-menu-item>
       <img [ngClass]="{'hide-icon': menuText == 'A-Z' || menuText=='Z-A'}" alt="tick" class="tick-icon"
            src="assets/svg/tick.svg"/>
@@ -73,4 +72,22 @@
     </button>
   </mat-menu>
 </div>
-<app-habits></app-habits>
+
+<div class="calendar-container">
+  <p-calendar #Calender
+              (onMonthChange)="onMonthChange($event)"
+              (onSelect)="onDateSelect()"
+              *ngIf="showCalendar"
+              [(ngModel)]="selectedDate"
+              [inline]="true"
+              [maxDate]="maxDate"
+              [minDate]="minDate"
+              [ngClass]="{'disable-next': isCurrent,'disable-prev': isPrevious}"
+              [showIcon]="false"
+              class="Calender-div"
+              dateFormat="MM d">
+  </p-calendar>
+</div>
+
+
+

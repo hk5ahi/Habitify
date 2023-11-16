@@ -1,5 +1,25 @@
-<div class="habits">
-  <div *ngIf="!hasHabits()" class="empty-template">
+<div *ngIf="hasHabits()" class="habits">
+  <app-single-habit [habit]="habit" [habits]="sendHabits()"></app-single-habit>
+  <div>
+    <p-accordion [activeIndex]=activeTabIndices [multiple]="true" [ngClass]="{'hide':isResize}">
+      <p-accordionTab *ngIf="isHabitCompleted()" [header]="getSuccessHeader()" class="accord">
+        <app-single-habit [habit]="habit" [habits]="sendCompletedHabits()"></app-single-habit>
+      </p-accordionTab>
+
+      <p-accordionTab *ngIf="isHabitSkipped()" [header]="getSkipHeader()" class="accord">
+        <app-single-habit [habit]="habit" [habits]="sendSkippedHabits()"></app-single-habit>
+      </p-accordionTab>
+
+      <p-accordionTab *ngIf="isHabitFailed()" [header]="getFailHeader()" class="accord">
+        <app-single-habit [habit]="habit" [habits]="sendFailedHabits()"></app-single-habit>
+      </p-accordionTab>
+    </p-accordion>
+
+  </div>
+
+</div>
+<div *ngIf="!hasHabits()" [ngClass]="{'move-empty-habit':showEmpty}" class="none-habits">
+  <div class="empty-template">
     <div class="images-container">
       <img alt="image1" class="image" src="assets/svg/image1.svg">
       <img alt="image2" class="image" src="assets/svg/image2.svg">
@@ -11,8 +31,7 @@
     <div class="light-text">
       Habits are like dominos. As one is formed, all others will follow!
     </div>
-
-    <button class="add">
+    <button (click)="openDialog()" class="add">
       <mat-icon class="add-icon">add</mat-icon>
       <span class="button-text">Add Habits</span>
     </button>

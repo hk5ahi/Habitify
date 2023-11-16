@@ -1,0 +1,79 @@
+.Navigation {
+  width: 976px;
+  height: 51px;
+  padding: 10px 13px 10px 16px;
+  border-bottom: 1px solid rgb(229, 228, 229);
+  border-right: 1px solid rgb(229, 228, 229);
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  position: fixed;
+  right: 27.4em;
+  top: 0;
+}
+
+.Habits-Text {
+  display: inline-block;
+  width: 473.5px;
+  height: 21px;
+  margin: 4.5px 0;
+  font-size: 17px;
+  color: rgb(0, 0, 0);
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  line-height: 21px;
+  margin-top: auto;
+  margin-bottom: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.input-container {
+  width: 220px;
+  height: 30px;
+  display: flex;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 11px; /* Adjust the left position as needed */
+  top: 54%;
+  transform: translateY(-50%);
+  width: 12px; /* Adjust the width as needed */
+  height: 12px; /* Adjust the height as needed */
+}
+
+.search-input {
+  width: 100%;
+  min-width: 0;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  background: inherit;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  padding: 7.5px 17px 7.5px 28px;
+  cursor: default;
+  text-overflow: ellipsis;
+  margin-left: 2px;
+}
+
+.search-input::placeholder {
+  color: rgb(199, 199, 199);
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+}
+
+.search-input:hover {
+  border: 1px solid #2A67F4;
+}

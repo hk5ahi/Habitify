@@ -1,0 +1,16 @@
+::ng-deep .mat-mdc-menu-item:hover {
+  .interval-tick-icon {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.interval-tick-icon {
+  position: relative;
+  right: 4px;
+  top: 4px;
+  opacity: 0;
+}
+
+.show {
+  opacity: 1 !important;
+}

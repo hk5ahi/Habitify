@@ -1,0 +1,47 @@
+
+.row {
+  display: flex;
+}
+
+::ng-deep .days-menu {
+  overflow: hidden;
+}
+
+.days {
+  width: 196px;
+  height: 153px;
+}
+
+::ng-deep .days-menu .mat-mdc-menu-item {
+  height: 27px !important;
+  width: 27px !important;
+  text-align: center;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 12px !important;
+}
+
+::ng-deep .days-menu .mat-mdc-menu-item-text {
+  position: relative;
+  top: 0;
+  right: 2px;
+}
+
+.customize {
+  background-color: #2A67F4 !important;
+  color: #ffffff !important;
+}
+.number{
+  color: rgba(0,0,0,.7);
+}
+.number:hover{
+  background-color: #2A67F4;
+  color: #ffffff !important;
+}

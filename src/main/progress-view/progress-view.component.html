@@ -1,0 +1,100 @@
+<div [ngClass]="{'large-progress':isResize}" class="progress-view">
+
+  <div class="navigation">
+    <div class="nav-button resize">
+      <img (click)="updateResizeNavigation()" *ngIf="!isResize" alt="resize" src="assets/svg/resize.svg">
+      <img (click)="updateResizeNavigation()" *ngIf="isResize" alt="resize" src="assets/svg/left.svg">
+    </div>
+    <div [ngClass]="{'large-habit-text':isResize}" class="habit-text">{{habit.name}}</div>
+  </div>
+  <div [matMenuTriggerFor]="progressMenu" class="custom-calendar-input">
+    <img [ngClass]="{'move-calender-icon':isResize}" alt="Calender" class="calendar-icon"
+         src="assets/svg/calender.svg"/>
+    <input [ngClass]="{'move-calender':isResize}" [value]=calenderData class="input-calender" readonly type="text">
+    <img [ngClass]="{'move-down-icon':isResize}" alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
+  </div>
+  <div (click)="openEditModal(habit)" *ngIf="!isResize" class="nav-button edit">
+    <img alt="edit" src="assets/svg/edit.svg">
+  </div>
+  <div [ngClass]="{'extended-share':isResize}" class="nav-button share">
+    <img alt="share" src="assets/svg/share.svg">
+  </div>
+  <div (click)="updateResizeNavigation()" [ngClass]="{'extended-open':isResize}" class="nav-button open">
+    <img alt="open-close" src="assets/svg/open-close.svg">
+  </div>
+
+  <div class="main-content">
+    <div [ngClass]="{'extend-streak':isResize}" class="streak">
+      <div class="streak-content">
+        <img alt="Streak" class="streak-icon" src="assets/svg/streak.svg">
+        <div class="streak-text">Current Streak</div>
+        <div
+          class="streak-days">{{ getHabitCompletedStatus(habit) }} {{ getHabitCompletedStatus(habit) === 1 ? 'day' : 'days' }}</div>
+      </div>
+      <div *ngIf="habit.isCompleted" class="date-streak">{{getCurrentDate()}}</div>
+    </div>
+    <div [ngClass]="{'extend-cards':isResize}" class="cards">
+      <div class="card">
+        <div class="complete-content">
+          <img alt="Complete" class="complete-icon" src="assets/svg/tick.svg">
+          <div class="complete-text">Complete</div>
+        </div>
+        <div
+          class="days">{{ getHabitCompletedStatus(habit) }} {{ getHabitCompletedStatus(habit) === 1 ? 'day' : 'days' }}</div>
+
+        <div *ngIf="!habit.isCompleted" class="slash">- - -</div>
+        <div *ngIf="habit.isCompleted && !habit.isSkipped && !habit.isFailed" class="status">
+          <img alt="increment" class="increment" src="assets/svg/increment.svg">
+          <p class="text-increment">1 day</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="complete-content">
+          <img alt="Complete" class="complete-icon" src="assets/svg/cross.svg">
+          <div class="complete-text">Failed</div>
+        </div>
+        <div
+          class="days">{{ getHabitFailedStatus(habit) }} {{ getHabitFailedStatus(habit) === 1 ? 'day' : 'days' }}</div>
+        <div *ngIf="!habit.isFailed" class="slash">- - -</div>
+        <div *ngIf="habit.isFailed && !habit.isSkipped && !habit.isCompleted" class="status">
+          <img alt="decrement" class="decrement" src="assets/svg/decrement.svg">
+          <p class="text-decrement">1 day</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="complete-content">
+          <img alt="Complete" class="complete-icon" src="assets/svg/skip.svg">
+          <div class="complete-text">Skipped</div>
+        </div>
+        <div
+          class="days">{{ getHabitSkippedStatus(habit) }} {{ getHabitSkippedStatus(habit) === 1 ? 'day' : 'days' }}</div>
+        <div *ngIf="!habit.isSkipped" class="slash">- - -</div>
+        <div *ngIf="habit.isSkipped && !habit.isCompleted && !habit.isFailed" class="status">
+          <img alt="decrement" class="decrement" src="assets/svg/decrement.svg">
+          <p class="text-decrement">1 day</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="complete-content">
+          <div class="complete-text">Total</div>
+        </div>
+        <div class="days">{{getHabitGoalValue(habit)}}</div>
+
+        <div *ngIf="habit.goalProgress==0" class="slash">- - -</div>
+        <div *ngIf="habit.goalProgress!=0" class="status">
+          <img alt="increment" class="increment" src="assets/svg/increment.svg">
+          <p class="text-increment">{{getHabitGoalValue(habit)}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<mat-menu #progressMenu="matMenu" class="progress-menu">
+  <button (click)="updateCalenderData(getCurrentMonth())" mat-menu-item>
+    {{getCurrentMonth()}}
+  </button>
+  <button (click)="updateCalenderData(getCurrentYear())" mat-menu-item>
+    {{getCurrentYear()}}
+  </button>
+</mat-menu>

@@ -1,0 +1,14 @@
+.edit-habit-icon {
+  position: relative;
+  top: 4px;
+  right: 2.5px;
+  margin-right: 4px;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .edit-habit-icon {
+    filter: brightness(0) invert(1);
+  }
+}
+
+

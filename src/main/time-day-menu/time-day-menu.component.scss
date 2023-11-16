@@ -1,0 +1,29 @@
+.hide-icon {
+  opacity: 1 !important;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .time-tick-icon,
+  {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.time-tick-icon {
+  position: relative;
+  opacity: 0;
+  top: 2px;
+  right: 0;
+  margin-right: 8px;
+}
+
+.menu-text {
+  position: relative;
+  top: -2px;
+  right: -6px;
+}
+::ng-deep .time-day-menu .mat-mdc-menu-item-text{
+
+  position:relative;
+  top:1.5px;
+}

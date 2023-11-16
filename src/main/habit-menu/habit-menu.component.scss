@@ -1,0 +1,54 @@
+.section-one {
+  width: 22.875em;
+  height: 11.5em;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.text {
+  margin-left: 1.25em;
+}
+
+.section-two {
+  width: 22.875em;
+  height: 15.25em;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.section-three {
+  width: 22.875em;
+  height: 17.125em;
+  padding: 4px 0;
+  border-bottom: 1px solid #E5E4E5;
+}
+
+.section-text {
+  width: 22.875em;
+  height: 1.4em;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14.4px;
+  color: rgb(42, 103, 244);
+  padding: 4px 10px;
+  text-transform: capitalize;
+  margin-bottom: 7px;
+  margin-top: 4px;
+  overflow-wrap: break-word;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .habit-icons {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.habit-icons {
+  width: 1.35em;
+  height: 1.35em;
+  position: relative;
+  top: 4px;
+  margin-left: -4px;
+  margin-right: 5px;
+}

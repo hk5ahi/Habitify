@@ -23,7 +23,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0 0 35px;
+  margin: 0 0 2.1875em;
 }
 
 .images-container img {
@@ -49,16 +49,16 @@
   line-height: 18px;
   color: rgb(123, 124, 124);
   height: 2.25em;
-  width: 298px;
+  width: 22.9em;
   text-align: center;
 }
 
 ::ng-deep .add {
 
-  width: 102px;
+  width: 8.5em;
   line-height: 1.125em;
   font-weight: 500;
-  height: 30px;
+  height: 2.5em;
   font-size: 12px;
   color: black;
   background-color: rgb(255, 255, 255);
@@ -66,11 +66,10 @@
   cursor: default;
   border-radius: 5px;
   border: 1px solid rgb(237, 237, 237);
-
 }
 
 .image {
-  margin: 0 0 8px !important;
+  margin: 0 0 0.5em !important;
 }
 
 .add {
@@ -78,11 +77,189 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  right: -8em;
-  margin-top: 12px;
+  right: -7.5em;
+  margin-top: 1.1875em;
 }
 
 .last-image {
   margin: 0 !important;
 }
 
+.habit {
+  width: 1242px;
+  height: 64.6px;
+  background-color: #FFFEFF;
+  display: grid;
+  grid-template-areas: "circle name";
+  grid-template-columns: 62px 1fr;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.habit-identification {
+  width: 62px;
+  height: 40px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  grid-area: circle / circle / circle / circle;
+}
+
+.icon {
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+}
+
+.habit-content {
+  width: 1180px;
+  height: 64.6px;
+  padding: 13.5px 0;
+  display: grid;
+  grid-area: name / name / name / name;
+  grid-template-areas: "name smartAction otherAction";
+  grid-template-columns: 6fr auto auto;
+  -webkit-box-align: center;
+  align-items: center;
+  border-bottom: 1px solid rgb(229, 228, 229);
+  border-right: 1px solid rgb(229, 228, 229) !important;
+}
+
+.habit-name {
+  width: 1053px;
+  height: 15.6px;
+  overflow: hidden;
+  word-break: break-word;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 15.6px;
+  color: rgb(0, 0, 0);
+}
+
+.habit-frequency {
+  width: 1053px;
+  margin-top: 6px;
+  height: 15px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.4px;
+  color: rgb(123, 124, 124);
+  text-decoration: unset;
+}
+
+.minor-details {
+  width: 1053px;
+  height: 36.6px;
+}
+
+::ng-deep .done-button {
+  width: 71.1px !important;
+  height: 30px;
+  color: rgb(0, 0, 0);
+  padding: 0 8px;
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 3px;
+  margin-right: 1em;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.done {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 30px;
+  color: rgb(0, 0, 0);
+  margin-left: 5px;
+}
+
+::ng-deep .pi {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  right: 1px;
+  top: 0;
+}
+
+::ng-deep .p-button {
+  box-shadow: none !important;
+}
+
+.more-button {
+  width: 32px;
+  height: 30px;
+  background: rgb(255, 255, 255) !important;
+  border: 1px solid rgb(229, 228, 229);
+  border-radius: 3px;
+  color: rgb(0, 0, 0);
+  margin-right: 0.5em;
+  position: relative;
+  right: 4px;
+}
+
+.more-icon {
+  position: relative;
+  top: 2px;
+  right: 4px;
+}
+
+.edit-habit-icon {
+  position: relative;
+  top: 4px;
+  right: 2.5px;
+  margin-right: 4px;
+}
+
+::ng-deep .edit-habit-menu .mat-mdc-menu-item-text {
+  top: -0.5px
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .edit-habit-icon {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.accord {
+  width: 1242px;
+  height: 44px;
+}
+
+::ng-deep .p-accordion .p-accordion-content {
+  padding: 0;
+  border: none;
+  background: #ffffff;
+  color: #212529;
+}
+
+::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link {
+  border: none;
+  background: #ffffff;
+}
+
+.none-habits {
+  width: 77.625em; /* 1242px / 16 */
+  height: 59.5625em; /* 953px / 16 */
+  border-right: 1px solid rgb(234, 234, 234);
+  position: relative;
+  right: -15.05em;
+}
+
+.move-empty-habit {
+
+  position: relative;
+  top: -59.6em;
+  right: -15em;
+}
+
+::ng-deep .hide .p-accordion .p-accordion-header .p-accordion-header-link {
+  display: none;
+}

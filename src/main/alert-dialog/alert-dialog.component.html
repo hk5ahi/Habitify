@@ -1,0 +1,15 @@
+
+<mat-dialog-content #alert class="content">
+    <div class="alert-text">
+        <p class="text">app.habitify.me says</p>
+        <p class="second-text">Do you want to discard?</p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button color="primary" mat-raised-button (click)="closeAllDialog()">
+        OK
+    </button>
+    <button color="primary" mat-raised-button (click)="closeDialog()">
+        Cancel
+    </button>
+</mat-dialog-actions>

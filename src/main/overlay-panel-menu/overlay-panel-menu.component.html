@@ -1,0 +1,18 @@
+<p-overlayPanel #overlayPanel [appendTo]="targetElement" [dismissable]="false" class="move-panel">
+  <button (click)="toggleCalendarDisplay()" class="calender-button">
+    <img alt="down-arrow" class="down-icon" src="assets/svg/down.svg"/>
+    <span class="calender-text">{{getDisplayValue(selectedDate)}}</span>
+  </button>
+  <button class="progress-habit-bar" pButton type="button">
+    <input [(ngModel)]="progressData" autofocus class="progress-input log-input" placeholder="Value">
+    <span class="log-text">{{getGoalHabitUnit(habit)}}</span>
+    <img (click)="updateProgressData(habit)" [ngClass]="{'move-icon':getGoalHabitUnit(habit)==='times'}" alt="log"
+         class="log-tick-icon"
+         src="assets/svg/small-tick.svg"/>
+    <img (click)="closeOverLay()" [ngClass]="{'move-icon':getGoalHabitUnit(habit)==='times'}" alt="log"
+         class="log-cross-icon" src="assets/svg/cross.svg"/>
+  </button>
+  <p-calendar (onSelect)="onDateClick($event)" *ngIf="showCalendar" [(ngModel)]="selectedDate"
+              [disabledDates]="disabledDates" [inline]="true"
+              class="log-calender disable-next disable-prev"></p-calendar>
+</p-overlayPanel>

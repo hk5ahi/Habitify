@@ -1,0 +1,99 @@
+.manage-habits {
+  width: 976px;
+  height: 100%;
+  position: fixed;
+  top: 3.2em;
+  right: 27.4em;
+  border-right: 1px solid rgb(229, 228, 229);
+}
+
+.manage-habit {
+  width: 955px;
+  height: 36px;
+  padding: 2px 12px 2px 6px;
+  margin-left: 8px;
+}
+
+.habit-content {
+  display: flex;
+  align-items: center;
+  width: 93.3px;
+  height: 32px;
+}
+
+.mark {
+  width: 2em;
+  height: 2em;
+  margin-left: 7px;
+  position: relative;
+  top: 1px;
+}
+
+.habit-name {
+  display: inline-block; /* Change from block to inline-block */
+  color: rgb(0, 0, 0);
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  padding: 0 0 0 6px;
+  margin-left: 0;
+  height: 15.6px;
+  white-space: nowrap;
+  width: auto;
+  position: relative;
+  top: -1px;
+}
+
+.white-icon {
+  filter: brightness(0) invert(1);
+}
+
+.white-text {
+  color: #fff !important; /* Set the text color to white */
+}
+
+.background-color {
+  background-color: #2A67F4;
+  border-radius: 5px;
+  cursor: default;
+}
+
+.edit-habit-icon {
+  position: relative;
+  top: 4px;
+  right: 2.5px;
+  margin-right: 4px;
+}
+
+.small-icon {
+  width: 1.35em;
+  height: 1.35em;
+  position: relative;
+  top: 4px;
+  right: 1px;
+}
+
+.move-to {
+  margin-left: 23px;
+}
+
+.border {
+  margin-bottom: 4px !important;
+  border-bottom: 1px solid rgb(229, 228, 229);
+}
+
+.up-height {
+  margin: 4px 0 !important;
+
+}
+
+::ng-deep .manage-menu .mat-mdc-menu-content, ::ng-deep .manage-menu .mat-mdc-menu-item {
+  width: 264px !important;
+}
+
+.margin-up {
+  margin-top: 4px !important;
+}
+
+::ng-deep .manage-menu .mat-mdc-menu-item-text {
+  top: -0.5px !important;
+}

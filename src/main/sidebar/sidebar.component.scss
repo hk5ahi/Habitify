@@ -1,19 +1,14 @@
-
 * {
   box-sizing: border-box;
 }
 
 ::ng-deep .p-sidebar {
-
-
   width: 15em;
   padding: 7px 10px 0 0;
   border-right: 1px solid #e7e7e7 !important;;
   border-top: none;
   border-left: none;
-
 }
-
 
 ::ng-deep.p-sidebar::before {
   content: '';
@@ -22,7 +17,6 @@
   position: absolute;
   top: 0;
   left: -0.5em;
-  background-color: var(--chakra-colors-transparent);
   z-index: 10;
 }
 
@@ -42,12 +36,10 @@
 }
 
 .user {
-
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 7px;
-
 }
 
 .icon {
@@ -79,7 +71,6 @@
   padding: 4.3px 8px;
   position: relative;
   right: 7px;
-
 }
 
 .item-icon {
@@ -87,7 +78,7 @@
   top: 4.5px;
 }
 
-.item:hover {
+.item:not(.background-color):hover {
   background-color: #e7e7e7;
   cursor: default;
   border-radius: 5px;
@@ -99,21 +90,19 @@
   cursor: default;
 }
 
-
-.item:hover .item-container img.item-icon {
+.item:not(.background-color):hover .item-container img.item-icon {
   filter: brightness(0) invert(0); /* Adjust the color of the image to black on hover */
 }
 
-.habit-time:active .item-container img.item-icon {
-  filter: brightness(0) invert(1); /* Adjust the color of the image to white on click */
+.white-icon {
+  filter: brightness(0) invert(1);
 }
 
-.habit-time:active .text-container {
-  color: #fff; /* Set the text color to white */
+.white-text {
+  color: #fff !important; /* Set the text color to white */
 }
 
 .text-container {
-
   display: inline-block !important;
   width: 10.8125em !important;
   height: 1.725em !important;
@@ -156,7 +145,6 @@
   position: relative;
   right: 7px;
   cursor: default;
-
 }
 
 .area {
@@ -191,3 +179,10 @@
 .plus {
   width: 1.0625em;
 }
+
+.background-color {
+  background-color: #2A67F4;
+  border-radius: 5px;
+  cursor: default;
+}
+

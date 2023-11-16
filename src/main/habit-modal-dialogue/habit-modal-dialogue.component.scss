@@ -1,0 +1,642 @@
+.habit-dialogue {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 28em;
+  height: 22.5625em !important;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  background: rgb(252, 252, 252);
+  color: inherit;
+  margin-top: 3.75rem;
+  margin-bottom: 3.75rem;
+  max-height: calc(100% - 7.5rem);
+  right: 1em;
+  z-index: 1000;
+}
+
+.Header {
+  flex: 0 1 0;
+  padding: 0.875em 1em 4px;
+  position: relative;
+  top: -4.8125em;
+}
+
+.header-text {
+  font-size: 17px;
+  font-weight: 600;
+  font-family: Inter, sans-serif;
+  line-height: 20.4px;
+  color: #000000;
+  height: 1.275em;
+  width: 26em;
+  position: relative;
+  top: -0.8125em;
+}
+
+::ng-deep .p-dialog-header {
+  display: none; /* or any other styles to hide the header */
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #212529;
+  padding: 1rem;
+  height: 18.5em !important;
+  width: 28em;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.modal-footer {
+  width: 28em;
+  height: 4.125em !important;
+  background-color: #f5f5f5;
+  padding: 1.625em 0.75em;
+  position: relative;
+  top: -10.125em;
+}
+
+::ng-deep .p-dialog {
+  border: none !important;
+}
+
+.buttons {
+  width: 8.875em;
+  height: 1.875em;
+  margin-left: auto;
+}
+
+::ng-deep .save .p-button {
+  width: 60px !important;
+  height: 30px !important;
+  position: relative;
+  background: #2A67F4;
+  top: 0.5px;
+  right: -3px;
+  line-height: 1.875em;
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+}
+
+::ng-deep .save .p-button:focus {
+  box-shadow: none;
+}
+
+::ng-deep .cancel .p-button:focus {
+  box-shadow: none;
+}
+
+::ng-deep .cancel .p-button {
+  width: 6.1em !important;
+  height: 30px;
+  background: #ffffff !important;
+  margin: 0 0.5em 0 0;
+  padding: 0 1em;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  line-height: 30px;
+  font-weight: 500;
+  color: #000000;
+  border-color: rgb(229, 228, 229);
+}
+
+.name-container {
+  width: 26em;
+  height: 3.125em !important;
+  position: relative;
+  top: -6.1875em;
+  right: -0.8125em;
+}
+
+.name-text {
+  width: 25.25em;
+  height: 12px;
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  padding-left: 6px;
+}
+
+.name-input {
+  width: 26em;
+  height: 1.875em;
+  display: flex;
+}
+
+.input-habit {
+  width: 31.35em;
+  height: 2.5em;
+  background: #ffffff;
+  padding: 0 10px;
+  min-width: 0;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  cursor: default;
+  margin-top: 0.5em !important;
+}
+
+.input-habit:focus,
+.input-habit:hover,
+::ng-deep .goal-value .p-inputtext:focus,
+::ng-deep .goal-value .p-inputtext:hover,
+::ng-deep .goal-frequency:focus,
+::ng-deep .goal-frequency:hover,
+::ng-deep .repeat-frequency:focus,
+::ng-deep .repeat-frequency:hover,
+::ng-deep .tod-input:focus,
+.tod-input:hover {
+  border-color: rgb(42, 103, 244);
+}
+
+.habit-icon {
+  width: 2em;
+  height: 1.87em;
+  display: inline-flex;
+  appearance: none;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  line-height: 1.2;
+  padding: 0;
+  border: 1px solid rgb(229, 228, 229);
+  color: rgb(42, 168, 208);
+  cursor: default;
+  top: 6px;
+  right: -0.5em;
+  border-radius: 5px;
+}
+
+.mark {
+  width: 1.875em;
+  height: 1.75em;
+}
+
+.goal-container {
+  width: 16.625em;
+  height: 3.125em !important;
+  position: relative;
+  top: -4.92em;
+  right: -0.8125em;
+}
+
+.goal-text {
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 0.75em 0.87em 0;
+  padding-left: 6px;
+}
+
+.goal-input-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 10px;
+  width: 16.625em;
+  height: 1.875em;
+}
+
+::ng-deep .goal-value .p-inputtext {
+  width: 6.85em !important;
+  height: 2.5em;
+  background: #ffffff;
+  padding: 0 1.5em 0 0.5em;
+  padding-left: 0.5em !important;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  border-radius: 3px;
+  vertical-align: top;
+  border: 1px solid rgb(229, 228, 229);
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  color: black;
+}
+
+::ng-deep.p-inputtext:enabled:focus {
+  box-shadow: none;
+}
+
+::ng-deep .up-down-arrows .p-button {
+  width: 0.6875em;
+  height: 0.6875em;
+  padding: 0;
+  background-color: #ffffff !important;
+  color: #000000;
+  border: none;
+}
+
+::ng-deep.p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 1.875em;
+  height: 1.4375em;
+  top: 4px;
+}
+
+::ng-deep .p-inputnumber {
+  width: 5.125em;
+}
+
+.goal-frequency {
+  width: 6.85em;
+  height: 2.5em;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.goal-input-container {
+  position: relative;
+}
+
+.input-wrapper {
+  position: relative;
+  height: 30px;
+}
+
+.goal-frequency {
+  padding-right: 1.5em; /* Adjust the padding based on the size of your SVGs */
+}
+
+.down {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  right: 9.515px; /* Adjust the right offset based on your design */
+  color: black;
+}
+
+.up {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  right: 9.5px; /* Adjust the right offset based on your design */
+}
+
+.input-wrapper:hover .goal-frequency, .goal-frequency:focus {
+  border-color: rgb(42, 103, 244);
+}
+
+.input-wrapper:hover .repeat-frequency, .repeat-frequency:focus {
+  border-color: rgb(42, 103, 244);
+}
+
+.frequency-menu {
+  position: absolute !important;
+  z-index: 1001;
+}
+
+.repeat-container {
+  display: inline-block;
+  width: 8.75em;
+  height: 3.125em;
+  position: relative;
+  top: -8.5em;
+  right: -18.2em;
+}
+
+::ng-deep .cdk-overlay-container {
+  z-index: 1005 !important;
+}
+
+.calender-container {
+  display: inline-block;
+  width: 8.75em;
+  height: 3.125em;
+  position: relative;
+  top: -10.68em;
+  right: -18.2em;
+}
+
+.repeat-text {
+  display: inline-block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 12px 1.3em 0;
+  padding-left: 6px;
+  width: 8em;
+  height: 0.75em;
+}
+
+.repeat-input-container {
+  width: 8.75em;
+  height: 1.875em;
+}
+
+.down-repeat {
+  position: absolute;
+  top: 70%;
+  transform: translateY(-50%);
+  right: 9.5px; /* Adjust the right offset based on your design */
+  color: black;
+}
+
+.up-repeat {
+  position: absolute;
+  top: 43%;
+  transform: translateY(-50%);
+  right: 9.5px; /* Adjust the right offset based on your design */
+}
+
+.repeat-frequency {
+  width: 11.5em;
+  height: 2.5em;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.tod-container {
+  width: 16.625em;
+  height: 3.125em;
+  position: relative;
+  top: -7.14em;
+  right: -11px;
+}
+
+.tod-text {
+  width: 15.875em;
+  height: 12px;
+  display: block;
+  text-align: start;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 1;
+  font-family: Inter, sans-serif;
+  line-height: 12px;
+  color: rgb(123, 124, 124);
+  margin: 0 0.75em 0.9em 0;
+  padding-left: 6px;
+}
+
+.tod-wrapper {
+  width: 16.625em;
+  height: 1.875em;
+}
+
+.tod-input {
+  width: 22.2em;
+  height: 2.5em;
+  background: #ffffff;
+  padding: 0 17px 0 10px;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  position: relative;
+  appearance: none;
+  font-size: 12px;
+  padding-inline-start: 10px;
+  border-radius: 3px;
+  border: 1px solid rgb(229, 228, 229);
+  cursor: default;
+  font-family: Inter, sans-serif;
+  font-weight: 500;
+  line-height: 14.4px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+  margin-top: unset !important;
+}
+
+.calendar-button {
+  width: 0.8125em;
+  height: 0.8125em;
+  cursor: default !important;
+  position: relative;
+  top: -1.5625em;
+  right: -7.25em;
+}
+
+::ng-deep .frequency-menu .mat-mdc-menu-item, ::ng-deep .frequency-period-menu .mat-mdc-menu-item {
+  width: 5em !important;
+}
+
+::ng-deep .frequency-menu .mat-mdc-menu-content {
+  width: 5em !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  min-width: 5em !important;
+}
+
+::ng-deep .mat-mdc-menu-item:hover {
+  .habit-icons {
+    filter: brightness(0) invert(1);
+  }
+}
+
+::ng-deep .calender-container .p-datepicker {
+  position: static !important;
+  overflow: hidden;
+  border: none;
+}
+
+::ng-deep .repeat-menu .mat-mdc-menu-item {
+  width: 8.6em !important;
+}
+
+::ng-deep .day-menu .mat-mdc-menu-item {
+  width: 6.9em !important;
+}
+
+::ng-deep .interval-menu .mat-mdc-menu-item {
+  width: 7.625em !important;
+}
+
+::ng-deep .month-container .p-datepicker .p-datepicker-header, ::ng-deep .month-container .p-datepicker table th {
+  display: none;
+}
+
+::ng-deep .month-container .p-datepicker {
+  width: 13.5625em !important;
+  height: 9.65em !important;
+  position: relative;
+  top: 1em;
+  left: 0.2em;
+  border: none;
+  overflow: hidden;
+}
+
+::ng-deep .month-container .p-calendar {
+  display: inline;
+  overflow: hidden;
+}
+
+
+::ng-deep .month-container .p-datepicker table td.p-datepicker-today > span {
+  background: white !important;
+  color: black !important;
+  padding: 0.625em;
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-item {
+  width: 22.875em !important;
+  height: 1.875em !important;
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-content {
+  width: 23.5em !important;
+  height: 24.3125em !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 23.5em;
+  border-radius: 5px;
+}
+
+::ng-deep .habit-menu .mat-mdc-menu-item-text {
+  top: 0.5px !important;
+}
+
+.text {
+  margin-left: 1.25em;
+}
+
+::ng-deep .cdk-overlay-pane ::-webkit-scrollbar {
+  width: 9px;
+  height: 10% !important;
+  background: transparent;
+  border-radius: 10px;
+}
+
+::ng-deep .cdk-overlay-pane ::-webkit-scrollbar:hover {
+  background: #e7e5e5;
+}
+
+::ng-deep .cdk-overlay-pane {
+  margin-top: 2px;
+}
+
+::ng-deep .p-confirm-popup {
+  width: 28em;
+  left: 46.0625em;
+  top: -0.75em;
+}
+
+::ng-deep .p-button.p-button-text {
+  color: #ffffff;
+  background: #2A67F4;
+  width: 60px;
+}
+
+::ng-deep .p-confirm-popup .p-confirm-popup-footer button:last-child {
+  background: #2A67F4;
+  width: 60px;
+}
+
+::ng-deep .delete .p-button {
+  width: 72px;
+  height: 30px;
+  display: inline-flex;
+  appearance: none;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  user-select: none;
+  position: absolute;
+  right: 30em;
+  vertical-align: middle;
+  outline-offset: 2px;
+  line-height: 30px;
+  font-weight: 500;
+  font-size: 12px;
+  font-family: Inter, sans-serif;
+  color: rgb(210, 55, 55);
+  background-color: rgb(255, 255, 255);
+  margin-right: 8px;
+  cursor: default;
+  outline: transparent solid 2px;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(229, 228, 229);
+  border-image: initial;
+}
+
+::ng-deep .archive .p-button, ::ng-deep .unarchive .p-button {
+  width: 6.2em;
+  background: #ffffff !important;
+  margin: 0 0.5em 0 0;
+  padding: 0 1em;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  line-height: 30px;
+  font-weight: 500;
+  color: #000000;
+  border-color: rgb(229, 228, 229);
+  position: absolute;
+  right: 23.2em;
+  height: 30px;
+}
+
+::ng-deep .unarchive .p-button .p-button-label {
+  position: relative;
+  right: 4px;
+}
+::ng-deep  p-dialog p-dynamic-dialog p-component{
+  position:relative !important;
+  top:-10em !important;
+}

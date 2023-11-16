@@ -1,0 +1,24 @@
+<mat-menu #skippedHabit="matMenu" [hasBackdrop]="true" class="skip-habit-menu" overlapTrigger="false">
+
+  <button (click)="showOverlayPanel($event,habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/log.svg"/>
+    Log Progress
+  </button>
+  <button (click)="undoSkip(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/undo.svg"/>
+    Undo Skip
+  </button>
+  <button (click)="openEditModal(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/edit.svg"/>
+    Edit
+  </button>
+  <button (click)="emitHabit(habit)" mat-menu-item>
+    <img alt="tick" class="edit-habit-icon"
+         src="assets/svg/view-progress.svg"/>
+    View Progress
+  </button>
+
+</mat-menu>

@@ -1,0 +1,80 @@
+<div *ngIf="!isResize">
+  <div #habit (click)="updateProgressView(habit,$event)" (contextmenu)="openEditHabitMenu($event)"
+       *ngFor="let habit of filteredHabits" class="habit">
+    <div class="habit-identification">
+      <img [ngClass]="{'grey-background':habit.showProgressView && habit.isCompleted}"
+           [src]="getHabitIcon(habit)"
+           alt="habit"
+           class="icon">
+      <div *ngIf="habit.isCompleted && !habit.showProgressView" [style.background]="'white'" class="badge">
+        <p class="badge-text">1</p>
+      </div>
+    </div>
+
+    <div class="habit-content">
+      <div class="minor-details">
+        <div [ngClass]="{'canceled-text': habit.isFailed || habit.isSkipped || habit.isCompleted}" class="habit-name">
+          {{habit.name}}
+        </div>
+        <div [ngClass]="{'canceled-text': habit.isFailed || habit.isSkipped || habit.isCompleted}"
+             class="habit-frequency">
+          {{getGoalData(habit)}}
+        </div>
+      </div>
+      <button (click)="completeHabit(habit)" *ngIf="showDoneButton(habit)" class="done-button" pButton type="button">
+        <i class="pi pi-check" style="font-size: 0.88rem"></i>
+        <span class="done">Done</span>
+      </button>
+      <button #logHabit (click)="toggleLogValueBar(habit)" *ngIf="showLogButton(habit)" class="log-button" pButton
+              type="button">
+        <img alt="log" class="log-icon"
+             src="assets/svg/log.svg"/>
+        <span class="log">Log</span>
+      </button>
+
+      <button #logHabitData (click)="stopEvent($event)" *ngIf="habit.showLogValueBar" class="log-habit-bar" pButton
+              type="button">
+        <input (blur)="isInputFocused = false"
+               (focus)="isInputFocused = true"
+               [(ngModel)]="goalProgress"
+               autofocus
+               class="log-input"
+               inputmode="numeric"
+               pattern="[0-9]*"
+               placeholder="{{ isInputFocused ? 'Value' : 'Value' }}">
+
+        <span class="log-text">{{getHabitGoalUnit(habit)}}</span>
+        <img (click)="updateGoalProgress(habit,$event)" alt="log" class="log-tick-icon"
+             src="assets/svg/small-tick.svg"/>
+        <img (click)="closeLogValueBar(habit,$event)" alt="log"
+             class="log-cross-icon" src="assets/svg/cross.svg"/>
+      </button>
+      <button #more
+              *ngIf="!habit.isCompleted && !habit.isSkipped && !habit.isFailed"
+              [matMenuTriggerFor]="editHabit.getMenu()" class="more-button" pButton type="button">
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
+      </button>
+      <button #more *ngIf="habit.isCompleted" [matMenuTriggerFor]="compHabit.getMenu()" class="more-button" pButton
+              type="button">
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
+      </button>
+      <button #more *ngIf="habit.isSkipped" [matMenuTriggerFor]="skippedHabit.getMenu()" class="more-button" pButton
+              type="button">
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
+      </button>
+      <button #more *ngIf="habit.isFailed" [matMenuTriggerFor]="failedHabit.getMenu()" class="more-button" pButton
+              type="button">
+        <i class="pi pi-ellipsis-v more-icon common-icon-style"></i>
+      </button>
+    </div>
+    <app-edit-habit-menu #editHabit (habitProgress)="updateSelectedHabit($event)"
+                         (isOverlay)="updateIsOverlayPanelOpen($event)" [habit]="habit"></app-edit-habit-menu>
+    <app-complete-habit-menu #compHabit (habitProgress)="updateSelectedHabit($event)"
+                             [habit]="habit"></app-complete-habit-menu>
+    <app-skip-habit-menu #skippedHabit (habitProgress)="updateSelectedHabit($event)"
+                         [habit]="habit"></app-skip-habit-menu>
+    <app-failed-habit-menu #failedHabit (habitProgress)="updateSelectedHabit($event)"
+                           [habit]="habit"></app-failed-habit-menu>
+  </div>
+</div>
+<app-progress-view *ngIf="selectedHabit?.showProgressView && selectedHabit" [habit]="selectedHabit"></app-progress-view>
